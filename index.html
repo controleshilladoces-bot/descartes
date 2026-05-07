@@ -444,90 +444,128 @@ margin:0 auto 18px; box-shadow:0 6px 24px rgba(74,155,127,0.35);
 
   <!-- S6: FECHAMENTO NOITE -->
 
-  <div id="s6" class="card hidden">
-    <div class="step-label">Fechamento da noite</div>
-    <div class="step-title">Registro oficial do fim do dia</div>
-    <div class="alert">🌙 Tire a foto com todos os itens no lixo de descarte claramente visíveis.</div>
-
-```
-<div class="field">
-  <label class="fl">Responsável <span class="req">*</span></label>
-  <div class="cl" id="colabNoite"></div>
-</div>
-
-<div class="div"></div>
-
-<div class="field">
-  <label class="fl">Total de itens descartados hoje <span class="req">*</span></label>
-  <input type="number" id="totalNoite" min="0" placeholder="0" inputmode="numeric">
-</div>
-
-<div class="field">
-  <label class="fl">Foto do lixo de descarte <span class="req">*</span></label>
-  <div class="foto-wrap" onclick="triggerFoto('fotoNoiteInput')">
-    <div class="foto-ph" id="fotoNoitePh">
-      <div class="fi">🗑️</div>
-      <p>Foto do lixo de descarte</p>
-      <small>OBRIGATÓRIO</small>
+  <div id="s6" class="hidden">
+    <!-- PASSO A: Responsável -->
+    <div id="s6a" class="card">
+      <div class="step-label">Fechamento da noite — Passo 1</div>
+      <div class="step-title">Quem está fazendo o fechamento?</div>
+      <div class="cl" id="colabNoite"></div>
+      <button class="btn-p mt8" onclick="goS6b()">Continuar →</button>
+      <button class="btn-s" onclick="goBack(1)">← Voltar</button>
     </div>
-    <img id="fotoNoitePreview" style="display:none">
-  </div>
-  <input type="file" id="fotoNoiteInput" accept="image/*" capture="environment" style="display:none" onchange="previewFoto(this,'fotoNoitePreview','fotoNoitePh')">
-</div>
-
-<div class="field">
-  <label class="fl">Observações</label>
-  <textarea id="obsNoite" placeholder="Alguma observação sobre o fechamento..."></textarea>
-</div>
-
-<button class="btn-p" onclick="submitNoite()">Confirmar Fechamento 🌙</button>
-<button class="btn-s" onclick="goBack(1)">← Voltar</button>
-```
-
+    <!-- PASSO B: Adicionar itens -->
+    <div id="s6b" class="card hidden">
+      <div class="step-label">Fechamento da noite — Passo 2</div>
+      <div class="step-title">Itens descartados hoje</div>
+      <div class="alert">🌙 Adicione todos os itens que foram descartados.</div>
+      <div id="itensNoiteList" style="margin-bottom:12px"></div>
+      <button class="btn-s" onclick="showAddItemNoite()">+ Adicionar item</button>
+      <!-- Form adicionar item -->
+      <div id="addItemNoiteForm" class="hidden" style="background:var(--creme);border-radius:14px;padding:14px;margin-top:12px">
+        <div class="field">
+          <label class="fl">Categoria</label>
+          <div class="og" id="catNoiteGrid"></div>
+        </div>
+        <div class="field hidden" id="prodNoiteField">
+          <label class="fl">Produto</label>
+          <select id="prodNoiteSelect" style="width:100%"><option value="">Selecione...</option></select>
+        </div>
+        <div class="field">
+          <label class="fl">Quantidade</label>
+          <input type="number" id="qtdNoite" min="1" placeholder="0" inputmode="numeric" style="font-size:18px;text-align:center">
+        </div>
+        <div class="field">
+          <label class="fl">Motivo</label>
+          <div class="pills" id="motivoNoitePills">
+            <div class="pill v" onclick="selPill(this,'motivoNoitePills','Vencido')">Vencido</div>
+            <div class="pill v" onclick="selPill(this,'motivoNoitePills','Estragado')">Estragado</div>
+            <div class="pill a" onclick="selPill(this,'motivoNoitePills','Quebrou/Caiu')">Quebrou/Caiu</div>
+            <div class="pill" onclick="selPill(this,'motivoNoitePills','Outros')">Outros</div>
+          </div>
+        </div>
+        <button class="btn-p" onclick="addItemNoite()" style="margin-bottom:6px">Adicionar ✓</button>
+        <button class="btn-s" onclick="document.getElementById('addItemNoiteForm').classList.add('hidden')">Cancelar</button>
+      </div>
+      <div class="div"></div>
+      <button class="btn-p" onclick="goS6c()">Continuar →</button>
+      <button class="btn-s" onclick="document.getElementById('s6b').classList.add('hidden');document.getElementById('s6a').classList.remove('hidden')">← Voltar</button>
+    </div>
+    <!-- PASSO C: Foto -->
+    <div id="s6c" class="card hidden">
+      <div class="step-label">Fechamento da noite — Passo 3</div>
+      <div class="step-title">Foto do lixo de descarte</div>
+      <div class="alert">🌙 Tire a foto com todos os itens visíveis no lixo.</div>
+      <div class="field">
+        <label class="fl">Foto obrigatória <span class="req">*</span></label>
+        <div class="foto-wrap" onclick="triggerFoto('fotoNoiteInput')">
+          <div class="foto-ph" id="fotoNoitePh"><div class="fi">🗑️</div><p>Tirar foto</p><small>OBRIGATÓRIO</small></div>
+          <img id="fotoNoitePreview" style="display:none">
+        </div>
+        <input type="file" id="fotoNoiteInput" accept="image/*" capture="environment" style="display:none" onchange="previewFoto(this,'fotoNoitePreview','fotoNoitePh')">
+      </div>
+      <div class="field">
+        <label class="fl">Observações</label>
+        <textarea id="obsNoite" placeholder="Alguma observação..."></textarea>
+      </div>
+      <button class="btn-p" onclick="submitNoite()">Confirmar Fechamento 🌙</button>
+      <button class="btn-s" onclick="document.getElementById('s6c').classList.add('hidden');document.getElementById('s6b').classList.remove('hidden')">← Voltar</button>
+    </div>
   </div>
 
   <!-- S7: CONFERÊNCIA MANHÃ -->
 
-  <div id="s7" class="card hidden">
-    <div class="step-label">Conferência da manhã</div>
-    <div class="step-title">O que você encontrou no lixo?</div>
-    <div class="alert">☀️ <strong>Não consulte</strong> o registro da noite. Conte os itens independentemente.</div>
-
-```
-<div class="field">
-  <label class="fl">Responsável <span class="req">*</span></label>
-  <div class="cl" id="colabManha"></div>
-</div>
-
-<div class="div"></div>
-
-<div class="field">
-  <label class="fl">Quantos itens você encontrou? <span class="req">*</span></label>
-  <input type="number" id="totalManha" min="0" placeholder="0" inputmode="numeric">
-</div>
-
-<div class="field">
-  <label class="fl">Foto do lixo encontrado <span class="req">*</span></label>
-  <div class="foto-wrap" onclick="triggerFoto('fotoManhaInput')">
-    <div class="foto-ph" id="fotomanhaPh">
-      <div class="fi">☀️</div>
-      <p>Foto do lixo de descarte</p>
-      <small>OBRIGATÓRIO</small>
+  <div id="s7" class="hidden">
+    <div id="s7a" class="card">
+      <div class="step-label">Conferência da manhã — Passo 1</div>
+      <div class="step-title">Quem está fazendo a conferência?</div>
+      <div class="alert">☀️ <strong>Não consulte</strong> o registro da noite antes de conferir!</div>
+      <div class="cl" id="colabManha"></div>
+      <button class="btn-p mt8" onclick="goS7b()">Continuar →</button>
+      <button class="btn-s" onclick="goBack(1)">← Voltar</button>
     </div>
-    <img id="fotoManhaPreview" style="display:none">
-  </div>
-  <input type="file" id="fotoManhaInput" accept="image/*" capture="environment" style="display:none" onchange="previewFoto(this,'fotoManhaPreview','fotomanhaPh')">
-</div>
-
-<div class="field">
-  <label class="fl">Observações</label>
-  <textarea id="obsManha" placeholder="Tudo ok? Alguma divergência?"></textarea>
-</div>
-
-<button class="btn-p verde" onclick="submitManha()">Confirmar Conferência ☀️</button>
-<button class="btn-s" onclick="goBack(1)">← Voltar</button>
-```
-
+    <div id="s7b" class="card hidden">
+      <div class="step-label">Conferência da manhã — Passo 2</div>
+      <div class="step-title">O que você encontrou no lixo?</div>
+      <div id="itensManhList" style="margin-bottom:12px"></div>
+      <button class="btn-s" onclick="showAddItemManha()">+ Adicionar item encontrado</button>
+      <div id="addItemManhaForm" class="hidden" style="background:var(--creme);border-radius:14px;padding:14px;margin-top:12px">
+        <div class="field">
+          <label class="fl">Categoria</label>
+          <div class="og" id="catManhaGrid"></div>
+        </div>
+        <div class="field hidden" id="prodManhaField">
+          <label class="fl">Produto</label>
+          <select id="prodManhaSelect" style="width:100%"><option value="">Selecione...</option></select>
+        </div>
+        <div class="field">
+          <label class="fl">Quantidade</label>
+          <input type="number" id="qtdManha" min="1" placeholder="0" inputmode="numeric" style="font-size:18px;text-align:center">
+        </div>
+        <button class="btn-p" onclick="addItemManha()">Adicionar ✓</button>
+        <button class="btn-s" onclick="document.getElementById('addItemManhaForm').classList.add('hidden')">Cancelar</button>
+      </div>
+      <div class="div"></div>
+      <button class="btn-p" onclick="goS7c()">Continuar →</button>
+      <button class="btn-s" onclick="document.getElementById('s7b').classList.add('hidden');document.getElementById('s7a').classList.remove('hidden')">← Voltar</button>
+    </div>
+    <div id="s7c" class="card hidden">
+      <div class="step-label">Conferência da manhã — Passo 3</div>
+      <div class="step-title">Foto do lixo encontrado</div>
+      <div class="field">
+        <label class="fl">Foto obrigatória <span class="req">*</span></label>
+        <div class="foto-wrap" onclick="triggerFoto('fotoManhaInput')">
+          <div class="foto-ph" id="fotomanhaPh"><div class="fi">☀️</div><p>Tirar foto</p><small>OBRIGATÓRIO</small></div>
+          <img id="fotoManhaPreview" style="display:none">
+        </div>
+        <input type="file" id="fotoManhaInput" accept="image/*" capture="environment" style="display:none" onchange="previewFoto(this,'fotoManhaPreview','fotomanhaPh')">
+      </div>
+      <div class="field">
+        <label class="fl">Observações</label>
+        <textarea id="obsManha" placeholder="Tudo ok? Alguma divergência?"></textarea>
+      </div>
+      <button class="btn-p verde" onclick="submitManha()">Confirmar Conferência ☀️</button>
+      <button class="btn-s" onclick="document.getElementById('s7c').classList.add('hidden');document.getElementById('s7b').classList.remove('hidden')">← Voltar</button>
+    </div>
   </div>
 
   <!-- S8: CONFIRMAÇÃO -->
@@ -626,15 +664,23 @@ const isCozinha = () => S.loja === 'Cozinha';
 
 // ── SCREENS ───────────────────────────────────────────────────────────────
 const SCREENS = ['s0','s1','s2','s3','s4','s5','s6','s7','s8','sOk'];
+var SUB_SCREENS = ['s6a','s6b','s6c','s7a','s7b','s7c'];
 function show(id){
   SCREENS.forEach(function(s){
     var el = document.getElementById(s);
     el.classList.add('hidden');
     el.style.display = 'none';
   });
+  SUB_SCREENS.forEach(function(s){
+    var el = document.getElementById(s);
+    if(el){ el.classList.add('hidden'); el.style.display='none'; }
+  });
   var target = document.getElementById(id);
   target.classList.remove('hidden');
   target.style.display = 'block';
+  // show first sub-screen for s6/s7
+  if(id==='s6'){ var a=document.getElementById('s6a'); if(a){a.classList.remove('hidden');a.style.display='block';} }
+  if(id==='s7'){ var a=document.getElementById('s7a'); if(a){a.classList.remove('hidden');a.style.display='block';} }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -774,24 +820,7 @@ function submitDescarte(){
   },900);
 }
 
-function submitNoite(){
-  const colab=document.querySelector('#colabNoite .cb.sel');
-  if(!colab){alert('Selecione o responsável');return;}
-  if(isFisica()&&!S.fotoNoite){alert('Foto obrigatória para o fechamento');return;}
-  const total=document.getElementById('totalNoite').value;
-  const pN={tipo:'fechamento_noite',loja:S.loja,colab:S.colab,totalItens:total,obs:document.getElementById('obsNoite').value,dataHora:new Date().toISOString()};
-  sendToSheets(pN);
-  setTimeout(()=>{
-    document.getElementById('okTitle').textContent='Fechamento registrado! 🌙';
-    document.getElementById('okSub').textContent='A conferência da manhã será comparada a este registro.';
-    document.getElementById('okDetail').innerHTML=`<div style="padding:8px 0;text-align:center;font-size:14px;color:#3D2314">Total de itens: <strong>${total||0}</strong></div>`;
-    show('sOk');
-  },700);
-}
 
-function submitManha(){
-  const colab=document.querySelector('#colabManha .cb.sel');
-  if(!colab){alert('Selecione o responsável');return;}
   if(isFisica()&&!S.fotoManha){alert('Foto obrigatória para a conferência');return;}
   const total=document.getElementById('totalManha').value;
   const pM={tipo:'conferencia_manha',loja:S.loja,colab:S.colab,totalItens:total,obs:document.getElementById('obsManha').value,dataHora:new Date().toISOString()};
@@ -840,6 +869,159 @@ function sendToSheets(data) {
   form.submit();
   setTimeout(function(){ document.body.removeChild(form); }, 1000);
 }
+
+// ── ITENS NOITE ───────────────────────────────────────────────────────────
+var itensNoite = [];
+var itensManha = [];
+
+function goS6b() {
+  var sel = document.querySelector('#colabNoite .cb.sel');
+  if (!sel) { alert('Selecione o responsável'); return; }
+  S.colab = sel.textContent;
+  buildCatGrid('catNoiteGrid', 'noite');
+  document.getElementById('s6a').classList.add('hidden');
+  document.getElementById('s6b').classList.remove('hidden');
+  itensNoite = [];
+  renderItens('itensNoiteList', itensNoite);
+}
+
+function goS6c() {
+  if (itensNoite.length === 0) { alert('Adicione pelo menos 1 item'); return; }
+  document.getElementById('s6b').classList.add('hidden');
+  document.getElementById('s6c').classList.remove('hidden');
+}
+
+function goS7b() {
+  var sel = document.querySelector('#colabManha .cb.sel');
+  if (!sel) { alert('Selecione o responsável'); return; }
+  S.colab = sel.textContent;
+  buildCatGrid('catManhaGrid', 'manha');
+  document.getElementById('s7a').classList.add('hidden');
+  document.getElementById('s7b').classList.remove('hidden');
+  itensManha = [];
+  renderItens('itensManhList', itensManha);
+}
+
+function goS7c() {
+  if (itensManha.length === 0) { alert('Adicione pelo menos 1 item'); return; }
+  document.getElementById('s7b').classList.add('hidden');
+  document.getElementById('s7c').classList.remove('hidden');
+}
+
+function buildCatGrid(gridId, turno) {
+  var g = document.getElementById(gridId);
+  g.innerHTML = '';
+  CATS_LOJA.forEach(function(c) {
+    var b = document.createElement('button');
+    b.className = 'ob';
+    b.innerHTML = '<span class="ei">'+c.ei+'</span>'+c.label;
+    b.onclick = function() {
+      g.querySelectorAll('.ob').forEach(function(x){x.classList.remove('sel')});
+      b.classList.add('sel');
+      var prodField = turno==='noite' ? 'prodNoiteField' : 'prodManhaField';
+      var prodSel = turno==='noite' ? 'prodNoiteSelect' : 'prodManhaSelect';
+      document.getElementById(prodField).classList.remove('hidden');
+      var sel = document.getElementById(prodSel);
+      sel.innerHTML = '<option value="">Selecione...</option>';
+      (PRODUTOS[c.id]||[]).forEach(function(p){
+        var o = document.createElement('option');
+        o.value = p; o.textContent = p;
+        sel.appendChild(o);
+      });
+      sel.dataset.cat = c.id;
+    };
+    g.appendChild(b);
+  });
+}
+
+function selPill(el, groupId, val) {
+  document.querySelectorAll('#'+groupId+' .pill').forEach(function(p){p.classList.remove('sel')});
+  el.classList.add('sel');
+  el.dataset.val = val;
+}
+
+function showAddItemNoite() {
+  document.getElementById('addItemNoiteForm').classList.remove('hidden');
+  document.getElementById('qtdNoite').value = '';
+  document.querySelectorAll('#motivoNoitePills .pill').forEach(function(p){p.classList.remove('sel')});
+}
+
+function showAddItemManha() {
+  document.getElementById('addItemManhaForm').classList.remove('hidden');
+  document.getElementById('qtdManha').value = '';
+}
+
+function addItemNoite() {
+  var prod = document.getElementById('prodNoiteSelect').value;
+  var qtd  = document.getElementById('qtdNoite').value;
+  var mot  = document.querySelector('#motivoNoitePills .pill.sel');
+  if (!prod) { alert('Selecione o produto'); return; }
+  if (!qtd)  { alert('Informe a quantidade'); return; }
+  if (!mot)  { alert('Selecione o motivo'); return; }
+  itensNoite.push({produto:prod, quantidade:qtd, unidade:'Unidade', motivo:mot.dataset.val||mot.textContent, categoria:document.getElementById('prodNoiteSelect').dataset.cat||''});
+  renderItens('itensNoiteList', itensNoite);
+  document.getElementById('addItemNoiteForm').classList.add('hidden');
+}
+
+function addItemManha() {
+  var prod = document.getElementById('prodManhaSelect').value;
+  var qtd  = document.getElementById('qtdManha').value;
+  if (!prod) { alert('Selecione o produto'); return; }
+  if (!qtd)  { alert('Informe a quantidade'); return; }
+  itensManha.push({produto:prod, quantidade:qtd, unidade:'Unidade', motivo:'Encontrado na conferência', categoria:document.getElementById('prodManhaSelect').dataset.cat||''});
+  renderItens('itensManhList', itensManha);
+  document.getElementById('addItemManhaForm').classList.add('hidden');
+}
+
+function renderItens(containerId, lista) {
+  var c = document.getElementById(containerId);
+  if (lista.length === 0) {
+    c.innerHTML = '<div style="color:var(--cinza);font-size:13px;text-align:center;padding:12px">Nenhum item adicionado ainda</div>';
+    return;
+  }
+  c.innerHTML = lista.map(function(item, i) {
+    return '<div style="background:var(--creme);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">'+
+      '<div><div style="font-size:13px;font-weight:600;color:var(--marrom)">'+item.produto+'</div>'+
+      '<div style="font-size:11px;color:var(--cinza)">'+item.quantidade+' un · '+item.motivo+'</div></div>'+
+      '<button onclick="removeItem(''+containerId+'','+i+')" style="background:none;border:none;color:var(--perigo);font-size:16px;cursor:pointer">✕</button>'+
+      '</div>';
+  }).join('');
+}
+
+function removeItem(containerId, idx) {
+  if (containerId === 'itensNoiteList') { itensNoite.splice(idx,1); renderItens(containerId, itensNoite); }
+  else { itensManha.splice(idx,1); renderItens(containerId, itensManha); }
+}
+
+function submitNoite() {
+  if (!S.fotoNoite) { alert('Foto obrigatória'); return; }
+  var colab = document.querySelector('#colabNoite .cb.sel');
+  itensNoite.forEach(function(item) {
+    var p = Object.assign({}, item, {tipo:'fechamento_noite', loja:S.loja, colab:S.colab, obs:document.getElementById('obsNoite').value, dataHora:new Date().toISOString()});
+    sendToSheets(p);
+  });
+  setTimeout(function(){
+    document.getElementById('okTitle').textContent = 'Fechamento registrado! 🌙';
+    document.getElementById('okSub').textContent = itensNoite.length + ' item(s) registrado(s).';
+    document.getElementById('okDetail').innerHTML = '<div style="padding:8px 0;text-align:center;font-size:14px;color:var(--marrom)">Total: <strong>'+itensNoite.length+'</strong> itens</div>';
+    show('sOk');
+  }, 800);
+}
+
+function submitManha() {
+  if (!S.fotoManha) { alert('Foto obrigatória'); return; }
+  itensManha.forEach(function(item) {
+    var p = Object.assign({}, item, {tipo:'conferencia_manha', loja:S.loja, colab:S.colab, obs:document.getElementById('obsManha').value, dataHora:new Date().toISOString()});
+    sendToSheets(p);
+  });
+  setTimeout(function(){
+    document.getElementById('okTitle').textContent = 'Conferência registrada! ☀️';
+    document.getElementById('okSub').textContent = itensManha.length + ' item(s) conferido(s).';
+    document.getElementById('okDetail').innerHTML = '<div style="padding:8px 0;text-align:center;font-size:14px;color:var(--marrom)">Total conferido: <strong>'+itensManha.length+'</strong> itens</div>';
+    show('sOk');
+  }, 800);
+}
+
 </script>
 
 </body>
