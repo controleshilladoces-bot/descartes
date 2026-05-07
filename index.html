@@ -512,11 +512,15 @@ function buildColabGrid(gridId) {
   var g = document.getElementById(gridId);
   g.innerHTML = '';
   var colabs = COLABORADORES[S.loja];
+  var isMain = gridId === 'colabGrid';
   if (!colabs) {
     g.style.display = 'none';
-    document.getElementById('colabTextoDiv') && (document.getElementById('colabTextoDiv').style.display = 'block');
+    if (isMain && document.getElementById('colabTextoDiv')) {
+      document.getElementById('colabTextoDiv').style.display = 'block';
+    }
     return;
   }
+  g.style.display = 'grid';
   colabs.forEach(function(c) {
     var b = document.createElement('button');
     b.className = 'colab-btn';
@@ -525,6 +529,9 @@ function buildColabGrid(gridId) {
       g.querySelectorAll('.colab-btn').forEach(function(x){x.classList.remove('sel')});
       b.classList.add('sel');
       S.colab = c;
+      if (isMain) {
+        setTimeout(function() { buildCatScreen(); goTo('t3'); }, 100);
+      }
     };
     g.appendChild(b);
   });
@@ -539,11 +546,7 @@ function confirmarColab() {
 }
 
 // Quando colaborador da grid é selecionado e vai para próxima tela
-document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('colab-btn') && e.target.closest('#colabGrid')) {
-    setTimeout(function() { buildCatScreen(); goTo('t3'); }, 150);
-  }
-});
+// event delegation removed
 
 // CATEGORIA
 function buildCatScreen() {
