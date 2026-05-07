@@ -255,7 +255,7 @@ margin:0 auto 18px; box-shadow:0 6px 24px rgba(74,155,127,0.35);
 .deco-dot { width:5px; height:5px; border-radius:50%; background:var(–rosa); }
 
 .hint { font-size:11px; color:var(–cinza); text-align:center; margin-top:4px; }
-.hidden { display:none !important; visibility:hidden !important; }
+.hidden { display:none !important; }
 .mt8 { margin-top:8px; }
 </style>
 
@@ -277,7 +277,7 @@ margin:0 auto 18px; box-shadow:0 6px 24px rgba(74,155,127,0.35);
 
   <!-- S0: LOJA -->
 
-  <div id="s0" class="card">
+  <div id="s0" class="card" style="display:block">
     <div class="step-label">Olá!</div>
     <div class="step-title">Qual é a sua unidade?</div>
     <div class="og c1" style="gap:8px">
@@ -668,19 +668,16 @@ var SUB_SCREENS = ['s6a','s6b','s6c','s7a','s7b','s7c'];
 function show(id){
   SCREENS.forEach(function(s){
     var el = document.getElementById(s);
-    el.classList.add('hidden');
-    el.style.display = 'none';
+    if(el){ el.style.display = 'none'; }
   });
   SUB_SCREENS.forEach(function(s){
     var el = document.getElementById(s);
-    if(el){ el.classList.add('hidden'); el.style.display='none'; }
+    if(el){ el.style.display = 'none'; }
   });
   var target = document.getElementById(id);
-  target.classList.remove('hidden');
-  target.style.display = 'block';
-  // show first sub-screen for s6/s7
-  if(id==='s6'){ var a=document.getElementById('s6a'); if(a){a.classList.remove('hidden');a.style.display='block';} }
-  if(id==='s7'){ var a=document.getElementById('s7a'); if(a){a.classList.remove('hidden');a.style.display='block';} }
+  if(target){ target.style.display = 'block'; }
+  if(id==='s6'){ var a=document.getElementById('s6a'); if(a){ a.style.display='block'; } }
+  if(id==='s7'){ var a=document.getElementById('s7a'); if(a){ a.style.display='block'; } }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
