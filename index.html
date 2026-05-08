@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -302,365 +301,364 @@ var itD=[],itN=[],itM=[],fotoD=null,unidD="Unidade";
 var TL=["t0","t1","t2","tD","t7","t7b","t7c","t8","t8b","t8c","tOk"];
 
 function ir(id){
-for(var i=0;i<TL.length;i++){var e=document.getElementById(TL[i]);if(e)e.style.display=“none”;}
-var el=document.getElementById(id);
-if(el)el.style.display=“block”;
-window.scrollTo({top:0,behavior:“smooth”});
+  for(var i=0;i<TL.length;i++){var e=document.getElementById(TL[i]);if(e)e.style.display="none";}
+  var el=document.getElementById(id);
+  if(el)el.style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function setLoja(l){
-S.loja=l;
-document.getElementById(“badge”).textContent=l;
-document.getElementById(“hdrB”).style.display=“flex”;
-var f=FIS.indexOf(l)>=0;
-document.getElementById(“btnNoite”).style.display=f?“flex”:“none”;
-document.getElementById(“btnManha”).style.display=f?“flex”:“none”;
-ir(“t1”);
+  S.loja=l;
+  document.getElementById("badge").textContent=l;
+  document.getElementById("hdrB").style.display="flex";
+  var f=FIS.indexOf(l)>=0;
+  document.getElementById("btnNoite").style.display=f?"flex":"none";
+  document.getElementById("btnManha").style.display=f?"flex":"none";
+  ir("t1");
 }
 
 function setModo(m){
-if(m===“noite”){buildCG(“colabNG”,“colabNTxt”,false);ir(“t7”);return;}
-if(m===“manha”){buildCG(“colabMG”,“colabMTxt”,false);ir(“t8”);return;}
-buildCG(“colabGrid”,“colabTxt”,true);
-ir(“t2”);
+  if(m==="noite"){buildCG("colabNG","colabNTxt",false);ir("t7");return;}
+  if(m==="manha"){buildCG("colabMG","colabMTxt",false);ir("t8");return;}
+  buildCG("colabGrid","colabTxt",true);
+  ir("t2");
 }
 
 function buildCG(gid,tid,isMain){
-var g=document.getElementById(gid);
-g.innerHTML=””;
-var cs=CL[S.loja];
-if(!cs){
-g.style.display=“none”;
-if(tid)document.getElementById(tid).style.display=“block”;
-return;
-}
-g.style.display=“grid”;
-for(var i=0;i<cs.length;i++){
-(function(name,main){
-var b=document.createElement(“button”);
-b.className=“cb”;
-b.textContent=name;
-b.onclick=function(){
-var btns=g.querySelectorAll(”.cb”);
-for(var j=0;j<btns.length;j++)btns[j].classList.remove(“sel”);
-b.classList.add(“sel”);
-S.colab=name;
-if(main){setTimeout(function(){initD();ir(“tD”);},100);}
-};
-g.appendChild(b);
-})(cs[i],isMain);
-}
+  var g=document.getElementById(gid);
+  g.innerHTML="";
+  var cs=CL[S.loja];
+  if(!cs){
+    g.style.display="none";
+    if(tid)document.getElementById(tid).style.display="block";
+    return;
+  }
+  g.style.display="grid";
+  for(var i=0;i<cs.length;i++){
+    (function(name,main){
+      var b=document.createElement("button");
+      b.className="cb";
+      b.textContent=name;
+      b.onclick=function(){
+        var btns=g.querySelectorAll(".cb");
+        for(var j=0;j<btns.length;j++)btns[j].classList.remove("sel");
+        b.classList.add("sel");
+        S.colab=name;
+        if(main){setTimeout(function(){initD();ir("tD");},100);}
+      };
+      g.appendChild(b);
+    })(cs[i],isMain);
+  }
 }
 
 function confirmarColab(){
-var v=document.getElementById(“colabInp”).value.trim();
-if(!v){alert(“Digite seu nome”);return;}
-S.colab=v;initD();ir(“tD”);
+  var v=document.getElementById("colabInp").value.trim();
+  if(!v){alert("Digite seu nome");return;}
+  S.colab=v;initD();ir("tD");
 }
 
 function initD(){
-itD=[];renderListD();
-document.getElementById(“formD”).style.display=“none”;
-document.getElementById(“btnEnvD”).style.display=“none”;
-var cz=S.loja===“Cozinha”;
-var g=document.getElementById(“catDGrid”);
-g.innerHTML=””;
-g.style.display=cz?“none”:“grid”;
-document.getElementById(“catDCoz”).style.display=cz?“block”:“none”;
-if(!cz){
-for(var i=0;i<CATS.length;i++){
-(function(cat){
-var b=document.createElement(“button”);
-b.className=“bc”;
-b.textContent=cat.lb;
-b.onclick=function(){setCatD(cat.id,cat.lb);};
-g.appendChild(b);
-})(CATS[i]);
-}
-}
+  itD=[];renderListD();
+  document.getElementById("formD").style.display="none";
+  document.getElementById("btnEnvD").style.display="none";
+  var cz=S.loja==="Cozinha";
+  var g=document.getElementById("catDGrid");
+  g.innerHTML="";
+  g.style.display=cz?"none":"grid";
+  document.getElementById("catDCoz").style.display=cz?"block":"none";
+  if(!cz){
+    for(var i=0;i<CATS.length;i++){
+      (function(cat){
+        var b=document.createElement("button");
+        b.className="bc";
+        b.textContent=cat.lb;
+        b.onclick=function(){setCatD(cat.id,cat.lb);};
+        g.appendChild(b);
+      })(CATS[i]);
+    }
+  }
 }
 
 function abrirFD(){
-document.getElementById(“formD”).style.display=“block”;
-document.getElementById(“prodDSel”).style.display=“none”;
-document.getElementById(“prodDTxt”).style.display=“none”;
-document.getElementById(“qtdDF”).style.display=“none”;
-document.getElementById(“motDF”).style.display=“none”;
-document.getElementById(“fotoDF”).style.display=“none”;
-document.getElementById(“btnAddD”).style.display=“none”;
-document.getElementById(“qtdD”).value=””;
-document.getElementById(“fotoDPrv”).style.display=“none”;
-document.getElementById(“fotoDPh”).style.display=“block”;
-var ps=document.querySelectorAll(”#motD .pill”);
-for(var i=0;i<ps.length;i++)ps[i].classList.remove(“sel”);
-fotoD=null;unidD=“Unidade”;
-var us=document.querySelectorAll(”#unidD .pill”);
-for(var i=0;i<us.length;i++){us[i].classList.remove(“sel”);if(us[i].textContent===“Unidade”)us[i].classList.add(“sel”);}
-var cz=S.loja===“Cozinha”;
-document.getElementById(“catDGrid”).style.display=cz?“none”:“grid”;
-document.getElementById(“catDCoz”).style.display=cz?“block”:“none”;
-var bs=document.querySelectorAll(”#catDGrid .bc”);
-for(var i=0;i<bs.length;i++)bs[i].classList.remove(“sel”);
+  document.getElementById("formD").style.display="block";
+  document.getElementById("prodDSel").style.display="none";
+  document.getElementById("prodDTxt").style.display="none";
+  document.getElementById("qtdDF").style.display="none";
+  document.getElementById("motDF").style.display="none";
+  document.getElementById("fotoDF").style.display="none";
+  document.getElementById("btnAddD").style.display="none";
+  document.getElementById("qtdD").value="";
+  document.getElementById("fotoDPrv").style.display="none";
+  document.getElementById("fotoDPh").style.display="block";
+  var ps=document.querySelectorAll("#motD .pill");
+  for(var i=0;i<ps.length;i++)ps[i].classList.remove("sel");
+  fotoD=null;unidD="Unidade";
+  var us=document.querySelectorAll("#unidD .pill");
+  for(var i=0;i<us.length;i++){us[i].classList.remove("sel");if(us[i].textContent==="Unidade")us[i].classList.add("sel");}
+  var cz=S.loja==="Cozinha";
+  document.getElementById("catDGrid").style.display=cz?"none":"grid";
+  document.getElementById("catDCoz").style.display=cz?"block":"none";
+  var bs=document.querySelectorAll("#catDGrid .bc");
+  for(var i=0;i<bs.length;i++)bs[i].classList.remove("sel");
 }
 
-function fecharFD(){document.getElementById(“formD”).style.display=“none”;}
+function fecharFD(){document.getElementById("formD").style.display="none";}
 
 function setCatD(id,lb){
-var isCz=(id===“insumo”||id===“acabado”);
-document.getElementById(“prodDSel”).style.display=isCz?“none”:“block”;
-document.getElementById(“prodDTxt”).style.display=isCz?“block”:“none”;
-if(isCz){
-unidD=id===“insumo”?“Kg”:“Unidade”;
-var us=document.querySelectorAll(”#unidD .pill”);
-for(var i=0;i<us.length;i++){us[i].classList.remove(“sel”);if(us[i].textContent===unidD)us[i].classList.add(“sel”);}
-} else {
-var sel=document.getElementById(“selProdD”);
-sel.innerHTML=”<option value=''>Selecione…</option>”;
-sel.dataset.cat=id;sel.dataset.lb=lb;
-var prods=PR[id]||[];
-for(var i=0;i<prods.length;i++){var o=document.createElement(“option”);o.value=prods[i];o.textContent=prods[i];sel.appendChild(o);}
-}
-document.getElementById(“qtdDF”).style.display=“block”;
-document.getElementById(“motDF”).style.display=“block”;
-if(FIS.indexOf(S.loja)>=0)document.getElementById(“fotoDF”).style.display=“block”;
-document.getElementById(“btnAddD”).style.display=“block”;
+  var isCz=(id==="insumo"||id==="acabado");
+  document.getElementById("prodDSel").style.display=isCz?"none":"block";
+  document.getElementById("prodDTxt").style.display=isCz?"block":"none";
+  if(isCz){
+    unidD=id==="insumo"?"Kg":"Unidade";
+    var us=document.querySelectorAll("#unidD .pill");
+    for(var i=0;i<us.length;i++){us[i].classList.remove("sel");if(us[i].textContent===unidD)us[i].classList.add("sel");}
+  } else {
+    var sel=document.getElementById("selProdD");
+    sel.innerHTML="<option value=''>Selecione...</option>";
+    sel.dataset.cat=id;sel.dataset.lb=lb;
+    var prods=PR[id]||[];
+    for(var i=0;i<prods.length;i++){var o=document.createElement("option");o.value=prods[i];o.textContent=prods[i];sel.appendChild(o);}
+  }
+  document.getElementById("qtdDF").style.display="block";
+  document.getElementById("motDF").style.display="block";
+  if(FIS.indexOf(S.loja)>=0)document.getElementById("fotoDF").style.display="block";
+  document.getElementById("btnAddD").style.display="block";
 }
 
 function selUnid(el,val){
-var us=document.querySelectorAll(”#unidD .pill”);
-for(var i=0;i<us.length;i++)us[i].classList.remove(“sel”);
-el.classList.add(“sel”);unidD=val;
+  var us=document.querySelectorAll("#unidD .pill");
+  for(var i=0;i<us.length;i++)us[i].classList.remove("sel");
+  el.classList.add("sel");unidD=val;
 }
 
 function prevFD(inp){
-if(!inp.files[0])return;
-var r=new FileReader();
-r.onload=function(e){
-document.getElementById(“fotoDPrv”).src=e.target.result;
-document.getElementById(“fotoDPrv”).style.display=“block”;
-document.getElementById(“fotoDPh”).style.display=“none”;
-fotoD=e.target.result;
-};
-r.readAsDataURL(inp.files[0]);
+  if(!inp.files[0])return;
+  var r=new FileReader();
+  r.onload=function(e){
+    document.getElementById("fotoDPrv").src=e.target.result;
+    document.getElementById("fotoDPrv").style.display="block";
+    document.getElementById("fotoDPh").style.display="none";
+    fotoD=e.target.result;
+  };
+  r.readAsDataURL(inp.files[0]);
 }
 
 function addD(){
-var isCz=(document.getElementById(“prodDTxt”).style.display!==“none”);
-var prod=””,cat=””,unid=unidD;
-if(isCz){
-prod=document.getElementById(“txtProdD”).value.trim();
-cat=“Cozinha”;
-if(!prod){alert(“Digite o nome do produto”);return;}
-} else {
-prod=document.getElementById(“selProdD”).value;
-cat=document.getElementById(“selProdD”).dataset.lb||””;
-if(!prod){alert(“Selecione o produto”);return;}
-unid=“Unidade”;
-}
-var qtd=document.getElementById(“qtdD”).value;
-var motEl=document.querySelector(”#motD .pill.sel”);
-if(!qtd||parseInt(qtd)<=0){alert(“Informe a quantidade”);return;}
-if(!motEl){alert(“Selecione o motivo”);return;}
-if(FIS.indexOf(S.loja)>=0&&!fotoD){alert(“Foto obrigatoria”);return;}
-itD.push({produto:prod,categoria:cat,quantidade:qtd,unidade:unid,motivo:motEl.textContent});
-renderListD();
-document.getElementById(“formD”).style.display=“none”;
-document.getElementById(“btnEnvD”).style.display=“block”;
+  var isCz=(document.getElementById("prodDTxt").style.display!=="none");
+  var prod="",cat="",unid=unidD;
+  if(isCz){
+    prod=document.getElementById("txtProdD").value.trim();
+    cat="Cozinha";
+    if(!prod){alert("Digite o nome do produto");return;}
+  } else {
+    prod=document.getElementById("selProdD").value;
+    cat=document.getElementById("selProdD").dataset.lb||"";
+    if(!prod){alert("Selecione o produto");return;}
+    unid="Unidade";
+  }
+  var qtd=document.getElementById("qtdD").value;
+  var motEl=document.querySelector("#motD .pill.sel");
+  if(!qtd||parseInt(qtd)<=0){alert("Informe a quantidade");return;}
+  if(!motEl){alert("Selecione o motivo");return;}
+  if(FIS.indexOf(S.loja)>=0&&!fotoD){alert("Foto obrigatoria");return;}
+  itD.push({produto:prod,categoria:cat,quantidade:qtd,unidade:unid,motivo:motEl.textContent});
+  renderListD();
+  document.getElementById("formD").style.display="none";
+  document.getElementById("btnEnvD").style.display="block";
 }
 
 function renderListD(){
-var c=document.getElementById(“listD”);
-if(itD.length===0){c.innerHTML=”<div style='color:#9A8F8A;font-size:13px;text-align:center;padding:12px;margin-bottom:8px'>Nenhum item ainda</div>”;return;}
-var h=””;
-for(var i=0;i<itD.length;i++){
-h+=”<div class='ic'><div><div class='in2'>”+itD[i].produto+”</div><div class='id2'>”+itD[i].quantidade+” “+itD[i].unidade+” - “+itD[i].motivo+”</div></div><button class='ir' onclick='rmD("+i+")'>X</button></div>”;
-}
-c.innerHTML=h;
+  var c=document.getElementById("listD");
+  if(itD.length===0){c.innerHTML="<div style='color:#9A8F8A;font-size:13px;text-align:center;padding:12px;margin-bottom:8px'>Nenhum item ainda</div>";return;}
+  var h="";
+  for(var i=0;i<itD.length;i++){
+    h+="<div class='ic'><div><div class='in2'>"+itD[i].produto+"</div><div class='id2'>"+itD[i].quantidade+" "+itD[i].unidade+" - "+itD[i].motivo+"</div></div><button class='ir' onclick='rmD("+i+")'>X</button></div>";
+  }
+  c.innerHTML=h;
 }
 
-function rmD(i){itD.splice(i,1);renderListD();if(itD.length===0)document.getElementById(“btnEnvD”).style.display=“none”;}
+function rmD(i){itD.splice(i,1);renderListD();if(itD.length===0)document.getElementById("btnEnvD").style.display="none";}
 
 function enviarD(){
-if(itD.length===0){alert(“Adicione pelo menos 1 item”);return;}
-var btn=document.getElementById(“btnEnvD”);
-btn.textContent=“Enviando…”;btn.disabled=true;
-for(var i=0;i<itD.length;i++){
-post({tipo:“descarte”,loja:S.loja,colab:S.colab,categoria:itD[i].categoria,produto:itD[i].produto,quantidade:itD[i].quantidade,unidade:itD[i].unidade,motivo:itD[i].motivo,obs:””,dataHora:new Date().toISOString()});
-}
-setTimeout(function(){
-btn.textContent=“Enviar tudo”;btn.disabled=false;
-document.getElementById(“okT”).textContent=“Descarte registrado!”;
-document.getElementById(“okS”).textContent=itD.length+” item(s) enviado(s).”;
-document.getElementById(“okD”).innerHTML=”<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>”+itD.length+”</strong> itens</div>”;
-ir(“tOk”);
-},1000);
+  if(itD.length===0){alert("Adicione pelo menos 1 item");return;}
+  var btn=document.getElementById("btnEnvD");
+  btn.textContent="Enviando...";btn.disabled=true;
+  for(var i=0;i<itD.length;i++){
+    post({tipo:"descarte",loja:S.loja,colab:S.colab,categoria:itD[i].categoria,produto:itD[i].produto,quantidade:itD[i].quantidade,unidade:itD[i].unidade,motivo:itD[i].motivo,obs:"",dataHora:new Date().toISOString()});
+  }
+  setTimeout(function(){
+    btn.textContent="Enviar tudo";btn.disabled=false;
+    document.getElementById("okT").textContent="Descarte registrado!";
+    document.getElementById("okS").textContent=itD.length+" item(s) enviado(s).";
+    document.getElementById("okD").innerHTML="<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>"+itD.length+"</strong> itens</div>";
+    ir("tOk");
+  },1000);
 }
 
 function selPill(el,gid,val){
-var ps=document.querySelectorAll(”#”+gid+” .pill”);
-for(var i=0;i<ps.length;i++)ps[i].classList.remove(“sel”);
-el.classList.add(“sel”);
+  var ps=document.querySelectorAll("#"+gid+" .pill");
+  for(var i=0;i<ps.length;i++)ps[i].classList.remove("sel");
+  el.classList.add("sel");
 }
 
 function prevF(inp,pi,phi,t){
-if(!inp.files[0])return;
-var r=new FileReader();
-r.onload=function(e){
-document.getElementById(pi).src=e.target.result;
-document.getElementById(pi).style.display=“block”;
-document.getElementById(phi).style.display=“none”;
-if(t===“N”)S.fN=e.target.result;
-if(t===“M”)S.fM=e.target.result;
-};
-r.readAsDataURL(inp.files[0]);
+  if(!inp.files[0])return;
+  var r=new FileReader();
+  r.onload=function(e){
+    document.getElementById(pi).src=e.target.result;
+    document.getElementById(pi).style.display="block";
+    document.getElementById(phi).style.display="none";
+    if(t==="N")S.fN=e.target.result;
+    if(t==="M")S.fM=e.target.result;
+  };
+  r.readAsDataURL(inp.files[0]);
 }
 
 function post(data){
-var f=document.createElement(“form”);
-f.method=“POST”;f.action=SU;f.target=“hif”;
-var keys=Object.keys(data);
-for(var i=0;i<keys.length;i++){
-var inp=document.createElement(“input”);
-inp.type=“hidden”;inp.name=keys[i];inp.value=data[keys[i]]||””;
-f.appendChild(inp);
-}
-document.body.appendChild(f);f.submit();
-setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},2000);
+  var f=document.createElement("form");
+  f.method="POST";f.action=SU;f.target="hif";
+  var keys=Object.keys(data);
+  for(var i=0;i<keys.length;i++){
+    var inp=document.createElement("input");
+    inp.type="hidden";inp.name=keys[i];inp.value=data[keys[i]]||"";
+    f.appendChild(inp);
+  }
+  document.body.appendChild(f);f.submit();
+  setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},2000);
 }
 
 function buildCatTurno(gid,turno){
-var g=document.getElementById(gid);
-g.innerHTML=””;
-for(var i=0;i<CATS.length;i++){
-(function(cat,trn){
-var b=document.createElement(“button”);
-b.className=“bc”;b.textContent=cat.lb;
-b.onclick=function(){
-var bs=g.querySelectorAll(”.bc”);
-for(var j=0;j<bs.length;j++)bs[j].classList.remove(“sel”);
-b.classList.add(“sel”);
-var pf=trn===“noite”?“prodNF”:“prodMF”;
-var ps=trn===“noite”?“selProdN”:“selProdM”;
-document.getElementById(pf).style.display=“block”;
-var sel=document.getElementById(ps);
-sel.innerHTML=”<option value=''>Selecione…</option>”;
-sel.dataset.lb=cat.lb;
-var prods=PR[cat.id]||[];
-for(var k=0;k<prods.length;k++){var o=document.createElement(“option”);o.value=prods[k];o.textContent=prods[k];sel.appendChild(o);}
-};
-g.appendChild(b);
-})(CATS[i],turno);
-}
+  var g=document.getElementById(gid);
+  g.innerHTML="";
+  for(var i=0;i<CATS.length;i++){
+    (function(cat,trn){
+      var b=document.createElement("button");
+      b.className="bc";b.textContent=cat.lb;
+      b.onclick=function(){
+        var bs=g.querySelectorAll(".bc");
+        for(var j=0;j<bs.length;j++)bs[j].classList.remove("sel");
+        b.classList.add("sel");
+        var pf=trn==="noite"?"prodNF":"prodMF";
+        var ps=trn==="noite"?"selProdN":"selProdM";
+        document.getElementById(pf).style.display="block";
+        var sel=document.getElementById(ps);
+        sel.innerHTML="<option value=''>Selecione...</option>";
+        sel.dataset.lb=cat.lb;
+        var prods=PR[cat.id]||[];
+        for(var k=0;k<prods.length;k++){var o=document.createElement("option");o.value=prods[k];o.textContent=prods[k];sel.appendChild(o);}
+      };
+      g.appendChild(b);
+    })(CATS[i],turno);
+  }
 }
 
 function getColab(gid,tid){
-var s=document.querySelector(”#”+gid+” .cb.sel”);
-if(s)return s.textContent;
-if(tid){var t=document.getElementById(tid);if(t&&t.value.trim())return t.value.trim();}
-return null;
+  var s=document.querySelector("#"+gid+" .cb.sel");
+  if(s)return s.textContent;
+  if(tid){var t=document.getElementById(tid);if(t&&t.value.trim())return t.value.trim();}
+  return null;
 }
 
 function goNI(){
-var c=getColab(“colabNG”,“colabNInp”);
-if(!c){alert(“Selecione ou digite o responsavel”);return;}
-S.colab=c;itN=[];renderList(“listN”,itN,“noite”);buildCatTurno(“catNG”,“noite”);ir(“t7b”);
+  var c=getColab("colabNG","colabNInp");
+  if(!c){alert("Selecione ou digite o responsavel");return;}
+  S.colab=c;itN=[];renderList("listN",itN,"noite");buildCatTurno("catNG","noite");ir("t7b");
 }
 
 function abrirFN(){
-document.getElementById(“formN”).style.display=“block”;
-document.getElementById(“qtdN”).value=””;
-var ps=document.querySelectorAll(”#motN .pill”);
-for(var i=0;i<ps.length;i++)ps[i].classList.remove(“sel”);
+  document.getElementById("formN").style.display="block";
+  document.getElementById("qtdN").value="";
+  var ps=document.querySelectorAll("#motN .pill");
+  for(var i=0;i<ps.length;i++)ps[i].classList.remove("sel");
 }
 
 function addN(){
-var p=document.getElementById(“selProdN”).value;
-var q=document.getElementById(“qtdN”).value;
-var m=document.querySelector(”#motN .pill.sel”);
-var c=document.getElementById(“selProdN”).dataset.lb||””;
-if(!p){alert(“Selecione o produto”);return;}
-if(!q){alert(“Informe a quantidade”);return;}
-if(!m){alert(“Selecione o motivo”);return;}
-itN.push({produto:p,quantidade:q,unidade:“Unidade”,motivo:m.textContent,categoria:c});
-renderList(“listN”,itN,“noite”);
-document.getElementById(“formN”).style.display=“none”;
+  var p=document.getElementById("selProdN").value;
+  var q=document.getElementById("qtdN").value;
+  var m=document.querySelector("#motN .pill.sel");
+  var c=document.getElementById("selProdN").dataset.lb||"";
+  if(!p){alert("Selecione o produto");return;}
+  if(!q){alert("Informe a quantidade");return;}
+  if(!m){alert("Selecione o motivo");return;}
+  itN.push({produto:p,quantidade:q,unidade:"Unidade",motivo:m.textContent,categoria:c});
+  renderList("listN",itN,"noite");
+  document.getElementById("formN").style.display="none";
 }
 
-function goNF(){if(itN.length===0){alert(“Adicione pelo menos 1 item”);return;}ir(“t7c”);}
+function goNF(){if(itN.length===0){alert("Adicione pelo menos 1 item");return;}ir("t7c");}
 
 function submitN(){
-if(!S.fN){alert(“Foto obrigatoria”);return;}
-var obs=document.getElementById(“obsN”).value;
-for(var i=0;i<itN.length;i++){
-var d=itN[i];
-post({tipo:“fechamento_noite”,loja:S.loja,colab:S.colab,categoria:d.categoria,produto:d.produto,quantidade:d.quantidade,unidade:d.unidade,motivo:d.motivo,obs:obs,dataHora:new Date().toISOString()});
-}
-setTimeout(function(){
-document.getElementById(“okT”).textContent=“Fechamento registrado!”;
-document.getElementById(“okS”).textContent=itN.length+” item(s).”;
-document.getElementById(“okD”).innerHTML=”<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>”+itN.length+”</strong> itens</div>”;
-ir(“tOk”);
-},800);
+  if(!S.fN){alert("Foto obrigatoria");return;}
+  var obs=document.getElementById("obsN").value;
+  for(var i=0;i<itN.length;i++){
+    var d=itN[i];
+    post({tipo:"fechamento_noite",loja:S.loja,colab:S.colab,categoria:d.categoria,produto:d.produto,quantidade:d.quantidade,unidade:d.unidade,motivo:d.motivo,obs:obs,dataHora:new Date().toISOString()});
+  }
+  setTimeout(function(){
+    document.getElementById("okT").textContent="Fechamento registrado!";
+    document.getElementById("okS").textContent=itN.length+" item(s).";
+    document.getElementById("okD").innerHTML="<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>"+itN.length+"</strong> itens</div>";
+    ir("tOk");
+  },800);
 }
 
 function goMI(){
-var c=getColab(“colabMG”,“colabMInp”);
-if(!c){alert(“Selecione ou digite o responsavel”);return;}
-S.colab=c;itM=[];renderList(“listM”,itM,“manha”);buildCatTurno(“catMG”,“manha”);ir(“t8b”);
+  var c=getColab("colabMG","colabMInp");
+  if(!c){alert("Selecione ou digite o responsavel");return;}
+  S.colab=c;itM=[];renderList("listM",itM,"manha");buildCatTurno("catMG","manha");ir("t8b");
 }
 
-function abrirFM(){document.getElementById(“formM”).style.display=“block”;document.getElementById(“qtdM”).value=””;}
+function abrirFM(){document.getElementById("formM").style.display="block";document.getElementById("qtdM").value="";}
 
 function addM(){
-var p=document.getElementById(“selProdM”).value;
-var q=document.getElementById(“qtdM”).value;
-var c=document.getElementById(“selProdM”).dataset.lb||””;
-if(!p){alert(“Selecione o produto”);return;}
-if(!q){alert(“Informe a quantidade”);return;}
-itM.push({produto:p,quantidade:q,unidade:“Unidade”,motivo:“Encontrado na conferencia”,categoria:c});
-renderList(“listM”,itM,“manha”);
-document.getElementById(“formM”).style.display=“none”;
+  var p=document.getElementById("selProdM").value;
+  var q=document.getElementById("qtdM").value;
+  var c=document.getElementById("selProdM").dataset.lb||"";
+  if(!p){alert("Selecione o produto");return;}
+  if(!q){alert("Informe a quantidade");return;}
+  itM.push({produto:p,quantidade:q,unidade:"Unidade",motivo:"Encontrado na conferencia",categoria:c});
+  renderList("listM",itM,"manha");
+  document.getElementById("formM").style.display="none";
 }
 
-function goMF(){if(itM.length===0){alert(“Adicione pelo menos 1 item”);return;}ir(“t8c”);}
+function goMF(){if(itM.length===0){alert("Adicione pelo menos 1 item");return;}ir("t8c");}
 
 function submitM(){
-if(!S.fM){alert(“Foto obrigatoria”);return;}
-var obs=document.getElementById(“obsM”).value;
-for(var i=0;i<itM.length;i++){
-var d=itM[i];
-post({tipo:“conferencia_manha”,loja:S.loja,colab:S.colab,categoria:d.categoria,produto:d.produto,quantidade:d.quantidade,unidade:d.unidade,motivo:d.motivo,obs:obs,dataHora:new Date().toISOString()});
-}
-setTimeout(function(){
-document.getElementById(“okT”).textContent=“Conferencia registrada!”;
-document.getElementById(“okS”).textContent=itM.length+” item(s).”;
-document.getElementById(“okD”).innerHTML=”<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>”+itM.length+”</strong> itens</div>”;
-ir(“tOk”);
-},800);
+  if(!S.fM){alert("Foto obrigatoria");return;}
+  var obs=document.getElementById("obsM").value;
+  for(var i=0;i<itM.length;i++){
+    var d=itM[i];
+    post({tipo:"conferencia_manha",loja:S.loja,colab:S.colab,categoria:d.categoria,produto:d.produto,quantidade:d.quantidade,unidade:d.unidade,motivo:d.motivo,obs:obs,dataHora:new Date().toISOString()});
+  }
+  setTimeout(function(){
+    document.getElementById("okT").textContent="Conferencia registrada!";
+    document.getElementById("okS").textContent=itM.length+" item(s).";
+    document.getElementById("okD").innerHTML="<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>"+itM.length+"</strong> itens</div>";
+    ir("tOk");
+  },800);
 }
 
 function renderList(cid,lista,turno){
-var c=document.getElementById(cid);
-if(lista.length===0){c.innerHTML=”<div style='color:#9A8F8A;font-size:13px;text-align:center;padding:12px'>Nenhum item ainda</div>”;return;}
-var h=””;
-for(var i=0;i<lista.length;i++){
-h+=”<div class='ic'><div><div class='in2'>”+lista[i].produto+”</div><div class='id2'>”+lista[i].quantidade+” un - “+(lista[i].motivo||””)+”</div></div><button class='ir' data-turno='"+turno+"' data-i='"+i+"' onclick='rmItem(this)'>X</button></div>”;
-}
-c.innerHTML=h;
+  var c=document.getElementById(cid);
+  if(lista.length===0){c.innerHTML="<div style='color:#9A8F8A;font-size:13px;text-align:center;padding:12px'>Nenhum item ainda</div>";return;}
+  var h="";
+  for(var i=0;i<lista.length;i++){
+    h+="<div class='ic'><div><div class='in2'>"+lista[i].produto+"</div><div class='id2'>"+lista[i].quantidade+" un - "+(lista[i].motivo||"")+"</div></div><button class='ir' data-turno='"+turno+"' data-i='"+i+"' onclick='rmItem(this)'>X</button></div>";
+  }
+  c.innerHTML=h;
 }
 
 function rmItem(btn){
-var t=btn.getAttribute(“data-turno”);
-var i=parseInt(btn.getAttribute(“data-i”));
-if(t===“noite”){itN.splice(i,1);renderList(“listN”,itN,“noite”);}
-else{itM.splice(i,1);renderList(“listM”,itM,“manha”);}
+  var t=btn.getAttribute("data-turno");
+  var i=parseInt(btn.getAttribute("data-i"));
+  if(t==="noite"){itN.splice(i,1);renderList("listN",itN,"noite");}
+  else{itM.splice(i,1);renderList("listM",itM,"manha");}
 }
 
-function novoD(){itD=[];ir(“t1”);}
-function trocarLoja(){S={loja:””,colab:””,fN:null,fM:null};document.getElementById(“hdrB”).style.display=“none”;ir(“t0”);}
+function novoD(){itD=[];ir("t1");}
+function trocarLoja(){S={loja:"",colab:"",fN:null,fM:null};document.getElementById("hdrB").style.display="none";ir("t0");}
 
-ir(“t0”);
+ir("t0");
 </script>
-
 </body>
 </html>
