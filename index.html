@@ -401,7 +401,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div><!-- /container -->
 
 <script>
-var SURL="https://script.google.com/macros/s/AKfycbwzirimtIYwQsvqbzkOTJ4y58XULsHEi3asqZDgebSPBE7QbQNZorKNbKWoNHcLI4mJ/exec";
+var SURL="https://script.google.com/macros/s/AKfycbywizZJsDqJSj-g7Bhd2AkwzxkHVbtgYWsSOFqpZKsRkuEDhT5h-fXtC6g-CESO7IU/exec";
 var COLAB={'Lapa':['Sheila','Emily'],'Moema':['Pedro','Andreia','Ana Beatriz'],'Saúde':['Thifany','Jéssica','Mariah','Kauan'],'Cozinha':null,'Delivery Mooca':null,'Delivery Centro':null};
 var CNPJ={'Saúde':'20.331.832/0001-06','Cozinha':'20.331.832/0001-06','Lapa':'20.331.832/0002-89','Moema':'20.331.832/0003-60','Delivery Mooca':'20.331.832/0001-06','Delivery Centro':'20.331.832/0001-06'};
 var FISICAS=['Lapa','Moema','Saúde'];
@@ -854,7 +854,9 @@ function enviar(btnId,rows,titulo,subtitulo){
   if(enviando)return;
   enviando=true;
   setBtnEnviando(btnId);
-  fetch(SURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({rows:rows})})
+  // Apps Script com no-cors nao le JSON -- envia como form URL encoded
+  var payload='data='+encodeURIComponent(JSON.stringify({rows:rows}));
+  fetch(SURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:payload})
   .catch(function(){})
   .finally(function(){
     setTimeout(function(){
