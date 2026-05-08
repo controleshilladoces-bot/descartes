@@ -343,9 +343,6 @@ function renderTurno(cid,lista,turno){var c=document.getElementById(cid);if(list
 function novoD(){itD=[];ir(“t1”);}
 function trocarLoja(){S={loja:””,colab:””,fotoN:null,fotoM:null};document.getElementById(“hdrB”).style.display=“none”;function rmTBtn(btn){var cid=btn.getAttribute(“data-cid”);var i=parseInt(btn.getAttribute(“data-i”));var t=btn.getAttribute(“data-t”);if(t===“noite”){itN.splice(i,1);renderTurno(cid,itN,t);}else{itM.splice(i,1);renderTurno(cid,itM,t);}}
 function rmDBtn(btn){var i=parseInt(btn.getAttribute(“data-i”));rmD(i);}
-ir(“t0”);}
-function rmTBtn(btn){var cid=btn.getAttribute(“data-cid”);var i=parseInt(btn.getAttribute(“data-i”));var t=btn.getAttribute(“data-t”);if(t===“noite”){itN.splice(i,1);renderTurno(cid,itN,t);}else{itM.splice(i,1);renderTurno(cid,itM,t);}}
-function rmDBtn(btn){var i=parseInt(btn.getAttribute(“data-i”));rmD(i);}
 ir(“t0”);
 </script>
 
