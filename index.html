@@ -72,10 +72,7 @@ textarea { resize:none; height:70px; font-size:13px; }
 <div class="header">
   <div class="logo">HILLA DOCES</div>
   <div class="logo-sub">Controle de Descartes</div>
-  <div id="badge" class="loja-tag" style="display:none"></div>
-</div>
-<div class="container">
-  <div id="t0" class="screen">
+ <div id="t0" class="screen">
     <div class="card">
       <div class="lbl">Olá!</div>
       <div class="ttl">Qual é a sua unidade?</div>
@@ -330,7 +327,7 @@ textarea { resize:none; height:70px; font-size:13px; }
 
 </div>
 <iframe name="hidden_iframe" style="display:none"></iframe>
-<script>
+  <script>
 var URL="https://script.google.com/macros/s/AKfycbwzirimtIYwQsvqbzkOTJ4y58XULsHEi3asqZDgebSPBE7QbQNZorKNbKWoNHcLI4mJ/exec";
 var COLAB={'Lapa':['Sheila','Emily'],'Moema':['Pedro','Andreia','Ana Beatriz'],'Saúde':['Thifany','Jéssica','Mariah','Kauan'],'Cozinha':null,'Delivery Mooca':null,'Delivery Centro':null};
 var FISICAS=['Lapa','Moema','Saúde'];
@@ -343,8 +340,7 @@ brigadeiro:['Coxinha Tradicional','Coxinha Branca no Belga','Brigadeiro de Uva']
 fatias:['Caseirinho Cenoura','Caseirinho Ninho Nutella','Fatia Casadinho','Fatia Ninho'],
 especiais:['Cone Ninho','Cone Casadinho','Bolo Gelado Coco','Bolo Gelado Ninho Nutella'],
 naked:['Naked Casadinho','Naked Coco','Naked Pistache Geleia','Naked Pistache Brigadeiro Branco','Naked Frutas Vermelhas'],
-petit:['Petit Casadinho','Petit Coco','Petit Pistache Geleia','Petit Pistache Brigadeiro Branco','Petit Frutas Vermelhas'],
-acabado:['Caseirinho Cenoura','Caseirinho Ninho Nutella','Fatia Casadinho','Fatia Ninho','Bolo Cenoura','Naked Casadinho','Naked Coco','Naked Pistache Geleia','Naked Pistache Brigadeiro Branco','Petit Casadinho','Petit Coco','Petit Pistache Geleia','Coxinha Tradicional','Coxinha Branca no Belga','Cone Ninho','Cone Casadinho','Bolo Gelado Coco','Bolo Gelado Ninho Nutella']
+petit:['Petit Casadinho','Petit Coco','Petit Pistache Geleia','Petit Pistache Brigadeiro Branco','Petit Frutas Vermelhas']
 };
 var S={loja:'',colab:'',cat:'',catId:'',prod:'',qtd:'',unid:'Unidade',motivo:'',obs:'',foto:null,fotoN:null,fotoM:null};
 var itN=[],itM=[];
@@ -383,12 +379,13 @@ function setCat(id,lb){S.catId=id;S.cat=lb;S.unid='Unidade';buildProdTela(id);ir
 
 function buildProdTela(id){
   var pg=document.getElementById('prodGrid');var inf=document.getElementById('insumoForm');pg.innerHTML='';
-  if(id==='insumo'){pg.style.display='none';inf.style.display='block';S.unid='Kg';document.getElementById('unidHint').textContent='em kg';return;}
+  if(id==='insumo'||id==='insumo_coz'){pg.style.display='none';inf.style.display='block';S.unid='Kg';document.getElementById('unidHint').textContent='em kg';return;}
+  if(id==='acabado_coz'){pg.style.display='none';inf.style.display='block';S.unid='Unidade';document.getElementById('unidHint').textContent='em unidades';return;}
   inf.style.display='none';pg.style.display='block';
   (PRODS[id]||[]).forEach(function(p){var b=document.createElement('button');b.className='btn-prod';b.textContent=p;b.onclick=function(){S.prod=p;buildDetalhes();ir('t5');};pg.appendChild(b);});
 }
 
-function confirmarInsumo(){var v=document.getElementById('insumoNome').value.trim();if(!v){alert('Digite o nome do insumo');return;}S.prod=v;buildDetalhes();ir('t5');}
+function confirmarInsumo(){var v=document.getElementById('insumoNome').value.trim();if(!v){alert('Digite o nome do produto');return;}S.prod=v;buildDetalhes();ir('t5');}
 
 function selUnid(el,val){document.querySelectorAll('#insumoForm .pill').forEach(function(p){p.classList.remove('sel');});el.classList.add('sel');S.unid=val;document.getElementById('unidHint').textContent='em '+val.toLowerCase();}
 
@@ -406,27 +403,13 @@ function submitDescarte(){var btn=document.getElementById('btnEnviar');btn.textC
 
 function buildCatTurno(gid,turno){var g=document.getElementById(gid);g.innerHTML='';CATS.forEach(function(c){var b=document.createElement('button');b.className='btn-cat';b.textContent=c.lb;b.onclick=function(){g.querySelectorAll('.btn-cat').forEach(function(x){x.classList.remove('sel');});b.classList.add('sel');var pf=turno==='noite'?'prodNoiteField':'prodManhaField';var ps=turno==='noite'?'prodNoiteSel':'prodManhaSel';document.getElementById(pf).style.display='block';var sel=document.getElementById(ps);sel.innerHTML='<option value="">Selecione...</option>';sel.dataset.cat=c.id;sel.dataset.catLb=c.lb;(PRODS[c.id]||[]).forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o);});};g.appendChild(b);});}
 
-function goNoiteItens(){
-  var s=document.querySelector('#colabNoiteGrid .colab-btn.sel');
-  var txt=document.getElementById('colabNoiteInput');
-  if(s)S.colab=s.textContent;
-  else if(txt&&txt.value.trim())S.colab=txt.value.trim();
-  else{alert('Selecione ou digite o responsável');return;}
-  itN=[];renderItens('itensNoiteList',itN,'noite');buildCatTurno('catNoiteGrid','noite');ir('t7b');
-}
+function goNoiteItens(){var s=document.querySelector('#colabNoiteGrid .colab-btn.sel');var txt=document.getElementById('colabNoiteInput');if(s)S.colab=s.textContent;else if(txt&&txt.value.trim())S.colab=txt.value.trim();else{alert('Selecione ou digite o responsável');return;}itN=[];renderItens('itensNoiteList',itN,'noite');buildCatTurno('catNoiteGrid','noite');ir('t7b');}
 function showFN(){document.getElementById('formNoite').style.display='block';document.getElementById('qtdNoite').value='';document.querySelectorAll('#motivoNoitePills .pill').forEach(function(p){p.classList.remove('sel');});}
 function addItemNoite(){var p=document.getElementById('prodNoiteSel').value;var q=document.getElementById('qtdNoite').value;var m=document.querySelector('#motivoNoitePills .pill.sel');var c=document.getElementById('prodNoiteSel').dataset.catLb||'';if(!p){alert('Selecione o produto');return;}if(!q){alert('Informe a quantidade');return;}if(!m){alert('Selecione o motivo');return;}itN.push({produto:p,quantidade:q,unidade:'Unidade',motivo:m.textContent,categoria:c});renderItens('itensNoiteList',itN,'noite');document.getElementById('formNoite').style.display='none';}
 function goNoiteFoto(){if(itN.length===0){alert('Adicione pelo menos 1 item');return;}ir('t7c');}
 function submitNoite(){if(!S.fotoN){alert('Foto obrigatória');return;}itN.forEach(function(item){enviar(Object.assign({},item,{tipo:'fechamento_noite',loja:S.loja,colab:S.colab,obs:document.getElementById('obsNoite').value,dataHora:new Date().toISOString()}));});setTimeout(function(){document.getElementById('okTitle').textContent='Fechamento registrado! 🌙';document.getElementById('okSub').textContent=itN.length+' item(s) registrado(s).';document.getElementById('okDetail').innerHTML='<div style="padding:8px 0;text-align:center;font-size:14px;color:#3D2314">Total: <strong>'+itN.length+'</strong> itens</div>';ir('tOk');},800);}
 
-function goManhaItens(){
-  var s=document.querySelector('#colabManhaGrid .colab-btn.sel');
-  var txt=document.getElementById('colabManhaInput');
-  if(s)S.colab=s.textContent;
-  else if(txt&&txt.value.trim())S.colab=txt.value.trim();
-  else{alert('Selecione ou digite o responsável');return;}
-  itM=[];renderItens('itensManhaList',itM,'manha');buildCatTurno('catManhaGrid','manha');ir('t8b');
-}
+function goManhaItens(){var s=document.querySelector('#colabManhaGrid .colab-btn.sel');var txt=document.getElementById('colabManhaInput');if(s)S.colab=s.textContent;else if(txt&&txt.value.trim())S.colab=txt.value.trim();else{alert('Selecione ou digite o responsável');return;}itM=[];renderItens('itensManhaList',itM,'manha');buildCatTurno('catManhaGrid','manha');ir('t8b');}
 function showFM(){document.getElementById('formManha').style.display='block';document.getElementById('qtdManha').value='';}
 function addItemManha(){var p=document.getElementById('prodManhaSel').value;var q=document.getElementById('qtdManha').value;var c=document.getElementById('prodManhaSel').dataset.catLb||'';if(!p){alert('Selecione o produto');return;}if(!q){alert('Informe a quantidade');return;}itM.push({produto:p,quantidade:q,unidade:'Unidade',motivo:'Encontrado na conferência',categoria:c});renderItens('itensManhaList',itM,'manha');document.getElementById('formManha').style.display='none';}
 function goManhaFoto(){if(itM.length===0){alert('Adicione pelo menos 1 item');return;}ir('t8c');}
@@ -443,3 +426,6 @@ ir('t0');
 </script>
 </body>
 </html>
+  <div id="badge" class="loja-tag" style="display:none"></div>
+</div>
+<div class="container">
