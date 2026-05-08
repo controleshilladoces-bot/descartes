@@ -489,7 +489,7 @@ function renderItensDia(){
 var c=document.getElementById(‘itensDiaList’);
 if(itensDia.length===0){c.innerHTML=’<div style="color:#9A8F8A;font-size:13px;text-align:center;padding:12px;margin-bottom:8px">Nenhum item ainda</div>’;return;}
 c.innerHTML=itensDia.map(function(item,i){
-return ‘<div class="item-card"><div><div class="item-name">’+item.produto+’</div><div class="item-detail">’+item.quantidade+’ ‘+item.unidade+’ · ‘+item.motivo+’</div></div><button class="item-remove" onclick="rmDia('+i+')">✕</button></div>’;
+return ‘<div class="item-card"><div><div class="item-name">’+item.produto+’</div><div class="item-detail">’+item.quantidade+’ ‘+item.unidade+’ - ‘+item.motivo+’</div></div><button class="item-remove" onclick="rmDia('+i+')">X</button></div>’;
 }).join(’’);
 }
 
@@ -503,8 +503,8 @@ itensDia.forEach(function(item){
 enviar({tipo:‘descarte’,loja:S.loja,colab:S.colab,categoria:item.categoria,produto:item.produto,quantidade:item.quantidade,unidade:item.unidade,motivo:item.motivo,obs:’’,dataHora:new Date().toISOString()});
 });
 setTimeout(function(){
-btn.textContent=‘✓ Enviar tudo’;btn.disabled=false;
-document.getElementById(‘okTitle’).textContent=‘Descarte registrado! ✓’;
+btn.textContent=‘Enviar tudo’;btn.disabled=false;
+document.getElementById(‘okTitle’).textContent=‘Descarte registrado!’;
 document.getElementById(‘okSub’).textContent=itensDia.length+’ item(s) enviado(s).’;
 document.getElementById(‘okDetail’).innerHTML=’<div style="padding:8px 0;text-align:center;font-size:14px;color:#3D2314">Total: <strong>’+itensDia.length+’</strong> itens descartados</div>’;
 ir(‘tOk’);
@@ -580,7 +580,7 @@ function submitNoite(){
 if(!S.fotoN){alert(‘Foto obrigatória’);return;}
 itN.forEach(function(item){enviar(Object.assign({},item,{tipo:‘fechamento_noite’,loja:S.loja,colab:S.colab,obs:document.getElementById(‘obsNoite’).value,dataHora:new Date().toISOString()}));});
 setTimeout(function(){
-document.getElementById(‘okTitle’).textContent=‘Fechamento registrado! 🌙’;
+document.getElementById(‘okTitle’).textContent=‘Fechamento registrado!’;
 document.getElementById(‘okSub’).textContent=itN.length+’ item(s) registrado(s).’;
 document.getElementById(‘okDetail’).innerHTML=’<div style="padding:8px 0;text-align:center;font-size:14px;color:#3D2314">Total: <strong>’+itN.length+’</strong> itens</div>’;
 ir(‘tOk’);
@@ -622,7 +622,7 @@ function renderItens(cid,lista,turno){
 var c=document.getElementById(cid);
 if(lista.length===0){c.innerHTML=’<div style="color:#9A8F8A;font-size:13px;text-align:center;padding:12px">Nenhum item ainda</div>’;return;}
 c.innerHTML=lista.map(function(item,i){
-return ‘<div class="item-card"><div><div class="item-name">’+item.produto+’</div><div class="item-detail">’+item.quantidade+’ un · ‘+(item.motivo||’’)+’</div></div><button class="item-remove" onclick="rmItem(''+cid+'','+i+',''+turno+'')">✕</button></div>’;
+return ‘<div class="item-card"><div><div class="item-name">’+item.produto+’</div><div class="item-detail">’+item.quantidade+’ un - ‘+(item.motivo||’’)+’</div></div><button class="item-remove" onclick="rmItem(''+cid+'','+i+',''+turno+'')">X</button></div>’;
 }).join(’’);
 }
 function rmItem(cid,idx,turno){if(turno===‘noite’){itN.splice(idx,1);renderItens(cid,itN,turno);}else{itM.splice(idx,1);renderItens(cid,itM,turno);}}
