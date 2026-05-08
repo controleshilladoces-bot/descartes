@@ -21,12 +21,12 @@ body{font-family:'DM Sans',sans-serif;background:#FDF8F4;min-height:100vh;max-wi
 .lbl{font-size:9px;font-weight:700;color:#B06433;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px}
 .ttl{font-family:'Cormorant Garamond',serif;font-size:20px;color:#3D2314;margin-bottom:16px;font-weight:600}
 .btn-list{display:grid;gap:9px}
-.btn-i{background:#FDF8F4;border:1.5px solid #F2E8DE;border-radius:13px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#3D2314;cursor:pointer;text-align:left;width:100%}
-.mbtn{background:white;border:1.5px solid #F2E8DE;border-radius:15px;padding:15px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;text-align:left;width:100%;margin-bottom:10px}
+.bi{background:#FDF8F4;border:1.5px solid #F2E8DE;border-radius:13px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#3D2314;cursor:pointer;text-align:left;width:100%}
+.mb{background:white;border:1.5px solid #F2E8DE;border-radius:15px;padding:15px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;text-align:left;width:100%;margin-bottom:10px}
 .mi{font-size:26px}
 .mn{font-size:13px;font-weight:700;color:#3D2314}
 .md{font-size:11px;color:#9A8F8A;margin-top:2px}
-.bg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.bg2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .bc{background:#FDF8F4;border:1.5px solid #F2E8DE;border-radius:12px;padding:12px 8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#3D2314;cursor:pointer;text-align:center}
 .bc.sel{background:#B06433;border-color:#B06433;color:white}
 .bp{background:#FDF8F4;border:1.5px solid #F2E8DE;border-radius:12px;padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#3D2314;cursor:pointer;text-align:left;width:100%;margin-bottom:8px;display:block}
@@ -62,9 +62,9 @@ textarea{resize:none;height:70px;font-size:13px}
 .ok-t{font-family:'Cormorant Garamond',serif;font-size:26px;color:#3D2314;margin-bottom:6px}
 .ok-s{color:#9A8F8A;font-size:13px;margin-bottom:24px}
 .ic{background:#FDF8F4;border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.in{font-size:13px;font-weight:600;color:#3D2314}
-.id{font-size:11px;color:#9A8F8A}
-.ir{background:none;border:none;color:#C0392B;font-size:18px;cursor:pointer}
+.in2{font-size:13px;font-weight:600;color:#3D2314}
+.id2{font-size:11px;color:#9A8F8A}
+.ir{background:none;border:none;color:#C0392B;font-size:18px;cursor:pointer;padding:4px}
 .af{background:#FDF8F4;border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid #F2E8DE}
 </style>
 </head>
@@ -83,12 +83,12 @@ textarea{resize:none;height:70px;font-size:13px}
       <div class="lbl">Ola!</div>
       <div class="ttl">Qual e a sua unidade?</div>
       <div class="btn-list">
-        <button class="btn-i" onclick="setLoja('Lapa')">Lapa</button>
-        <button class="btn-i" onclick="setLoja('Moema')">Moema</button>
-        <button class="btn-i" onclick="setLoja('Saude')">Saude</button>
-        <button class="btn-i" onclick="setLoja('Delivery Mooca')">Delivery Mooca</button>
-        <button class="btn-i" onclick="setLoja('Delivery Centro')">Delivery Centro</button>
-        <button class="btn-i" onclick="setLoja('Cozinha')">Cozinha</button>
+        <button class="bi" onclick="setLoja('Lapa')">Lapa</button>
+        <button class="bi" onclick="setLoja('Moema')">Moema</button>
+        <button class="bi" onclick="setLoja('Saude')">Saude</button>
+        <button class="bi" onclick="setLoja('Delivery Mooca')">Delivery Mooca</button>
+        <button class="bi" onclick="setLoja('Delivery Centro')">Delivery Centro</button>
+        <button class="bi" onclick="setLoja('Cozinha')">Cozinha</button>
       </div>
     </div>
   </div>
@@ -96,15 +96,15 @@ textarea{resize:none;height:70px;font-size:13px}
     <div class="card">
       <div class="lbl">Tipo de registro</div>
       <div class="ttl">O que voce vai registrar?</div>
-      <button class="mbtn" onclick="setModo('dia')">
+      <button class="mb" onclick="setModo('dia')">
         <span class="mi">&#128221;</span>
         <div><div class="mn">Descarte do dia</div><div class="md">Registrar um ou mais itens agora</div></div>
       </button>
-      <button class="mbtn" id="btnNoite" onclick="setModo('noite')">
+      <button class="mb" id="btnNoite" onclick="setModo('noite')">
         <span class="mi">&#127769;</span>
-        <div><div class="mn">Fechamento da noite</div><div class="md">Itens vencidos + foto do lixo</div></div>
+        <div><div class="mn">Fechamento da noite</div><div class="md">Itens vencidos mais foto do lixo</div></div>
       </button>
-      <button class="mbtn" id="btnManha" onclick="setModo('manha')">
+      <button class="mb" id="btnManha" onclick="setModo('manha')">
         <span class="mi">&#9728;</span>
         <div><div class="mn">Conferencia da manha</div><div class="md">Confirmar descarte da noite anterior</div></div>
       </button>
@@ -116,34 +116,34 @@ textarea{resize:none;height:70px;font-size:13px}
       <div class="ttl">Quem esta registrando?</div>
       <div class="cg" id="colabGrid"></div>
       <div id="colabTxt" style="display:none">
-        <input type="text" id="colabInput" placeholder="Seu nome...">
+        <input type="text" id="colabInp" placeholder="Seu nome...">
         <button class="btn-p" style="margin-top:10px" onclick="confirmarColab()">Continuar</button>
       </div>
       <button class="btn-s" onclick="ir('t1')">Voltar</button>
     </div>
   </div>
-  <div id="tDia" class="scr">
+  <div id="tD" class="scr">
     <div class="card">
       <div class="lbl">Descarte do dia</div>
       <div class="ttl">Itens para descartar</div>
-      <div id="itensDiaList"></div>
-      <button class="btn-s" onclick="showFD()" style="margin-bottom:12px">+ Adicionar item</button>
-      <div id="formDia" style="display:none" class="af">
+      <div id="listD"></div>
+      <button class="btn-s" onclick="abrirFD()" style="margin-bottom:12px">+ Adicionar item</button>
+      <div id="formD" style="display:none" class="af">
         <div class="fld">
           <label class="fl">Categoria</label>
-          <div class="bg" id="catDiaGrid"></div>
-          <div id="catDiaCoz" style="display:none">
-            <button class="btn-i" style="margin-bottom:8px" onclick="setCatDia('insumo','Insumo')">Insumo / Ingrediente</button>
-            <button class="btn-i" onclick="setCatDia('acabado','Produto Acabado')">Produto Acabado</button>
+          <div class="bg2" id="catDGrid"></div>
+          <div id="catDCoz" style="display:none">
+            <button class="bi" style="margin-bottom:8px" onclick="setCatD('insumo','Insumo')">Insumo / Ingrediente</button>
+            <button class="bi" onclick="setCatD('acabado','Produto Acabado')">Produto Acabado</button>
           </div>
         </div>
-        <div id="prodDiaL" style="display:none">
-          <div class="fld"><label class="fl">Produto</label><select id="prodDiaSel"><option value="">Selecione...</option></select></div>
+        <div id="prodDSel" style="display:none">
+          <div class="fld"><label class="fl">Produto</label><select id="selProdD"><option value="">Selecione...</option></select></div>
         </div>
-        <div id="prodDiaTxt" style="display:none">
-          <div class="fld"><label class="fl">Nome do produto</label><input type="text" id="prodDiaInput" placeholder="Ex: Morango, Caseirinho..."></div>
+        <div id="prodDTxt" style="display:none">
+          <div class="fld"><label class="fl">Nome do produto</label><input type="text" id="txtProdD" placeholder="Ex: Morango, Caseirinho..."></div>
           <div class="fld"><label class="fl">Unidade</label>
-            <div class="pills" id="unidPills">
+            <div class="pills" id="unidD">
               <div class="pill sel" onclick="selUnid(this,'Unidade')">Unidade</div>
               <div class="pill" onclick="selUnid(this,'Kg')">Kg</div>
               <div class="pill" onclick="selUnid(this,'Gramas')">Gramas</div>
@@ -151,37 +151,37 @@ textarea{resize:none;height:70px;font-size:13px}
             </div>
           </div>
         </div>
-        <div class="fld" id="qtdDiaF" style="display:none">
+        <div class="fld" id="qtdDF" style="display:none">
           <label class="fl">Quantidade</label>
-          <input type="number" id="qtdDia" min="1" placeholder="0" inputmode="numeric" style="font-size:20px;text-align:center">
+          <input type="number" id="qtdD" min="1" placeholder="0" inputmode="numeric" style="font-size:20px;text-align:center">
         </div>
-        <div class="fld" id="motDiaF" style="display:none">
+        <div class="fld" id="motDF" style="display:none">
           <label class="fl">Motivo</label>
-          <div class="pills" id="motivoDia">
-            <div class="pill d" onclick="selPill(this,'motivoDia','Vencido')">Vencido</div>
-            <div class="pill d" onclick="selPill(this,'motivoDia','Estragado')">Estragado</div>
-            <div class="pill w" onclick="selPill(this,'motivoDia','Quebrou/Caiu')">Quebrou/Caiu</div>
-            <div class="pill w" onclick="selPill(this,'motivoDia','Danificado')">Danificado</div>
-            <div class="pill cz" onclick="selPill(this,'motivoDia','Sobra de Producao')">Sobra de Producao</div>
-            <div class="pill cz" onclick="selPill(this,'motivoDia','Rebarba')">Rebarba</div>
-            <div class="pill cz" onclick="selPill(this,'motivoDia','Solado')">Solado</div>
-            <div class="pill cz" onclick="selPill(this,'motivoDia','Queimado')">Queimado</div>
-            <div class="pill" onclick="selPill(this,'motivoDia','Outros')">Outros</div>
+          <div class="pills" id="motD">
+            <div class="pill d" onclick="selPill(this,'motD','Vencido')">Vencido</div>
+            <div class="pill d" onclick="selPill(this,'motD','Estragado')">Estragado</div>
+            <div class="pill w" onclick="selPill(this,'motD','Quebrou')">Quebrou</div>
+            <div class="pill w" onclick="selPill(this,'motD','Danificado')">Danificado</div>
+            <div class="pill" onclick="selPill(this,'motD','Sobra')">Sobra de Producao</div>
+            <div class="pill" onclick="selPill(this,'motD','Rebarba')">Rebarba</div>
+            <div class="pill" onclick="selPill(this,'motD','Solado')">Solado</div>
+            <div class="pill" onclick="selPill(this,'motD','Queimado')">Queimado</div>
+            <div class="pill" onclick="selPill(this,'motD','Outros')">Outros</div>
           </div>
         </div>
-        <div class="fld" id="fotoDiaF" style="display:none">
+        <div class="fld" id="fotoDF" style="display:none">
           <label class="fl">Foto</label>
-          <div class="fw" onclick="document.getElementById('fotoDiaInp').click()">
-            <div id="fotoDiaPh"><div style="font-size:24px">&#128247;</div><p style="font-size:12px;color:#9A8F8A;margin-top:4px">Tirar foto</p><p style="font-size:10px;color:#B06433;font-weight:700">OBRIGATORIO</p></div>
-            <img id="fotoDiaPrv" style="display:none">
+          <div class="fw" onclick="document.getElementById('fotoD').click()">
+            <div id="fotoDPh"><div style="font-size:24px">&#128247;</div><p style="font-size:12px;color:#9A8F8A;margin-top:4px">Tirar foto</p><p style="font-size:10px;color:#B06433;font-weight:700">OBRIGATORIO</p></div>
+            <img id="fotoDPrv" style="display:none">
           </div>
-          <input type="file" id="fotoDiaInp" accept="image/*" capture="environment" style="display:none" onchange="prevFotoDia(this)">
+          <input type="file" id="fotoD" accept="image/*" capture="environment" style="display:none" onchange="prevFD(this)">
         </div>
-        <button class="btn-p" id="btnAddDia" onclick="addItemDia()" style="display:none;margin-bottom:6px">Adicionar</button>
-        <button class="btn-s" onclick="cancelFD()">Cancelar</button>
+        <button class="btn-p" id="btnAddD" onclick="addD()" style="display:none;margin-bottom:6px">Adicionar</button>
+        <button class="btn-s" onclick="fecharFD()">Cancelar</button>
       </div>
       <div class="div"></div>
-      <button class="btn-p" id="btnEnvDia" onclick="submitDia()" style="display:none">Enviar tudo</button>
+      <button class="btn-p" id="btnEnvD" onclick="enviarD()" style="display:none">Enviar tudo</button>
       <button class="btn-s" onclick="ir('t2')">Voltar</button>
     </div>
   </div>
@@ -189,8 +189,8 @@ textarea{resize:none;height:70px;font-size:13px}
     <div class="card">
       <div class="lbl">Fechamento da noite</div>
       <div class="ttl">Quem esta fechando?</div>
-      <div class="cg" id="colabNoiteGrid"></div>
-      <div id="colabNoiteTxt" style="display:none"><input type="text" id="colabNoiteInp" placeholder="Seu nome..."></div>
+      <div class="cg" id="colabNG"></div>
+      <div id="colabNTxt" style="display:none"><input type="text" id="colabNInp" placeholder="Seu nome..."></div>
       <button class="btn-p" onclick="goNI()">Continuar</button>
       <button class="btn-s" onclick="ir('t1')">Voltar</button>
     </div>
@@ -200,22 +200,22 @@ textarea{resize:none;height:70px;font-size:13px}
       <div class="lbl">Fechamento da noite</div>
       <div class="ttl">Itens descartados hoje</div>
       <div class="abox">Adicione todos os itens descartados.</div>
-      <div id="itensNoiteList"></div>
-      <button class="btn-s" onclick="showFN()" style="margin-bottom:12px">+ Adicionar item</button>
-      <div id="formNoite" style="display:none" class="af">
-        <div class="fld"><label class="fl">Categoria</label><div class="bg" id="catNoiteGrid"></div></div>
-        <div class="fld" id="prodNoiteF" style="display:none"><label class="fl">Produto</label><select id="prodNoiteSel"><option value="">Selecione...</option></select></div>
-        <div class="fld"><label class="fl">Quantidade</label><input type="number" id="qtdNoite" min="1" placeholder="0" inputmode="numeric" style="font-size:20px;text-align:center"></div>
+      <div id="listN"></div>
+      <button class="btn-s" onclick="abrirFN()" style="margin-bottom:12px">+ Adicionar item</button>
+      <div id="formN" style="display:none" class="af">
+        <div class="fld"><label class="fl">Categoria</label><div class="bg2" id="catNG"></div></div>
+        <div class="fld" id="prodNF" style="display:none"><label class="fl">Produto</label><select id="selProdN"><option value="">Selecione...</option></select></div>
+        <div class="fld"><label class="fl">Quantidade</label><input type="number" id="qtdN" min="1" placeholder="0" inputmode="numeric" style="font-size:20px;text-align:center"></div>
         <div class="fld"><label class="fl">Motivo</label>
-          <div class="pills" id="motivoNoite">
-            <div class="pill d" onclick="selPill(this,'motivoNoite','Vencido')">Vencido</div>
-            <div class="pill d" onclick="selPill(this,'motivoNoite','Estragado')">Estragado</div>
-            <div class="pill w" onclick="selPill(this,'motivoNoite','Quebrou/Caiu')">Quebrou/Caiu</div>
-            <div class="pill" onclick="selPill(this,'motivoNoite','Outros')">Outros</div>
+          <div class="pills" id="motN">
+            <div class="pill d" onclick="selPill(this,'motN','Vencido')">Vencido</div>
+            <div class="pill d" onclick="selPill(this,'motN','Estragado')">Estragado</div>
+            <div class="pill w" onclick="selPill(this,'motN','Quebrou')">Quebrou</div>
+            <div class="pill" onclick="selPill(this,'motN','Outros')">Outros</div>
           </div>
         </div>
-        <button class="btn-p" onclick="addIN()" style="margin-bottom:6px">Adicionar</button>
-        <button class="btn-s" onclick="document.getElementById('formNoite').style.display='none'">Cancelar</button>
+        <button class="btn-p" onclick="addN()" style="margin-bottom:6px">Adicionar</button>
+        <button class="btn-s" onclick="document.getElementById('formN').style.display='none'">Cancelar</button>
       </div>
       <div class="div"></div>
       <button class="btn-p" onclick="goNF()">Continuar</button>
@@ -226,12 +226,12 @@ textarea{resize:none;height:70px;font-size:13px}
     <div class="card">
       <div class="lbl">Fechamento da noite - Foto</div>
       <div class="ttl">Foto do lixo de descarte</div>
-      <div class="fw" onclick="document.getElementById('fotoNInp').click()">
+      <div class="fw" onclick="document.getElementById('fotoN').click()">
         <div id="fotoNPh"><div style="font-size:28px">&#128465;</div><p style="font-size:12px;color:#9A8F8A;margin-top:6px">Foto do lixo</p><p style="font-size:10px;color:#B06433;font-weight:700">OBRIGATORIO</p></div>
         <img id="fotoNPrv" style="display:none">
       </div>
-      <input type="file" id="fotoNInp" accept="image/*" capture="environment" style="display:none" onchange="prevF(this,'fotoNPrv','fotoNPh','N')">
-      <div class="fld" style="margin-top:12px"><label class="fl">Observacoes</label><textarea id="obsNoite" placeholder="Alguma observacao..."></textarea></div>
+      <input type="file" id="fotoN" accept="image/*" capture="environment" style="display:none" onchange="prevF(this,'fotoNPrv','fotoNPh','N')">
+      <div class="fld" style="margin-top:12px"><label class="fl">Observacoes</label><textarea id="obsN" placeholder="Alguma observacao..."></textarea></div>
       <button class="btn-p" onclick="submitN()">Confirmar Fechamento</button>
       <button class="btn-s" onclick="ir('t7b')">Voltar</button>
     </div>
@@ -241,8 +241,8 @@ textarea{resize:none;height:70px;font-size:13px}
       <div class="lbl">Conferencia da manha</div>
       <div class="ttl">Quem esta conferindo?</div>
       <div class="abox">Nao consulte o registro da noite antes!</div>
-      <div class="cg" id="colabManhaGrid"></div>
-      <div id="colabManhaTxt" style="display:none"><input type="text" id="colabManhaInp" placeholder="Seu nome..."></div>
+      <div class="cg" id="colabMG"></div>
+      <div id="colabMTxt" style="display:none"><input type="text" id="colabMInp" placeholder="Seu nome..."></div>
       <button class="btn-p" onclick="goMI()">Continuar</button>
       <button class="btn-s" onclick="ir('t1')">Voltar</button>
     </div>
@@ -251,14 +251,14 @@ textarea{resize:none;height:70px;font-size:13px}
     <div class="card">
       <div class="lbl">Conferencia da manha</div>
       <div class="ttl">O que voce encontrou?</div>
-      <div id="itensMList"></div>
-      <button class="btn-s" onclick="showFM()" style="margin-bottom:12px">+ Adicionar item</button>
-      <div id="formManha" style="display:none" class="af">
-        <div class="fld"><label class="fl">Categoria</label><div class="bg" id="catManhaGrid"></div></div>
-        <div class="fld" id="prodManhaF" style="display:none"><label class="fl">Produto</label><select id="prodManhaSel"><option value="">Selecione...</option></select></div>
-        <div class="fld"><label class="fl">Quantidade</label><input type="number" id="qtdManha" min="1" placeholder="0" inputmode="numeric" style="font-size:20px;text-align:center"></div>
-        <button class="btn-p" onclick="addIM()">Adicionar</button>
-        <button class="btn-s" onclick="document.getElementById('formManha').style.display='none'">Cancelar</button>
+      <div id="listM"></div>
+      <button class="btn-s" onclick="abrirFM()" style="margin-bottom:12px">+ Adicionar item encontrado</button>
+      <div id="formM" style="display:none" class="af">
+        <div class="fld"><label class="fl">Categoria</label><div class="bg2" id="catMG"></div></div>
+        <div class="fld" id="prodMF" style="display:none"><label class="fl">Produto</label><select id="selProdM"><option value="">Selecione...</option></select></div>
+        <div class="fld"><label class="fl">Quantidade</label><input type="number" id="qtdM" min="1" placeholder="0" inputmode="numeric" style="font-size:20px;text-align:center"></div>
+        <button class="btn-p" onclick="addM()">Adicionar</button>
+        <button class="btn-s" onclick="document.getElementById('formM').style.display='none'">Cancelar</button>
       </div>
       <div class="div"></div>
       <button class="btn-p" onclick="goMF()">Continuar</button>
@@ -269,12 +269,12 @@ textarea{resize:none;height:70px;font-size:13px}
     <div class="card">
       <div class="lbl">Conferencia da manha - Foto</div>
       <div class="ttl">Foto do lixo encontrado</div>
-      <div class="fw" onclick="document.getElementById('fotoMInp').click()">
+      <div class="fw" onclick="document.getElementById('fotoM').click()">
         <div id="fotoMPh"><div style="font-size:28px">&#9728;</div><p style="font-size:12px;color:#9A8F8A;margin-top:6px">Foto do lixo</p><p style="font-size:10px;color:#B06433;font-weight:700">OBRIGATORIO</p></div>
         <img id="fotoMPrv" style="display:none">
       </div>
-      <input type="file" id="fotoMInp" accept="image/*" capture="environment" style="display:none" onchange="prevF(this,'fotoMPrv','fotoMPh','M')">
-      <div class="fld" style="margin-top:12px"><label class="fl">Observacoes</label><textarea id="obsManha" placeholder="Divergencia? Anote aqui..."></textarea></div>
+      <input type="file" id="fotoM" accept="image/*" capture="environment" style="display:none" onchange="prevF(this,'fotoMPrv','fotoMPh','M')">
+      <div class="fld" style="margin-top:12px"><label class="fl">Observacoes</label><textarea id="obsM" placeholder="Divergencia? Anote aqui..."></textarea></div>
       <button class="btn-p btn-g" onclick="submitM()">Confirmar Conferencia</button>
       <button class="btn-s" onclick="ir('t8b')">Voltar</button>
     </div>
@@ -295,54 +295,370 @@ textarea{resize:none;height:70px;font-size:13px}
 var SU="https://script.google.com/macros/s/AKfycbxoalYfkU8P1QIUsJjMjphRVOmdyDdI_nSaZrhuyGhPw-PZQ6NwCweqZfBMAPjyqNl1/exec";
 var CL={"Lapa":["Sheila","Emily"],"Moema":["Pedro","Andreia","Ana Beatriz"],"Saude":["Thifany","Jessica","Mariah","Kauan"],"Cozinha":null,"Delivery Mooca":null,"Delivery Centro":null};
 var FIS=["Lapa","Moema","Saude"];
-var CATS=[{id:"potes",lb:"Potes 180ml"},{id:"potinhos",lb:"Potinhos 80ml"},{id:"caixinhas",lb:"Caixinhas"},{id:"brigadeiro",lb:"Brigadeiros"},{id:"fatias",lb:"Fatias Caseirinhos"},{id:"especiais",lb:"Especiais"},{id:"naked",lb:"Naked"},{id:"petit",lb:"Petit"}];
-var PR={
-potes:["Pote Pistache Geleia","Pote Maracuja","Pote Morango Tradicional","Pote Morango Casadinho","Pote Bombom Uva","Pote Abacaxi","Pote Brownie","Pote Doce de Leite","Pote Brigadeiro","Pote Hillanoffe","Pote Ninho","Pote Casadinho Coco"],
-potinhos:["Potinho Pistache","Potinho Casadinho","Potinho Ninho Nutella","Potinho Maracuja"],
-caixinhas:["Caixinha Dois Brigadeiros","Caixinha Ninho Nutella"],
-brigadeiro:["Coxinha Tradicional","Coxinha Branca Belga","Brigadeiro de Uva"],
-fatias:["Caseirinho Cenoura","Caseirinho Ninho Nutella","Fatia Casadinho","Fatia Ninho"],
-especiais:["Cone Ninho","Cone Casadinho","Bolo Gelado Coco","Bolo Gelado Ninho Nutella"],
-naked:["Naked Casadinho","Naked Pistache Branco","Naked Pistache FV","Naked Coco","Naked Frutas Vermelhas"],
-petit:["Petit Casadinho","Petit Pistache Branco","Petit Pistache FV","Petit Coco","Petit Frutas Vermelhas"]
+var CATS=[{id:"potes",lb:"Potes 180ml"},{id:"potinhos",lb:"Potinhos 80ml"},{id:"caixinhas",lb:"Caixinhas"},{id:"brigadeiro",lb:"Brigadeiros"},{id:"fatias",lb:"Fatias"},{id:"especiais",lb:"Especiais"},{id:"naked",lb:"Naked"},{id:"petit",lb:"Petit"}];
+var PR={potes:["Pote Pistache Geleia","Pote Maracuja","Pote Morango Trad","Pote Morango Casadinho","Pote Bombom Uva","Pote Abacaxi","Pote Brownie","Pote Doce de Leite","Pote Brigadeiro","Pote Hillanoffe","Pote Ninho","Pote Casadinho Coco"],potinhos:["Potinho Pistache","Potinho Casadinho","Potinho Ninho Nutella","Potinho Maracuja"],caixinhas:["Caixinha Dois Brigadeiros","Caixinha Ninho Nutella"],brigadeiro:["Coxinha Tradicional","Coxinha Branca Belga","Brigadeiro de Uva"],fatias:["Caseirinho Cenoura","Caseirinho Ninho Nutella","Fatia Casadinho","Fatia Ninho"],especiais:["Cone Ninho","Cone Casadinho","Bolo Gelado Coco","Bolo Gelado Ninho Nutella"],naked:["Naked Casadinho","Naked Pistache Branco","Naked Pistache FV","Naked Coco","Naked Frutas Vermelhas"],petit:["Petit Casadinho","Petit Pistache Branco","Petit Pistache FV","Petit Coco","Petit Frutas Vermelhas"]};
+var S={loja:"",colab:"",fN:null,fM:null};
+var itD=[],itN=[],itM=[],fotoD=null,unidD="Unidade";
+var TL=["t0","t1","t2","tD","t7","t7b","t7c","t8","t8b","t8c","tOk"];
+
+function ir(id){
+for(var i=0;i<TL.length;i++){var e=document.getElementById(TL[i]);if(e)e.style.display=“none”;}
+var el=document.getElementById(id);
+if(el)el.style.display=“block”;
+window.scrollTo({top:0,behavior:“smooth”});
+}
+
+function setLoja(l){
+S.loja=l;
+document.getElementById(“badge”).textContent=l;
+document.getElementById(“hdrB”).style.display=“flex”;
+var f=FIS.indexOf(l)>=0;
+document.getElementById(“btnNoite”).style.display=f?“flex”:“none”;
+document.getElementById(“btnManha”).style.display=f?“flex”:“none”;
+ir(“t1”);
+}
+
+function setModo(m){
+if(m===“noite”){buildCG(“colabNG”,“colabNTxt”,false);ir(“t7”);return;}
+if(m===“manha”){buildCG(“colabMG”,“colabMTxt”,false);ir(“t8”);return;}
+buildCG(“colabGrid”,“colabTxt”,true);
+ir(“t2”);
+}
+
+function buildCG(gid,tid,isMain){
+var g=document.getElementById(gid);
+g.innerHTML=””;
+var cs=CL[S.loja];
+if(!cs){
+g.style.display=“none”;
+if(tid)document.getElementById(tid).style.display=“block”;
+return;
+}
+g.style.display=“grid”;
+for(var i=0;i<cs.length;i++){
+(function(name,main){
+var b=document.createElement(“button”);
+b.className=“cb”;
+b.textContent=name;
+b.onclick=function(){
+var btns=g.querySelectorAll(”.cb”);
+for(var j=0;j<btns.length;j++)btns[j].classList.remove(“sel”);
+b.classList.add(“sel”);
+S.colab=name;
+if(main){setTimeout(function(){initD();ir(“tD”);},100);}
 };
-var S={loja:"",colab:"",fotoN:null,fotoM:null};
-var itD=[],itN=[],itM=[],fotoDia=null,unidDia="Unidade";
-var TL=["t0","t1","t2","tDia","t7","t7b","t7c","t8","t8b","t8c","tOk"];
-function ir(id){TL.forEach(function(t){var e=document.getElementById(t);if(e)e.style.display="none";});var el=document.getElementById(id);if(el)el.style.display="block";window.scrollTo({top:0,behavior:"smooth"});}
-function setLoja(l){S.loja=l;document.getElementById("badge").textContent=l;document.getElementById("hdrB").style.display="flex";var f=FIS.includes(l);document.getElementById("btnNoite").style.display=f?"flex":"none";document.getElementById("btnManha").style.display=f?"flex":"none";ir("t1");}
-function setModo(m){if(m==="noite"){bCG("colabNoiteGrid","colabNoiteTxt");ir("t7");return;}if(m==="manha"){bCG("colabManhaGrid","colabManhaTxt");ir("t8");return;}bCG("colabGrid","colabTxt");ir("t2");}
-function bCG(gid,tid){var g=document.getElementById(gid);g.innerHTML="";var cs=CL[S.loja];var isM=gid==="colabGrid";if(!cs){g.style.display="none";if(tid)document.getElementById(tid).style.display="block";return;}g.style.display="grid";cs.forEach(function(c){var b=document.createElement("button");b.className="cb";b.textContent=c;b.onclick=function(){g.querySelectorAll(".cb").forEach(function(x){x.classList.remove("sel");});b.classList.add("sel");S.colab=c;if(isM){setTimeout(function(){initD();ir("tDia");},100);}};g.appendChild(b);});}
-function confirmarColab(){var v=document.getElementById("colabInput").value.trim();if(!v){alert("Digite seu nome");return;}S.colab=v;initD();ir("tDia");}
-function initD(){itD=[];renderD();document.getElementById("formDia").style.display="none";document.getElementById("btnEnvDia").style.display="none";var cz=S.loja==="Cozinha";document.getElementById("catDiaGrid").style.display=cz?"none":"grid";document.getElementById("catDiaCoz").style.display=cz?"block":"none";if(!cz){var g=document.getElementById("catDiaGrid");g.innerHTML="";CATS.forEach(function(c){var b=document.createElement("button");b.className="bc";b.textContent=c.lb;b.onclick=function(){setCatDia(c.id,c.lb);};g.appendChild(b);});}}
-function showFD(){document.getElementById("formDia").style.display="block";document.getElementById("prodDiaL").style.display="none";document.getElementById("prodDiaTxt").style.display="none";document.getElementById("qtdDiaF").style.display="none";document.getElementById("motDiaF").style.display="none";document.getElementById("fotoDiaF").style.display="none";document.getElementById("btnAddDia").style.display="none";document.getElementById("qtdDia").value="";document.getElementById("fotoDiaPrv").style.display="none";document.getElementById("fotoDiaPh").style.display="block";document.querySelectorAll("#motivoDia .pill").forEach(function(p){p.classList.remove("sel");});fotoDia=null;unidDia="Unidade";var g=document.getElementById("catDiaGrid");if(g){g.querySelectorAll(".bc").forEach(function(b){b.classList.remove("sel");});}var cz=S.loja==="Cozinha";document.getElementById("catDiaGrid").style.display=cz?"none":"grid";document.getElementById("catDiaCoz").style.display=cz?"block":"none";}
-function cancelFD(){document.getElementById("formDia").style.display="none";}
-function setCatDia(id,lb){var isCz=(id==="insumo"||id==="acabado");document.getElementById("prodDiaL").style.display=isCz?"none":"block";document.getElementById("prodDiaTxt").style.display=isCz?"block":"none";if(isCz){unidDia=id==="insumo"?"Kg":"Unidade";document.querySelectorAll("#unidPills .pill").forEach(function(p){p.classList.remove("sel");if(p.textContent===unidDia)p.classList.add("sel");});}else{var sel=document.getElementById("prodDiaSel");sel.innerHTML="<option value=''>Selecione...</option>";sel.dataset.cat=id;sel.dataset.lb=lb;(PR[id]||[]).forEach(function(p){var o=document.createElement("option");o.value=p;o.textContent=p;sel.appendChild(o);});}document.getElementById("qtdDiaF").style.display="block";document.getElementById("motDiaF").style.display="block";if(FIS.includes(S.loja))document.getElementById("fotoDiaF").style.display="block";document.getElementById("btnAddDia").style.display="block";}
-function selUnid(el,val){document.querySelectorAll("#unidPills .pill").forEach(function(p){p.classList.remove("sel");});el.classList.add("sel");unidDia=val;}
-function prevFotoDia(inp){if(!inp.files[0])return;var r=new FileReader();r.onload=function(e){document.getElementById("fotoDiaPrv").src=e.target.result;document.getElementById("fotoDiaPrv").style.display="block";document.getElementById("fotoDiaPh").style.display="none";fotoDia=e.target.result;};r.readAsDataURL(inp.files[0]);}
-function addItemDia(){var sel=document.getElementById("prodDiaSel");var txt=document.getElementById("prodDiaInput");var prod="",cat="",unid=unidDia;var isCz=(document.getElementById("prodDiaTxt").style.display!=="none");if(isCz){prod=txt.value.trim();cat=document.getElementById("catDiaCoz").querySelector(".btn-i")?document.getElementById("catDiaCoz").textContent.trim():"Cozinha";if(!prod){alert("Digite o nome do produto");return;}}else{prod=sel.value;cat=sel.dataset.lb||"";if(!prod){alert("Selecione o produto");return;}unid="Unidade";}var qtd=document.getElementById("qtdDia").value;var mot=document.querySelector("#motivoDia .pill.sel");if(!qtd||qtd<=0){alert("Informe a quantidade");return;}if(!mot){alert("Selecione o motivo");return;}if(FIS.includes(S.loja)&&!fotoDia){alert("Foto obrigatoria");return;}itD.push({produto:prod,categoria:cat,quantidade:qtd,unidade:unid,motivo:mot.textContent,foto:fotoDia});renderD();document.getElementById("formDia").style.display="none";document.getElementById("btnEnvDia").style.display="block";}
-function renderD(){var c=document.getElementById("itensDiaList");if(itD.length===0){c.innerHTML="<div style='color:#9A8F8A;font-size:13px;text-align:center;padding:12px;margin-bottom:8px'>Nenhum item ainda</div>";return;}var h="";for(var i=0;i<itD.length;i++){var item=itD[i];h+="<div class='ic'><div><div class='in'>"+item.produto+"</div><div class='id'>"+item.quantidade+" "+item.unidade+" - "+item.motivo+"</div></div><button class='ir' data-i='"+i+"' onclick='rmDBtn(this)'>X</button></div>";}c.innerHTML=h;}c.innerHTML=itD.map(function(item,i){return "<div class='ic'><div><div class='in'>"+item.produto+"</div><div class='id'>"+item.quantidade+" "+item.unidade+" - "+item.motivo+"</div></div><button class='ir' data-i='"+i+"' onclick='rmDBtn(this)'>X</button></div>";}).join("");}
-function rmD(i){itD.splice(i,1);renderD();if(itD.length===0)document.getElementById("btnEnvDia").style.display="none";}
-function submitDia(){if(itD.length===0){alert("Adicione pelo menos 1 item");return;}var btn=document.getElementById("btnEnvDia");btn.textContent="Enviando...";btn.disabled=true;itD.forEach(function(item){enviar({tipo:"descarte",loja:S.loja,colab:S.colab,categoria:item.categoria,produto:item.produto,quantidade:item.quantidade,unidade:item.unidade,motivo:item.motivo,obs:"",dataHora:new Date().toISOString()});});setTimeout(function(){btn.textContent="Enviar tudo";btn.disabled=false;document.getElementById("okT").textContent="Descarte registrado!";document.getElementById("okS").textContent=itD.length+" item(s) enviado(s).";document.getElementById("okD").innerHTML="<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>"+itD.length+"</strong> itens</div>";ir("tOk");},1000);}
-function selPill(el,gid,val){document.querySelectorAll("#"+gid+" .pill").forEach(function(p){p.classList.remove("sel");});el.classList.add("sel");}
-function prevF(inp,pi,phi,t){if(!inp.files[0])return;var r=new FileReader();r.onload=function(e){document.getElementById(pi).src=e.target.result;document.getElementById(pi).style.display="block";document.getElementById(phi).style.display="none";if(t==="N")S.fotoN=e.target.result;if(t==="M")S.fotoM=e.target.result;};r.readAsDataURL(inp.files[0]);}
-function enviar(data){var f=document.createElement("form");f.method="POST";f.action=SU;f.target="hif";Object.keys(data).forEach(function(k){var i=document.createElement("input");i.type="hidden";i.name=k;i.value=data[k]||"";f.appendChild(i);});document.body.appendChild(f);f.submit();setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},2000);}
-function bCT(gid,turno){var g=document.getElementById(gid);g.innerHTML="";CATS.forEach(function(c){var b=document.createElement("button");b.className="bc";b.textContent=c.lb;b.onclick=function(){g.querySelectorAll(".bc").forEach(function(x){x.classList.remove("sel");});b.classList.add("sel");var pf=turno==="noite"?"prodNoiteF":"prodManhaF";var ps=turno==="noite"?"prodNoiteSel":"prodManhaSel";document.getElementById(pf).style.display="block";var sel=document.getElementById(ps);sel.innerHTML="<option value=''>Selecione...</option>";sel.dataset.lb=c.lb;(PR[c.id]||[]).forEach(function(p){var o=document.createElement("option");o.value=p;o.textContent=p;sel.appendChild(o);});};g.appendChild(b);});}
-function goNI(){var s=document.querySelector("#colabNoiteGrid .cb.sel");var t=document.getElementById("colabNoiteInp");if(s)S.colab=s.textContent;else if(t&&t.value.trim())S.colab=t.value.trim();else{alert("Selecione o responsavel");return;}itN=[];renderTurno("itensNoiteList",itN,"noite");bCT("catNoiteGrid","noite");ir("t7b");}
-function showFN(){document.getElementById("formNoite").style.display="block";document.getElementById("qtdNoite").value="";document.querySelectorAll("#motivoNoite .pill").forEach(function(p){p.classList.remove("sel");});}
-function addIN(){var p=document.getElementById("prodNoiteSel").value;var q=document.getElementById("qtdNoite").value;var m=document.querySelector("#motivoNoite .pill.sel");var c=document.getElementById("prodNoiteSel").dataset.lb||"";if(!p){alert("Selecione o produto");return;}if(!q){alert("Informe a quantidade");return;}if(!m){alert("Selecione o motivo");return;}itN.push({produto:p,quantidade:q,unidade:"Unidade",motivo:m.textContent,categoria:c});renderTurno("itensNoiteList",itN,"noite");document.getElementById("formNoite").style.display="none";}
-function goNF(){if(itN.length===0){alert("Adicione pelo menos 1 item");return;}ir("t7c");}
-function submitN(){if(!S.fotoN){alert("Foto obrigatoria");return;}itN.forEach(function(item){enviar(Object.assign({},item,{tipo:"fechamento_noite",loja:S.loja,colab:S.colab,obs:document.getElementById("obsNoite").value,dataHora:new Date().toISOString()}));});setTimeout(function(){document.getElementById("okT").textContent="Fechamento registrado!";document.getElementById("okS").textContent=itN.length+" item(s).";document.getElementById("okD").innerHTML="<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>"+itN.length+"</strong> itens</div>";ir("tOk");},800);}
-function goMI(){var s=document.querySelector("#colabManhaGrid .cb.sel");var t=document.getElementById("colabManhaInp");if(s)S.colab=s.textContent;else if(t&&t.value.trim())S.colab=t.value.trim();else{alert("Selecione o responsavel");return;}itM=[];renderTurno("itensMList",itM,"manha");bCT("catManhaGrid","manha");ir("t8b");}
-function showFM(){document.getElementById("formManha").style.display="block";document.getElementById("qtdManha").value="";}
-function addIM(){var p=document.getElementById("prodManhaSel").value;var q=document.getElementById("qtdManha").value;var c=document.getElementById("prodManhaSel").dataset.lb||"";if(!p){alert("Selecione o produto");return;}if(!q){alert("Informe a quantidade");return;}itM.push({produto:p,quantidade:q,unidade:"Unidade",motivo:"Encontrado na conferencia",categoria:c});renderTurno("itensMList",itM,"manha");document.getElementById("formManha").style.display="none";}
-function goMF(){if(itM.length===0){alert("Adicione pelo menos 1 item");return;}ir("t8c");}
-function submitM(){if(!S.fotoM){alert("Foto obrigatoria");return;}itM.forEach(function(item){enviar(Object.assign({},item,{tipo:"conferencia_manha",loja:S.loja,colab:S.colab,obs:document.getElementById("obsManha").value,dataHora:new Date().toISOString()}));});setTimeout(function(){document.getElementById("okT").textContent="Conferencia registrada!";document.getElementById("okS").textContent=itM.length+" item(s).";document.getElementById("okD").innerHTML="<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>"+itM.length+"</strong> itens</div>";ir("tOk");},800);}
-function renderTurno(cid,lista,turno){var c=document.getElementById(cid);if(lista.length===0){c.innerHTML="<div style='color:#9A8F8A;font-size:13px;text-align:center;padding:12px'>Nenhum item ainda</div>";return;}var h="";for(var i=0;i<lista.length;i++){var item=lista[i];h+="<div class='ic'><div><div class='in'>"+item.produto+"</div><div class='id'>"+item.quantidade+" un - "+(item.motivo||"")+"</div></div><button class='ir' data-cid='"+cid+"' data-i='"+i+"' data-t='"+turno+"' onclick='rmTBtn(this)'>X</button></div>";}c.innerHTML=h;}c.innerHTML=lista.map(function(item,i){return "<div class='ic'><div><div class='in'>"+item.produto+"</div><div class='id'>"+item.quantidade+" un - "+(item.motivo||"")+"</div></div><button class='ir' onclick="rmT('"+cid+"',"+i+",'"+turno+"')">X</button></div>";}).join("");}
+g.appendChild(b);
+})(cs[i],isMain);
+}
+}
+
+function confirmarColab(){
+var v=document.getElementById(“colabInp”).value.trim();
+if(!v){alert(“Digite seu nome”);return;}
+S.colab=v;initD();ir(“tD”);
+}
+
+function initD(){
+itD=[];renderListD();
+document.getElementById(“formD”).style.display=“none”;
+document.getElementById(“btnEnvD”).style.display=“none”;
+var cz=S.loja===“Cozinha”;
+var g=document.getElementById(“catDGrid”);
+g.innerHTML=””;
+g.style.display=cz?“none”:“grid”;
+document.getElementById(“catDCoz”).style.display=cz?“block”:“none”;
+if(!cz){
+for(var i=0;i<CATS.length;i++){
+(function(cat){
+var b=document.createElement(“button”);
+b.className=“bc”;
+b.textContent=cat.lb;
+b.onclick=function(){setCatD(cat.id,cat.lb);};
+g.appendChild(b);
+})(CATS[i]);
+}
+}
+}
+
+function abrirFD(){
+document.getElementById(“formD”).style.display=“block”;
+document.getElementById(“prodDSel”).style.display=“none”;
+document.getElementById(“prodDTxt”).style.display=“none”;
+document.getElementById(“qtdDF”).style.display=“none”;
+document.getElementById(“motDF”).style.display=“none”;
+document.getElementById(“fotoDF”).style.display=“none”;
+document.getElementById(“btnAddD”).style.display=“none”;
+document.getElementById(“qtdD”).value=””;
+document.getElementById(“fotoDPrv”).style.display=“none”;
+document.getElementById(“fotoDPh”).style.display=“block”;
+var ps=document.querySelectorAll(”#motD .pill”);
+for(var i=0;i<ps.length;i++)ps[i].classList.remove(“sel”);
+fotoD=null;unidD=“Unidade”;
+var us=document.querySelectorAll(”#unidD .pill”);
+for(var i=0;i<us.length;i++){us[i].classList.remove(“sel”);if(us[i].textContent===“Unidade”)us[i].classList.add(“sel”);}
+var cz=S.loja===“Cozinha”;
+document.getElementById(“catDGrid”).style.display=cz?“none”:“grid”;
+document.getElementById(“catDCoz”).style.display=cz?“block”:“none”;
+var bs=document.querySelectorAll(”#catDGrid .bc”);
+for(var i=0;i<bs.length;i++)bs[i].classList.remove(“sel”);
+}
+
+function fecharFD(){document.getElementById(“formD”).style.display=“none”;}
+
+function setCatD(id,lb){
+var isCz=(id===“insumo”||id===“acabado”);
+document.getElementById(“prodDSel”).style.display=isCz?“none”:“block”;
+document.getElementById(“prodDTxt”).style.display=isCz?“block”:“none”;
+if(isCz){
+unidD=id===“insumo”?“Kg”:“Unidade”;
+var us=document.querySelectorAll(”#unidD .pill”);
+for(var i=0;i<us.length;i++){us[i].classList.remove(“sel”);if(us[i].textContent===unidD)us[i].classList.add(“sel”);}
+} else {
+var sel=document.getElementById(“selProdD”);
+sel.innerHTML=”<option value=''>Selecione…</option>”;
+sel.dataset.cat=id;sel.dataset.lb=lb;
+var prods=PR[id]||[];
+for(var i=0;i<prods.length;i++){var o=document.createElement(“option”);o.value=prods[i];o.textContent=prods[i];sel.appendChild(o);}
+}
+document.getElementById(“qtdDF”).style.display=“block”;
+document.getElementById(“motDF”).style.display=“block”;
+if(FIS.indexOf(S.loja)>=0)document.getElementById(“fotoDF”).style.display=“block”;
+document.getElementById(“btnAddD”).style.display=“block”;
+}
+
+function selUnid(el,val){
+var us=document.querySelectorAll(”#unidD .pill”);
+for(var i=0;i<us.length;i++)us[i].classList.remove(“sel”);
+el.classList.add(“sel”);unidD=val;
+}
+
+function prevFD(inp){
+if(!inp.files[0])return;
+var r=new FileReader();
+r.onload=function(e){
+document.getElementById(“fotoDPrv”).src=e.target.result;
+document.getElementById(“fotoDPrv”).style.display=“block”;
+document.getElementById(“fotoDPh”).style.display=“none”;
+fotoD=e.target.result;
+};
+r.readAsDataURL(inp.files[0]);
+}
+
+function addD(){
+var isCz=(document.getElementById(“prodDTxt”).style.display!==“none”);
+var prod=””,cat=””,unid=unidD;
+if(isCz){
+prod=document.getElementById(“txtProdD”).value.trim();
+cat=“Cozinha”;
+if(!prod){alert(“Digite o nome do produto”);return;}
+} else {
+prod=document.getElementById(“selProdD”).value;
+cat=document.getElementById(“selProdD”).dataset.lb||””;
+if(!prod){alert(“Selecione o produto”);return;}
+unid=“Unidade”;
+}
+var qtd=document.getElementById(“qtdD”).value;
+var motEl=document.querySelector(”#motD .pill.sel”);
+if(!qtd||parseInt(qtd)<=0){alert(“Informe a quantidade”);return;}
+if(!motEl){alert(“Selecione o motivo”);return;}
+if(FIS.indexOf(S.loja)>=0&&!fotoD){alert(“Foto obrigatoria”);return;}
+itD.push({produto:prod,categoria:cat,quantidade:qtd,unidade:unid,motivo:motEl.textContent});
+renderListD();
+document.getElementById(“formD”).style.display=“none”;
+document.getElementById(“btnEnvD”).style.display=“block”;
+}
+
+function renderListD(){
+var c=document.getElementById(“listD”);
+if(itD.length===0){c.innerHTML=”<div style='color:#9A8F8A;font-size:13px;text-align:center;padding:12px;margin-bottom:8px'>Nenhum item ainda</div>”;return;}
+var h=””;
+for(var i=0;i<itD.length;i++){
+h+=”<div class='ic'><div><div class='in2'>”+itD[i].produto+”</div><div class='id2'>”+itD[i].quantidade+” “+itD[i].unidade+” - “+itD[i].motivo+”</div></div><button class='ir' onclick='rmD("+i+")'>X</button></div>”;
+}
+c.innerHTML=h;
+}
+
+function rmD(i){itD.splice(i,1);renderListD();if(itD.length===0)document.getElementById(“btnEnvD”).style.display=“none”;}
+
+function enviarD(){
+if(itD.length===0){alert(“Adicione pelo menos 1 item”);return;}
+var btn=document.getElementById(“btnEnvD”);
+btn.textContent=“Enviando…”;btn.disabled=true;
+for(var i=0;i<itD.length;i++){
+post({tipo:“descarte”,loja:S.loja,colab:S.colab,categoria:itD[i].categoria,produto:itD[i].produto,quantidade:itD[i].quantidade,unidade:itD[i].unidade,motivo:itD[i].motivo,obs:””,dataHora:new Date().toISOString()});
+}
+setTimeout(function(){
+btn.textContent=“Enviar tudo”;btn.disabled=false;
+document.getElementById(“okT”).textContent=“Descarte registrado!”;
+document.getElementById(“okS”).textContent=itD.length+” item(s) enviado(s).”;
+document.getElementById(“okD”).innerHTML=”<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>”+itD.length+”</strong> itens</div>”;
+ir(“tOk”);
+},1000);
+}
+
+function selPill(el,gid,val){
+var ps=document.querySelectorAll(”#”+gid+” .pill”);
+for(var i=0;i<ps.length;i++)ps[i].classList.remove(“sel”);
+el.classList.add(“sel”);
+}
+
+function prevF(inp,pi,phi,t){
+if(!inp.files[0])return;
+var r=new FileReader();
+r.onload=function(e){
+document.getElementById(pi).src=e.target.result;
+document.getElementById(pi).style.display=“block”;
+document.getElementById(phi).style.display=“none”;
+if(t===“N”)S.fN=e.target.result;
+if(t===“M”)S.fM=e.target.result;
+};
+r.readAsDataURL(inp.files[0]);
+}
+
+function post(data){
+var f=document.createElement(“form”);
+f.method=“POST”;f.action=SU;f.target=“hif”;
+var keys=Object.keys(data);
+for(var i=0;i<keys.length;i++){
+var inp=document.createElement(“input”);
+inp.type=“hidden”;inp.name=keys[i];inp.value=data[keys[i]]||””;
+f.appendChild(inp);
+}
+document.body.appendChild(f);f.submit();
+setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},2000);
+}
+
+function buildCatTurno(gid,turno){
+var g=document.getElementById(gid);
+g.innerHTML=””;
+for(var i=0;i<CATS.length;i++){
+(function(cat,trn){
+var b=document.createElement(“button”);
+b.className=“bc”;b.textContent=cat.lb;
+b.onclick=function(){
+var bs=g.querySelectorAll(”.bc”);
+for(var j=0;j<bs.length;j++)bs[j].classList.remove(“sel”);
+b.classList.add(“sel”);
+var pf=trn===“noite”?“prodNF”:“prodMF”;
+var ps=trn===“noite”?“selProdN”:“selProdM”;
+document.getElementById(pf).style.display=“block”;
+var sel=document.getElementById(ps);
+sel.innerHTML=”<option value=''>Selecione…</option>”;
+sel.dataset.lb=cat.lb;
+var prods=PR[cat.id]||[];
+for(var k=0;k<prods.length;k++){var o=document.createElement(“option”);o.value=prods[k];o.textContent=prods[k];sel.appendChild(o);}
+};
+g.appendChild(b);
+})(CATS[i],turno);
+}
+}
+
+function getColab(gid,tid){
+var s=document.querySelector(”#”+gid+” .cb.sel”);
+if(s)return s.textContent;
+if(tid){var t=document.getElementById(tid);if(t&&t.value.trim())return t.value.trim();}
+return null;
+}
+
+function goNI(){
+var c=getColab(“colabNG”,“colabNInp”);
+if(!c){alert(“Selecione ou digite o responsavel”);return;}
+S.colab=c;itN=[];renderList(“listN”,itN,“noite”);buildCatTurno(“catNG”,“noite”);ir(“t7b”);
+}
+
+function abrirFN(){
+document.getElementById(“formN”).style.display=“block”;
+document.getElementById(“qtdN”).value=””;
+var ps=document.querySelectorAll(”#motN .pill”);
+for(var i=0;i<ps.length;i++)ps[i].classList.remove(“sel”);
+}
+
+function addN(){
+var p=document.getElementById(“selProdN”).value;
+var q=document.getElementById(“qtdN”).value;
+var m=document.querySelector(”#motN .pill.sel”);
+var c=document.getElementById(“selProdN”).dataset.lb||””;
+if(!p){alert(“Selecione o produto”);return;}
+if(!q){alert(“Informe a quantidade”);return;}
+if(!m){alert(“Selecione o motivo”);return;}
+itN.push({produto:p,quantidade:q,unidade:“Unidade”,motivo:m.textContent,categoria:c});
+renderList(“listN”,itN,“noite”);
+document.getElementById(“formN”).style.display=“none”;
+}
+
+function goNF(){if(itN.length===0){alert(“Adicione pelo menos 1 item”);return;}ir(“t7c”);}
+
+function submitN(){
+if(!S.fN){alert(“Foto obrigatoria”);return;}
+var obs=document.getElementById(“obsN”).value;
+for(var i=0;i<itN.length;i++){
+var d=itN[i];
+post({tipo:“fechamento_noite”,loja:S.loja,colab:S.colab,categoria:d.categoria,produto:d.produto,quantidade:d.quantidade,unidade:d.unidade,motivo:d.motivo,obs:obs,dataHora:new Date().toISOString()});
+}
+setTimeout(function(){
+document.getElementById(“okT”).textContent=“Fechamento registrado!”;
+document.getElementById(“okS”).textContent=itN.length+” item(s).”;
+document.getElementById(“okD”).innerHTML=”<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>”+itN.length+”</strong> itens</div>”;
+ir(“tOk”);
+},800);
+}
+
+function goMI(){
+var c=getColab(“colabMG”,“colabMInp”);
+if(!c){alert(“Selecione ou digite o responsavel”);return;}
+S.colab=c;itM=[];renderList(“listM”,itM,“manha”);buildCatTurno(“catMG”,“manha”);ir(“t8b”);
+}
+
+function abrirFM(){document.getElementById(“formM”).style.display=“block”;document.getElementById(“qtdM”).value=””;}
+
+function addM(){
+var p=document.getElementById(“selProdM”).value;
+var q=document.getElementById(“qtdM”).value;
+var c=document.getElementById(“selProdM”).dataset.lb||””;
+if(!p){alert(“Selecione o produto”);return;}
+if(!q){alert(“Informe a quantidade”);return;}
+itM.push({produto:p,quantidade:q,unidade:“Unidade”,motivo:“Encontrado na conferencia”,categoria:c});
+renderList(“listM”,itM,“manha”);
+document.getElementById(“formM”).style.display=“none”;
+}
+
+function goMF(){if(itM.length===0){alert(“Adicione pelo menos 1 item”);return;}ir(“t8c”);}
+
+function submitM(){
+if(!S.fM){alert(“Foto obrigatoria”);return;}
+var obs=document.getElementById(“obsM”).value;
+for(var i=0;i<itM.length;i++){
+var d=itM[i];
+post({tipo:“conferencia_manha”,loja:S.loja,colab:S.colab,categoria:d.categoria,produto:d.produto,quantidade:d.quantidade,unidade:d.unidade,motivo:d.motivo,obs:obs,dataHora:new Date().toISOString()});
+}
+setTimeout(function(){
+document.getElementById(“okT”).textContent=“Conferencia registrada!”;
+document.getElementById(“okS”).textContent=itM.length+” item(s).”;
+document.getElementById(“okD”).innerHTML=”<div style='padding:8px 0;text-align:center;font-size:14px;color:#3D2314'>Total: <strong>”+itM.length+”</strong> itens</div>”;
+ir(“tOk”);
+},800);
+}
+
+function renderList(cid,lista,turno){
+var c=document.getElementById(cid);
+if(lista.length===0){c.innerHTML=”<div style='color:#9A8F8A;font-size:13px;text-align:center;padding:12px'>Nenhum item ainda</div>”;return;}
+var h=””;
+for(var i=0;i<lista.length;i++){
+h+=”<div class='ic'><div><div class='in2'>”+lista[i].produto+”</div><div class='id2'>”+lista[i].quantidade+” un - “+(lista[i].motivo||””)+”</div></div><button class='ir' data-turno='"+turno+"' data-i='"+i+"' onclick='rmItem(this)'>X</button></div>”;
+}
+c.innerHTML=h;
+}
+
+function rmItem(btn){
+var t=btn.getAttribute(“data-turno”);
+var i=parseInt(btn.getAttribute(“data-i”));
+if(t===“noite”){itN.splice(i,1);renderList(“listN”,itN,“noite”);}
+else{itM.splice(i,1);renderList(“listM”,itM,“manha”);}
+}
 
 function novoD(){itD=[];ir(“t1”);}
-function trocarLoja(){S={loja:””,colab:””,fotoN:null,fotoM:null};document.getElementById(“hdrB”).style.display=“none”;function rmTBtn(btn){var cid=btn.getAttribute(“data-cid”);var i=parseInt(btn.getAttribute(“data-i”));var t=btn.getAttribute(“data-t”);if(t===“noite”){itN.splice(i,1);renderTurno(cid,itN,t);}else{itM.splice(i,1);renderTurno(cid,itM,t);}}
-function rmDBtn(btn){var i=parseInt(btn.getAttribute(“data-i”));rmD(i);}
+function trocarLoja(){S={loja:””,colab:””,fN:null,fM:null};document.getElementById(“hdrB”).style.display=“none”;ir(“t0”);}
+
 ir(“t0”);
 </script>
 
