@@ -73,6 +73,7 @@ textarea { resize:none; height:70px; font-size:13px; }
 </style>
 </head>
 <body>
+
 <div class="header">
   <div class="logo">HILLA DOCES</div>
   <div class="logo-sub">Controle de Descartes</div>
@@ -81,7 +82,10 @@ textarea { resize:none; height:70px; font-size:13px; }
     <button class="trocar-btn" onclick="trocarLoja()">trocar</button>
   </div>
 </div>
+
 <div class="container">
+
+  <!-- TELA 0: Seleção de loja -->
 
   <div id="t0" class="screen">
     <div class="card">
@@ -97,6 +101,8 @@ textarea { resize:none; height:70px; font-size:13px; }
       </div>
     </div>
   </div>
+
+  <!-- TELA 1: Tipo de registro -->
 
   <div id="t1" class="screen">
     <div class="card">
@@ -117,6 +123,8 @@ textarea { resize:none; height:70px; font-size:13px; }
     </div>
   </div>
 
+  <!-- TELA 2: Colaborador (Descarte do dia) -->
+
   <div id="t2" class="screen">
     <div class="card">
       <div class="lbl">Descarte do dia</div>
@@ -129,6 +137,8 @@ textarea { resize:none; height:70px; font-size:13px; }
       <button class="btn-s" onclick="ir('t1')">← Voltar</button>
     </div>
   </div>
+
+  <!-- TELA Dia: Itens -->
 
   <div id="tDia" class="screen">
     <div class="card">
@@ -161,7 +171,7 @@ textarea { resize:none; height:70px; font-size:13px; }
         </div>
         <div class="field" id="qtdDiaField" style="display:none">
           <label class="fl">Quantidade</label>
-          <input type="number" id="qtdDia" min="1" placeholder="0" inputmode="numeric" style="font-size:20px;text-align:center">
+          <input type="number" id="qtdDia" min="1" placeholder="0" inputmode="numeric">
         </div>
         <div class="field" id="motivoDiaField" style="display:none">
           <label class="fl">Motivo</label>
@@ -194,6 +204,8 @@ textarea { resize:none; height:70px; font-size:13px; }
     </div>
   </div>
 
+  <!-- TELA 7: Fechamento noite - colaborador -->
+
   <div id="t7" class="screen">
     <div class="card">
       <div class="lbl">Fechamento da noite</div>
@@ -204,6 +216,8 @@ textarea { resize:none; height:70px; font-size:13px; }
       <button class="btn-s" onclick="ir('t1')">← Voltar</button>
     </div>
   </div>
+
+  <!-- TELA 7b: Fechamento noite - itens -->
 
   <div id="t7b" class="screen">
     <div class="card">
@@ -233,6 +247,8 @@ textarea { resize:none; height:70px; font-size:13px; }
     </div>
   </div>
 
+  <!-- TELA 7c: Fechamento noite - foto -->
+
   <div id="t7c" class="screen">
     <div class="card">
       <div class="lbl">Fechamento da noite — Foto</div>
@@ -248,6 +264,8 @@ textarea { resize:none; height:70px; font-size:13px; }
     </div>
   </div>
 
+  <!-- TELA 8: Conferência manhã - colaborador -->
+
   <div id="t8" class="screen">
     <div class="card">
       <div class="lbl">Conferência da manhã</div>
@@ -259,6 +277,8 @@ textarea { resize:none; height:70px; font-size:13px; }
       <button class="btn-s" onclick="ir('t1')">← Voltar</button>
     </div>
   </div>
+
+  <!-- TELA 8b: Conferência manhã - itens -->
 
   <div id="t8b" class="screen">
     <div class="card">
@@ -279,6 +299,8 @@ textarea { resize:none; height:70px; font-size:13px; }
     </div>
   </div>
 
+  <!-- TELA 8c: Conferência manhã - foto -->
+
   <div id="t8c" class="screen">
     <div class="card">
       <div class="lbl">Conferência da manhã — Foto</div>
@@ -294,6 +316,8 @@ textarea { resize:none; height:70px; font-size:13px; }
     </div>
   </div>
 
+  <!-- TELA OK: Sucesso -->
+
   <div id="tOk" class="screen">
     <div class="success">
       <div class="s-icon">✓</div>
@@ -306,331 +330,558 @@ textarea { resize:none; height:70px; font-size:13px; }
   </div>
 
 </div>
+
 <iframe name="hidden_iframe" style="display:none"></iframe>
+
 <script>
-var SURL="https://script.google.com/macros/s/AKfycbwzirimtIYwQsvqbzkOTJ4y58XULsHEi3asqZDgebSPBE7QbQNZorKNbKWoNHcLI4mJ/exec";
-var COLAB={'Lapa':['Sheila','Emily'],'Moema':['Pedro','Andreia','Ana Beatriz'],'Saúde':['Thifany','Jéssica','Mariah','Kauan'],'Cozinha':null,'Delivery Mooca':null,'Delivery Centro':null};
-var FISICAS=['Lapa','Moema','Saúde'];
-var CATS=[{id:'potes',lb:'Potes 180ml'},{id:'potinhos',lb:'Potinhos 80ml'},{id:'caixinhas',lb:'Caixinhas'},{id:'brigadeiro',lb:'Brigadeiros'},{id:'fatias',lb:'Fatias e Caseirinhos'},{id:'especiais',lb:'Especiais'},{id:'naked',lb:'Naked'},{id:'petit',lb:'Petit'}];
-var PRODS={
-potes:['Pote Pistache com Geleia','Pote Maracujá','Pote Morango Tradicional','Pote Morango Casadinho','Pote Bombom Uva','Pote Abacaxi','Pote Brownie','Pote Doce de Leite','Pote Brigadeiro','Pote Hillanoffe','Pote Ninho','Pote Casadinho Coco'],
-potinhos:['Potinho Pistache','Potinho Casadinho','Potinho Ninho Nutella','Potinho Maracujá'],
-caixinhas:['Caixinha Dois Brigadeiros','Caixinha Ninho Nutella'],
-brigadeiro:['Coxinha Tradicional','Coxinha Branca no Belga','Brigadeiro de Uva'],
-fatias:['Caseirinho Cenoura','Caseirinho Ninho Nutella','Fatia Casadinho','Fatia Ninho'],
-especiais:['Cone Ninho','Cone Casadinho','Bolo Gelado Coco','Bolo Gelado Ninho Nutella'],
-naked:['Naked Casadinho','Naked Coco','Naked Pistache Geleia','Naked Pistache Brigadeiro Branco','Naked Frutas Vermelhas'],
-petit:['Petit Casadinho','Petit Coco','Petit Pistache Geleia','Petit Pistache Brigadeiro Branco','Petit Frutas Vermelhas']
+// ─── CONFIGURAÇÕES ────────────────────────────────────────────────────────────
+var SURL = "https://script.google.com/macros/s/AKfycbwzirimtIYwQsvqbzkOTJ4y58XULsHEi3asqZDgebSPBE7QbQNZorKNbKWoNHcLI4mJ/exec";
+
+var COLAB = {
+  'Lapa':           ['Sheila','Emily'],
+  'Moema':          ['Pedro','Andreia','Ana Beatriz'],
+  'Saúde':          ['Thifany','Jéssica','Mariah','Kauan'],
+  'Cozinha':        null,
+  'Delivery Mooca': null,
+  'Delivery Centro':null
 };
-var S={loja:'',colab:'',fotoN:null,fotoM:null};
-var itensDia=[],itN=[],itM=[];
-var fotoDiaAtual=null;
-var unidDiaAtual='Unidade';
-var TELAS=['t0','t1','t2','tDia','t7','t7b','t7c','t8','t8b','t8c','tOk'];
 
-function ir(id){TELAS.forEach(function(t){var e=document.getElementById(t);if(e)e.style.display=‘none’;});var el=document.getElementById(id);if(el)el.style.display=‘block’;window.scrollTo({top:0,behavior:‘smooth’});}
+var CNPJ = {
+  'Saúde':          '20.331.832/0001-06',
+  'Cozinha':        '20.331.832/0001-06',
+  'Lapa':           '20.331.832/0002-89',
+  'Moema':          '20.331.832/0003-60',
+  'Delivery Mooca': '20.331.832/0001-06',
+  'Delivery Centro':'20.331.832/0001-06'
+};
 
-function setLoja(l){
-S.loja=l;
-document.getElementById(‘badge’).textContent=l;
-document.getElementById(‘headerBottom’).style.display=‘flex’;
-var f=FISICAS.includes(l);
-document.getElementById(‘btnNoite’).style.display=f?‘flex’:‘none’;
-document.getElementById(‘btnManha’).style.display=f?‘flex’:‘none’;
-ir(‘t1’);
+var FISICAS = ['Lapa','Moema','Saúde'];
+
+var CATS = [
+  {id:'potes',     lb:'Potes 180ml'},
+  {id:'potinhos',  lb:'Potinhos 80ml'},
+  {id:'caixinhas', lb:'Caixinhas'},
+  {id:'brigadeiro',lb:'Brigadeiros'},
+  {id:'fatias',    lb:'Fatias e Caseirinhos'},
+  {id:'especiais', lb:'Especiais'},
+  {id:'naked',     lb:'Naked'},
+  {id:'petit',     lb:'Petit'}
+];
+
+var PRODS = {
+  potes:      ['Pote Pistache com Geleia','Pote Maracujá','Pote Morango Tradicional','Pote Morango Casadinho','Pote Bombom Uva','Pote Abacaxi','Pote Brownie','Pote Doce de Leite','Pote Brigadeiro','Pote Hillanoffe','Pote Ninho','Pote Casadinho Coco'],
+  potinhos:   ['Potinho Pistache','Potinho Casadinho','Potinho Ninho Nutella','Potinho Maracujá'],
+  caixinhas:  ['Caixinha Dois Brigadeiros','Caixinha Ninho Nutella'],
+  brigadeiro: ['Coxinha Tradicional','Coxinha Branca no Belga','Brigadeiro de Uva'],
+  fatias:     ['Caseirinho Cenoura','Caseirinho Ninho Nutella','Fatia Casadinho','Fatia Ninho'],
+  especiais:  ['Cone Ninho','Cone Casadinho','Bolo Gelado Coco','Bolo Gelado Ninho Nutella'],
+  naked:      ['Naked Casadinho','Naked Coco','Naked Pistache Geleia','Naked Pistache Brigadeiro Branco','Naked Frutas Vermelhas'],
+  petit:      ['Petit Casadinho','Petit Coco','Petit Pistache Geleia','Petit Pistache Brigadeiro Branco','Petit Frutas Vermelhas']
+};
+
+// ─── ESTADO ───────────────────────────────────────────────────────────────────
+var S = { loja:'', colab:'', fotoN:null, fotoM:null };
+var itensDia = [], itN = [], itM = [];
+var fotoDiaAtual = null;
+var unidDiaAtual = 'Unidade';
+
+var TELAS = ['t0','t1','t2','tDia','t7','t7b','t7c','t8','t8b','t8c','tOk'];
+
+// ─── NAVEGAÇÃO ────────────────────────────────────────────────────────────────
+function ir(id) {
+  TELAS.forEach(function(t) {
+    var e = document.getElementById(t);
+    if (e) e.style.display = 'none';
+  });
+  var el = document.getElementById(id);
+  if (el) el.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function setModo(m){
-if(m===‘noite’){buildCG(‘colabNoiteGrid’,‘colabNoiteTexto’);ir(‘t7’);return;}
-if(m===‘manha’){buildCG(‘colabManhaGrid’,‘colabManhaTexto’);ir(‘t8’);return;}
-buildCG(‘colabGrid’,‘colabTexto’);ir(‘t2’);
-}
-
-function buildCG(gid,txtId){
-var g=document.getElementById(gid);g.innerHTML=’’;
-var cs=COLAB[S.loja];
-var isMain=gid===‘colabGrid’;
-if(!cs){g.style.display=‘none’;if(txtId)document.getElementById(txtId).style.display=‘block’;return;}
-g.style.display=‘grid’;
-cs.forEach(function(c){
-var b=document.createElement(‘button’);b.className=‘colab-btn’;b.textContent=c;
-b.onclick=function(){
-g.querySelectorAll(’.colab-btn’).forEach(function(x){x.classList.remove(‘sel’);});
-b.classList.add(‘sel’);S.colab=c;
-if(isMain){setTimeout(function(){initDia();ir(‘tDia’);},100);}
-};
-g.appendChild(b);
+// ─── INICIALIZAÇÃO ────────────────────────────────────────────────────────────
+// FIX PRINCIPAL: garante que a tela t0 apareça ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+  ir('t0');
 });
+
+// ─── LOJA ─────────────────────────────────────────────────────────────────────
+function setLoja(l) {
+  S.loja = l;
+  document.getElementById('badge').textContent = l;
+  document.getElementById('headerBottom').style.display = 'flex';
+
+  var f = FISICAS.includes(l);
+  document.getElementById('btnNoite').style.display = f ? 'flex' : 'none';
+  document.getElementById('btnManha').style.display = f ? 'flex' : 'none';
+
+  ir('t1');
 }
 
-function confirmarColab(){var v=document.getElementById(‘colabInput’).value.trim();if(!v){alert(‘Digite seu nome’);return;}S.colab=v;initDia();ir(‘tDia’);}
-
-function initDia(){
-itensDia=[];
-renderItensDia();
-document.getElementById(‘formDia’).style.display=‘none’;
-document.getElementById(‘btnEnviarDia’).style.display=‘none’;
-var coz=S.loja===‘Cozinha’;
-document.querySelectorAll(’.coz-m’).forEach(function(el){el.style.display=coz?‘inline-block’:‘none’;});
-buildCatDiaGrid();
+function trocarLoja() {
+  S.loja = '';
+  S.colab = '';
+  document.getElementById('headerBottom').style.display = 'none';
+  ir('t0');
 }
 
-function buildCatDiaGrid(){
-var coz=S.loja===‘Cozinha’;
-var g=document.getElementById(‘catDiaGrid’);
-g.innerHTML=’’;
-g.style.display=coz?‘none’:‘grid’;
-document.getElementById(‘catDiaCoz’).style.display=coz?‘block’:‘none’;
-if(!coz){
-CATS.forEach(function(c){
-var b=document.createElement(‘button’);b.className=‘btn-cat’;b.textContent=c.lb;
-b.onclick=function(){setCatDia(c.id,c.lb);};
-g.appendChild(b);
-});
-}
+// ─── MODO ─────────────────────────────────────────────────────────────────────
+function setModo(m) {
+  if (m === 'noite') { buildCG('colabNoiteGrid','colabNoiteTexto'); ir('t7'); return; }
+  if (m === 'manha') { buildCG('colabManhaGrid','colabManhaTexto'); ir('t8'); return; }
+  buildCG('colabGrid','colabTexto');
+  ir('t2');
 }
 
-function showFormDia(){
-document.getElementById(‘formDia’).style.display=‘block’;
-document.getElementById(‘prodDiaLista’).style.display=‘none’;
-document.getElementById(‘prodDiaTexto’).style.display=‘none’;
-document.getElementById(‘qtdDiaField’).style.display=‘none’;
-document.getElementById(‘motivoDiaField’).style.display=‘none’;
-document.getElementById(‘fotoDiaField’).style.display=‘none’;
-document.getElementById(‘btnAddDia’).style.display=‘none’;
-document.getElementById(‘qtdDia’).value=’’;
-document.querySelectorAll(’#motivoDiaPills .pill’).forEach(function(p){p.classList.remove(‘sel’);});
-document.getElementById(‘fotoDiaPreview’).style.display=‘none’;
-document.getElementById(‘fotoDiaPh’).style.display=‘block’;
-fotoDiaAtual=null;unidDiaAtual=‘Unidade’;
-document.querySelectorAll(’#unidDiaPills .pill’).forEach(function(p){p.classList.remove(‘sel’);});
-document.querySelector(’#unidDiaPills .pill’).classList.add(‘sel’);
-buildCatDiaGrid();
+// ─── COLABORADORES ────────────────────────────────────────────────────────────
+function buildCG(gid, txtId) {
+  var g   = document.getElementById(gid);
+  var txt = document.getElementById(txtId);
+  g.innerHTML = '';
+  var cs = COLAB[S.loja];
+
+  if (!cs) {
+    g.style.display = 'none';
+    if (txt) txt.style.display = 'block';
+    return;
+  }
+
+  g.style.display = 'grid';
+  if (txt) txt.style.display = 'none';
+
+  cs.forEach(function(c) {
+    var b = document.createElement('button');
+    b.className = 'colab-btn';
+    b.textContent = c;
+    b.onclick = function() {
+      g.querySelectorAll('.colab-btn').forEach(function(x){ x.classList.remove('sel'); });
+      b.classList.add('sel');
+      S.colab = c;
+      // Navega automaticamente após selecionar colaborador
+      if (gid === 'colabGrid') {
+        setTimeout(function(){ initDia(); ir('tDia'); }, 100);
+      }
+    };
+    g.appendChild(b);
+  });
 }
 
-function cancelarFormDia(){document.getElementById(‘formDia’).style.display=‘none’;}
-
-function setCatDia(id,lb){
-document.querySelectorAll(’#catDiaGrid .btn-cat’).forEach(function(b){b.classList.remove(‘sel’);});
-var isCoz=(id===‘insumo_coz’||id===‘acabado_coz’);
-if(!isCoz){
-var btns=document.querySelectorAll(’#catDiaGrid .btn-cat’);
-btns.forEach(function(b){if(b.textContent===lb)b.classList.add(‘sel’);});
-}
-var lista=document.getElementById(‘prodDiaLista’);
-var texto=document.getElementById(‘prodDiaTexto’);
-if(isCoz){
-lista.style.display=‘none’;texto.style.display=‘block’;
-unidDiaAtual=id===‘insumo_coz’?‘Kg’:‘Unidade’;
-document.querySelectorAll(’#unidDiaPills .pill’).forEach(function(p){p.classList.remove(‘sel’);});
-document.querySelectorAll(’#unidDiaPills .pill’).forEach(function(p){if(p.textContent===unidDiaAtual)p.classList.add(‘sel’);});
-} else {
-texto.style.display=‘none’;lista.style.display=‘block’;
-var sel=document.getElementById(‘prodDiaSel’);
-sel.innerHTML=’<option value="">Selecione…</option>’;
-sel.dataset.cat=id;sel.dataset.catLb=lb;
-(PRODS[id]||[]).forEach(function(p){var o=document.createElement(‘option’);o.value=p;o.textContent=p;sel.appendChild(o);});
-sel.onchange=function(){if(sel.value){mostrarDetDia();}};
-}
-document.getElementById(‘qtdDiaField’).style.display=‘block’;
-document.getElementById(‘motivoDiaField’).style.display=‘block’;
-if(FISICAS.includes(S.loja))document.getElementById(‘fotoDiaField’).style.display=‘block’;
-document.getElementById(‘btnAddDia’).style.display=‘block’;
+function confirmarColab() {
+  var v = document.getElementById('colabInput').value.trim();
+  if (!v) { alert('Digite seu nome'); return; }
+  S.colab = v;
+  initDia();
+  ir('tDia');
 }
 
-function mostrarDetDia(){
-document.getElementById(‘qtdDiaField’).style.display=‘block’;
-document.getElementById(‘motivoDiaField’).style.display=‘block’;
-if(FISICAS.includes(S.loja))document.getElementById(‘fotoDiaField’).style.display=‘block’;
-document.getElementById(‘btnAddDia’).style.display=‘block’;
+// ─── DESCARTE DO DIA ─────────────────────────────────────────────────────────
+function initDia() {
+  itensDia = [];
+  renderItensDia();
+  document.getElementById('formDia').style.display = 'none';
+  document.getElementById('btnEnviarDia').style.display = 'none';
+  var coz = S.loja === 'Cozinha';
+  document.querySelectorAll('.coz-m').forEach(function(el){ el.style.display = coz ? 'inline-block' : 'none'; });
+  buildCatDiaGrid();
 }
 
-function selUnidDia(el,val){
-document.querySelectorAll(’#unidDiaPills .pill’).forEach(function(p){p.classList.remove(‘sel’);});
-el.classList.add(‘sel’);unidDiaAtual=val;
+function buildCatDiaGrid() {
+  var coz = S.loja === 'Cozinha';
+  var g   = document.getElementById('catDiaGrid');
+  g.innerHTML = '';
+  g.style.display   = coz ? 'none' : 'grid';
+  document.getElementById('catDiaCoz').style.display = coz ? 'block' : 'none';
+  if (!coz) {
+    CATS.forEach(function(c) {
+      var b = document.createElement('button');
+      b.className   = 'btn-cat';
+      b.textContent = c.lb;
+      b.onclick = function(){ setCatDia(c.id, c.lb); };
+      g.appendChild(b);
+    });
+  }
 }
 
-function prevFotoDia(inp){
-if(!inp.files[0])return;
-var r=new FileReader();
-r.onload=function(e){
-document.getElementById(‘fotoDiaPreview’).src=e.target.result;
-document.getElementById(‘fotoDiaPreview’).style.display=‘block’;
-document.getElementById(‘fotoDiaPh’).style.display=‘none’;
-fotoDiaAtual=e.target.result;
-};
-r.readAsDataURL(inp.files[0]);
+function showFormDia() {
+  document.getElementById('formDia').style.display = 'block';
+  document.getElementById('prodDiaLista').style.display   = 'none';
+  document.getElementById('prodDiaTexto').style.display   = 'none';
+  document.getElementById('qtdDiaField').style.display    = 'none';
+  document.getElementById('motivoDiaField').style.display = 'none';
+  document.getElementById('fotoDiaField').style.display   = 'none';
+  document.getElementById('btnAddDia').style.display      = 'none';
+  document.getElementById('qtdDia').value = '';
+  document.querySelectorAll('#motivoDiaPills .pill').forEach(function(p){ p.classList.remove('sel'); });
+  document.getElementById('fotoDiaPreview').style.display = 'none';
+  document.getElementById('fotoDiaPh').style.display      = 'block';
+  fotoDiaAtual  = null;
+  unidDiaAtual  = 'Unidade';
+  document.querySelectorAll('#unidDiaPills .pill').forEach(function(p){ p.classList.remove('sel'); });
+  document.querySelector('#unidDiaPills .pill').classList.add('sel');
+  buildCatDiaGrid();
 }
 
-function addItemDia(){
-var sel=document.getElementById(‘prodDiaSel’);
-var txt=document.getElementById(‘prodDiaInput’);
-var prod=’’;var cat=’’;var unid=unidDiaAtual;
-if(document.getElementById(‘prodDiaTexto’).style.display!==‘none’){
-prod=txt.value.trim();cat=document.querySelector(’#catDiaCoz .btn-item.ativo’)||‘Cozinha’;
-if(!prod){alert(‘Digite o nome do produto’);return;}
-} else {
-prod=sel.value;cat=sel.dataset.catLb||’’;
-if(!prod){alert(‘Selecione o produto’);return;}
-unid=‘Unidade’;
-}
-var qtd=document.getElementById(‘qtdDia’).value;
-var mot=document.querySelector(’#motivoDiaPills .pill.sel’);
-if(!qtd||qtd<=0){alert(‘Informe a quantidade’);return;}
-if(!mot){alert(‘Selecione o motivo’);return;}
-if(FISICAS.includes(S.loja)&&!fotoDiaAtual){alert(‘Foto obrigatória’);return;}
-itensDia.push({produto:prod,categoria:cat,quantidade:qtd,unidade:unid,motivo:mot.textContent,foto:fotoDiaAtual});
-renderItensDia();
-document.getElementById(‘formDia’).style.display=‘none’;
-document.getElementById(‘btnEnviarDia’).style.display=‘block’;
+function cancelarFormDia() {
+  document.getElementById('formDia').style.display = 'none';
 }
 
-function renderItensDia(){
-var c=document.getElementById(‘itensDiaList’);
-if(itensDia.length===0){c.innerHTML=’<div style="color:#9A8F8A;font-size:13px;text-align:center;padding:12px;margin-bottom:8px">Nenhum item ainda</div>’;return;}
-c.innerHTML=itensDia.map(function(item,i){
-return ‘<div class="item-card"><div><div class="item-name">’+item.produto+’</div><div class="item-detail">’+item.quantidade+’ ‘+item.unidade+’ · ‘+item.motivo+’</div></div><button class="item-remove" onclick="rmDia('+i+')">✕</button></div>’;
-}).join(’’);
+function setCatDia(id, lb) {
+  document.querySelectorAll('#catDiaGrid .btn-cat').forEach(function(b){ b.classList.remove('sel'); });
+  var isCoz = (id === 'insumo_coz' || id === 'acabado_coz');
+
+  if (!isCoz) {
+    document.querySelectorAll('#catDiaGrid .btn-cat').forEach(function(b){
+      if (b.textContent === lb) b.classList.add('sel');
+    });
+  }
+
+  var lista = document.getElementById('prodDiaLista');
+  var texto = document.getElementById('prodDiaTexto');
+
+  if (isCoz) {
+    lista.style.display = 'none';
+    texto.style.display = 'block';
+    unidDiaAtual = (id === 'insumo_coz') ? 'Kg' : 'Unidade';
+    document.querySelectorAll('#unidDiaPills .pill').forEach(function(p){ p.classList.remove('sel'); });
+    document.querySelectorAll('#unidDiaPills .pill').forEach(function(p){
+      if (p.textContent === unidDiaAtual) p.classList.add('sel');
+    });
+    mostrarDetDia();
+  } else {
+    texto.style.display = 'none';
+    lista.style.display = 'block';
+    var sel = document.getElementById('prodDiaSel');
+    sel.innerHTML = '<option value="">Selecione…</option>';
+    sel.dataset.cat   = id;
+    sel.dataset.catLb = lb;
+    (PRODS[id] || []).forEach(function(p){
+      var o = document.createElement('option');
+      o.value = p; o.textContent = p;
+      sel.appendChild(o);
+    });
+    sel.onchange = function(){ if (sel.value) mostrarDetDia(); };
+  }
+
+  document.getElementById('qtdDiaField').style.display    = 'block';
+  document.getElementById('motivoDiaField').style.display = 'block';
+  if (FISICAS.includes(S.loja)) document.getElementById('fotoDiaField').style.display = 'block';
+  document.getElementById('btnAddDia').style.display = 'block';
 }
 
-function rmDia(idx){itensDia.splice(idx,1);renderItensDia();if(itensDia.length===0)document.getElementById(‘btnEnviarDia’).style.display=‘none’;}
-
-function submitDia(){
-if(itensDia.length===0){alert(‘Adicione pelo menos 1 item’);return;}
-var btn=document.getElementById(‘btnEnviarDia’);
-btn.textContent=‘Enviando…’;btn.disabled=true;
-itensDia.forEach(function(item){
-enviar({tipo:‘descarte’,loja:S.loja,colab:S.colab,categoria:item.categoria,produto:item.produto,quantidade:item.quantidade,unidade:item.unidade,motivo:item.motivo,obs:’’,dataHora:new Date().toISOString()});
-});
-setTimeout(function(){
-btn.textContent=‘✓ Enviar tudo’;btn.disabled=false;
-document.getElementById(‘okTitle’).textContent=‘Descarte registrado! ✓’;
-document.getElementById(‘okSub’).textContent=itensDia.length+’ item(s) enviado(s).’;
-document.getElementById(‘okDetail’).innerHTML=’<div style="padding:8px 0;text-align:center;font-size:14px;color:#3D2314">Total: <strong>’+itensDia.length+’</strong> itens descartados</div>’;
-ir(‘tOk’);
-},1000);
+function mostrarDetDia() {
+  document.getElementById('qtdDiaField').style.display    = 'block';
+  document.getElementById('motivoDiaField').style.display = 'block';
+  if (FISICAS.includes(S.loja)) document.getElementById('fotoDiaField').style.display = 'block';
+  document.getElementById('btnAddDia').style.display = 'block';
 }
 
-function selPill(el,gid,val){
-document.querySelectorAll(’#’+gid+’ .pill’).forEach(function(p){p.classList.remove(‘sel’);});
-el.classList.add(‘sel’);
+function selUnidDia(el, val) {
+  document.querySelectorAll('#unidDiaPills .pill').forEach(function(p){ p.classList.remove('sel'); });
+  el.classList.add('sel');
+  unidDiaAtual = val;
 }
 
-function prevFoto(inp,prevId,phId,tipo){
-if(!inp.files[0])return;
-var r=new FileReader();
-r.onload=function(e){
-document.getElementById(prevId).src=e.target.result;
-document.getElementById(prevId).style.display=‘block’;
-document.getElementById(phId).style.display=‘none’;
-if(tipo===‘N’)S.fotoN=e.target.result;
-if(tipo===‘M’)S.fotoM=e.target.result;
-};
-r.readAsDataURL(inp.files[0]);
+function prevFotoDia(inp) {
+  if (!inp.files[0]) return;
+  var r = new FileReader();
+  r.onload = function(e) {
+    fotoDiaAtual = e.target.result;
+    var prev = document.getElementById('fotoDiaPreview');
+    prev.src = fotoDiaAtual;
+    prev.style.display = 'block';
+    document.getElementById('fotoDiaPh').style.display = 'none';
+  };
+  r.readAsDataURL(inp.files[0]);
 }
 
-function enviar(data){
-var f=document.createElement(‘form’);f.method=‘POST’;f.action=SURL;f.target=‘hidden_iframe’;
-Object.keys(data).forEach(function(k){var i=document.createElement(‘input’);i.type=‘hidden’;i.name=k;i.value=data[k]||’’;f.appendChild(i);});
-document.body.appendChild(f);f.submit();
-setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f);},2000);
+function addItemDia() {
+  var isCoz = (S.loja === 'Cozinha');
+  var prod, unid, cat;
+
+  if (isCoz) {
+    prod = document.getElementById('prodDiaInput').value.trim();
+    unid = unidDiaAtual;
+    cat  = 'Cozinha';
+    if (!prod) { alert('Informe o produto'); return; }
+  } else {
+    var sel = document.getElementById('prodDiaSel');
+    prod = sel.value;
+    cat  = sel.dataset.catLb || '';
+    unid = 'Unidade';
+    if (!prod) { alert('Selecione o produto'); return; }
+  }
+
+  var qtd = document.getElementById('qtdDia').value;
+  if (!qtd || qtd <= 0) { alert('Informe a quantidade'); return; }
+
+  var motivo = '';
+  document.querySelectorAll('#motivoDiaPills .pill.sel').forEach(function(p){ motivo = p.textContent; });
+  if (!motivo) { alert('Selecione o motivo'); return; }
+
+  if (FISICAS.includes(S.loja) && !fotoDiaAtual) { alert('Foto obrigatória'); return; }
+
+  itensDia.push({ cat:cat, prod:prod, qtd:qtd, unid:unid, motivo:motivo, foto:fotoDiaAtual });
+  fotoDiaAtual = null;
+  renderItensDia();
+  document.getElementById('formDia').style.display = 'none';
+  document.getElementById('btnEnviarDia').style.display = 'block';
 }
 
-function buildCatTurno(gid,turno){
-var g=document.getElementById(gid);g.innerHTML=’’;
-CATS.forEach(function(c){
-var b=document.createElement(‘button’);b.className=‘btn-cat’;b.textContent=c.lb;
-b.onclick=function(){
-g.querySelectorAll(’.btn-cat’).forEach(function(x){x.classList.remove(‘sel’);});b.classList.add(‘sel’);
-var pf=turno===‘noite’?‘prodNoiteField’:‘prodManhaField’;
-var ps=turno===‘noite’?‘prodNoiteSel’:‘prodManhaSel’;
-document.getElementById(pf).style.display=‘block’;
-var sel=document.getElementById(ps);
-sel.innerHTML=’<option value="">Selecione…</option>’;
-sel.dataset.catLb=c.lb;
-(PRODS[c.id]||[]).forEach(function(p){var o=document.createElement(‘option’);o.value=p;o.textContent=p;sel.appendChild(o);});
-};
-g.appendChild(b);
-});
+function renderItensDia() {
+  var el = document.getElementById('itensDiaList');
+  el.innerHTML = '';
+  itensDia.forEach(function(it, i) {
+    var d = document.createElement('div');
+    d.className = 'item-card';
+    d.innerHTML = '<div><div class="item-name">' + it.prod + '</div><div class="item-detail">' + it.qtd + ' ' + it.unid + ' · ' + it.motivo + '</div></div>'
+      + '<button class="item-remove" onclick="removeDia(' + i + ')">✕</button>';
+    el.appendChild(d);
+  });
 }
 
-function goNoiteItens(){
-var s=document.querySelector(’#colabNoiteGrid .colab-btn.sel’);
-var txt=document.getElementById(‘colabNoiteInput’);
-if(s)S.colab=s.textContent;
-else if(txt&&txt.value.trim())S.colab=txt.value.trim();
-else{alert(‘Selecione ou digite o responsável’);return;}
-itN=[];renderItens(‘itensNoiteList’,itN,‘noite’);buildCatTurno(‘catNoiteGrid’,‘noite’);ir(‘t7b’);
-}
-function showFN(){document.getElementById(‘formNoite’).style.display=‘block’;document.getElementById(‘qtdNoite’).value=’’;document.querySelectorAll(’#motivoNoitePills .pill’).forEach(function(p){p.classList.remove(‘sel’);});}
-function addItemNoite(){
-var p=document.getElementById(‘prodNoiteSel’).value;
-var q=document.getElementById(‘qtdNoite’).value;
-var m=document.querySelector(’#motivoNoitePills .pill.sel’);
-var c=document.getElementById(‘prodNoiteSel’).dataset.catLb||’’;
-if(!p){alert(‘Selecione o produto’);return;}
-if(!q){alert(‘Informe a quantidade’);return;}
-if(!m){alert(‘Selecione o motivo’);return;}
-itN.push({produto:p,quantidade:q,unidade:‘Unidade’,motivo:m.textContent,categoria:c});
-renderItens(‘itensNoiteList’,itN,‘noite’);
-document.getElementById(‘formNoite’).style.display=‘none’;
-}
-function goNoiteFoto(){if(itN.length===0){alert(‘Adicione pelo menos 1 item’);return;}ir(‘t7c’);}
-function submitNoite(){
-if(!S.fotoN){alert(‘Foto obrigatória’);return;}
-itN.forEach(function(item){enviar(Object.assign({},item,{tipo:‘fechamento_noite’,loja:S.loja,colab:S.colab,obs:document.getElementById(‘obsNoite’).value,dataHora:new Date().toISOString()}));});
-setTimeout(function(){
-document.getElementById(‘okTitle’).textContent=‘Fechamento registrado! 🌙’;
-document.getElementById(‘okSub’).textContent=itN.length+’ item(s) registrado(s).’;
-document.getElementById(‘okDetail’).innerHTML=’<div style="padding:8px 0;text-align:center;font-size:14px;color:#3D2314">Total: <strong>’+itN.length+’</strong> itens</div>’;
-ir(‘tOk’);
-},800);
+function removeDia(i) {
+  itensDia.splice(i, 1);
+  renderItensDia();
+  if (!itensDia.length) document.getElementById('btnEnviarDia').style.display = 'none';
 }
 
-function goManhaItens(){
-var s=document.querySelector(’#colabManhaGrid .colab-btn.sel’);
-var txt=document.getElementById(‘colabManhaInput’);
-if(s)S.colab=s.textContent;
-else if(txt&&txt.value.trim())S.colab=txt.value.trim();
-else{alert(‘Selecione ou digite o responsável’);return;}
-itM=[];renderItens(‘itensManhaList’,itM,‘manha’);buildCatTurno(‘catManhaGrid’,‘manha’);ir(‘t8b’);
-}
-function showFM(){document.getElementById(‘formManha’).style.display=‘block’;document.getElementById(‘qtdManha’).value=’’;}
-function addItemManha(){
-var p=document.getElementById(‘prodManhaSel’).value;
-var q=document.getElementById(‘qtdManha’).value;
-var c=document.getElementById(‘prodManhaSel’).dataset.catLb||’’;
-if(!p){alert(‘Selecione o produto’);return;}
-if(!q){alert(‘Informe a quantidade’);return;}
-itM.push({produto:p,quantidade:q,unidade:‘Unidade’,motivo:‘Encontrado na conferência’,categoria:c});
-renderItens(‘itensManhaList’,itM,‘manha’);
-document.getElementById(‘formManha’).style.display=‘none’;
-}
-function goManhaFoto(){if(itM.length===0){alert(‘Adicione pelo menos 1 item’);return;}ir(‘t8c’);}
-function submitManha(){
-if(!S.fotoM){alert(‘Foto obrigatória’);return;}
-itM.forEach(function(item){enviar(Object.assign({},item,{tipo:‘conferencia_manha’,loja:S.loja,colab:S.colab,obs:document.getElementById(‘obsManha’).value,dataHora:new Date().toISOString()}));});
-setTimeout(function(){
-document.getElementById(‘okTitle’).textContent=‘Conferência registrada! ☀️’;
-document.getElementById(‘okSub’).textContent=itM.length+’ item(s) conferido(s).’;
-document.getElementById(‘okDetail’).innerHTML=’<div style="padding:8px 0;text-align:center;font-size:14px;color:#3D2314">Total: <strong>’+itM.length+’</strong> itens</div>’;
-ir(‘tOk’);
-},800);
+function submitDia() {
+  if (!itensDia.length) { alert('Adicione ao menos um item'); return; }
+  var now = new Date();
+  var rows = itensDia.map(function(it) {
+    return {
+      tipo:    'Descarte do Dia',
+      loja:    S.loja,
+      cnpj:    CNPJ[S.loja] || '',
+      colab:   S.colab,
+      data:    fmtDate(now),
+      hora:    fmtTime(now),
+      cat:     it.cat,
+      prod:    it.prod,
+      qtd:     it.qtd,
+      unid:    it.unid,
+      motivo:  it.motivo,
+      foto:    it.foto || ''
+    };
+  });
+  enviar(rows, 'Descarte registrado!', itensDia.length + ' item(ns) salvo(s).');
 }
 
-function renderItens(cid,lista,turno){
-var c=document.getElementById(cid);
-if(lista.length===0){c.innerHTML=’<div style="color:#9A8F8A;font-size:13px;text-align:center;padding:12px">Nenhum item ainda</div>’;return;}
-c.innerHTML=lista.map(function(item,i){
-return ‘<div class="item-card"><div><div class="item-name">’+item.produto+’</div><div class="item-detail">’+item.quantidade+’ un · ‘+(item.motivo||’’)+’</div></div><button class="item-remove" onclick="rmItem(''+cid+'','+i+',''+turno+'')">✕</button></div>’;
-}).join(’’);
+// ─── FECHAMENTO DA NOITE ──────────────────────────────────────────────────────
+function goNoiteItens() {
+  var c = S.loja ? COLAB[S.loja] : null;
+  if (c) {
+    var sel = document.querySelector('#colabNoiteGrid .colab-btn.sel');
+    if (sel) S.colab = sel.textContent;
+    else { var v = document.getElementById('colabNoiteInput').value.trim(); if (!v){ alert('Selecione ou informe seu nome'); return; } S.colab = v; }
+  } else {
+    var v = document.getElementById('colabNoiteInput').value.trim();
+    if (!v){ alert('Informe seu nome'); return; }
+    S.colab = v;
+  }
+  itN = [];
+  renderItensN();
+  buildCatGrid('catNoiteGrid', 'prodNoiteField', 'prodNoiteSel');
+  ir('t7b');
 }
-function rmItem(cid,idx,turno){if(turno===‘noite’){itN.splice(idx,1);renderItens(cid,itN,turno);}else{itM.splice(idx,1);renderItens(cid,itM,turno);}}
 
-function novoDescarte(){itensDia=[];ir(‘t1’);}
-function trocarLoja(){S={loja:’’,colab:’’,fotoN:null,fotoM:null};document.getElementById(‘headerBottom’).style.display=‘none’;ir(‘t0’);}
+function showFN() { document.getElementById('formNoite').style.display = 'block'; }
 
-ir(‘t0’);
+function addItemNoite() {
+  var sel = document.getElementById('prodNoiteSel');
+  var prod = sel.value;
+  var qtd  = document.getElementById('qtdNoite').value;
+  var mot  = '';
+  document.querySelectorAll('#motivoNoitePills .pill.sel').forEach(function(p){ mot = p.textContent; });
+  if (!prod) { alert('Selecione o produto'); return; }
+  if (!qtd || qtd <= 0) { alert('Informe a quantidade'); return; }
+  if (!mot) { alert('Selecione o motivo'); return; }
+  itN.push({ prod:prod, qtd:qtd, motivo:mot });
+  renderItensN();
+  document.getElementById('formNoite').style.display = 'none';
+}
+
+function renderItensN() {
+  var el = document.getElementById('itensNoiteList');
+  el.innerHTML = '';
+  itN.forEach(function(it, i) {
+    var d = document.createElement('div');
+    d.className = 'item-card';
+    d.innerHTML = '<div><div class="item-name">' + it.prod + '</div><div class="item-detail">' + it.qtd + ' · ' + it.motivo + '</div></div>'
+      + '<button class="item-remove" onclick="removeN(' + i + ')">✕</button>';
+    el.appendChild(d);
+  });
+}
+
+function removeN(i) { itN.splice(i,1); renderItensN(); }
+
+function goNoiteFoto() { ir('t7c'); }
+
+function submitNoite() {
+  if (!S.fotoN) { alert('Foto obrigatória'); return; }
+  var now = new Date();
+  var rows = [{
+    tipo:   'Fechamento da Noite',
+    loja:   S.loja,
+    cnpj:   CNPJ[S.loja] || '',
+    colab:  S.colab,
+    data:   fmtDate(now),
+    hora:   fmtTime(now),
+    itens:  JSON.stringify(itN),
+    obs:    document.getElementById('obsNoite').value,
+    foto:   S.fotoN
+  }];
+  enviar(rows, 'Fechamento registrado!', 'Noite encerrada com sucesso.');
+}
+
+// ─── CONFERÊNCIA DA MANHÃ ─────────────────────────────────────────────────────
+function goManhaItens() {
+  var c = S.loja ? COLAB[S.loja] : null;
+  if (c) {
+    var sel = document.querySelector('#colabManhaGrid .colab-btn.sel');
+    if (sel) S.colab = sel.textContent;
+    else { var v = document.getElementById('colabManhaInput').value.trim(); if (!v){ alert('Selecione ou informe seu nome'); return; } S.colab = v; }
+  } else {
+    var v = document.getElementById('colabManhaInput').value.trim();
+    if (!v){ alert('Informe seu nome'); return; }
+    S.colab = v;
+  }
+  itM = [];
+  renderItensM();
+  buildCatGrid('catManhaGrid', 'prodManhaField', 'prodManhaSel');
+  ir('t8b');
+}
+
+function showFM() { document.getElementById('formManha').style.display = 'block'; }
+
+function addItemManha() {
+  var sel  = document.getElementById('prodManhaSel');
+  var prod = sel.value;
+  var qtd  = document.getElementById('qtdManha').value;
+  if (!prod) { alert('Selecione o produto'); return; }
+  if (!qtd || qtd <= 0) { alert('Informe a quantidade'); return; }
+  itM.push({ prod:prod, qtd:qtd });
+  renderItensM();
+  document.getElementById('formManha').style.display = 'none';
+}
+
+function renderItensM() {
+  var el = document.getElementById('itensManhaList');
+  el.innerHTML = '';
+  itM.forEach(function(it, i) {
+    var d = document.createElement('div');
+    d.className = 'item-card';
+    d.innerHTML = '<div><div class="item-name">' + it.prod + '</div><div class="item-detail">' + it.qtd + '</div></div>'
+      + '<button class="item-remove" onclick="removeM(' + i + ')">✕</button>';
+    el.appendChild(d);
+  });
+}
+
+function removeM(i) { itM.splice(i,1); renderItensM(); }
+
+function goManhaFoto() { ir('t8c'); }
+
+function submitManha() {
+  if (!S.fotoM) { alert('Foto obrigatória'); return; }
+  var now = new Date();
+  var rows = [{
+    tipo:   'Conferência da Manhã',
+    loja:   S.loja,
+    cnpj:   CNPJ[S.loja] || '',
+    colab:  S.colab,
+    data:   fmtDate(now),
+    hora:   fmtTime(now),
+    itens:  JSON.stringify(itM),
+    obs:    document.getElementById('obsManha').value,
+    foto:   S.fotoM
+  }];
+  enviar(rows, 'Conferência registrada!', 'Manhã conferida com sucesso.');
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function buildCatGrid(gid, fieldId, selId) {
+  var g = document.getElementById(gid);
+  g.innerHTML = '';
+  CATS.forEach(function(c) {
+    var b = document.createElement('button');
+    b.className   = 'btn-cat';
+    b.textContent = c.lb;
+    b.onclick = function() {
+      g.querySelectorAll('.btn-cat').forEach(function(x){ x.classList.remove('sel'); });
+      b.classList.add('sel');
+      var sel = document.getElementById(selId);
+      sel.innerHTML = '<option value="">Selecione…</option>';
+      (PRODS[c.id] || []).forEach(function(p){
+        var o = document.createElement('option'); o.value = p; o.textContent = p; sel.appendChild(o);
+      });
+      document.getElementById(fieldId).style.display = 'block';
+    };
+    g.appendChild(b);
+  });
+}
+
+function selPill(el, pid, val) {
+  document.querySelectorAll('#' + pid + ' .pill').forEach(function(p){ p.classList.remove('sel'); });
+  el.classList.add('sel');
+}
+
+function prevFoto(inp, prevId, phId, tipo) {
+  if (!inp.files[0]) return;
+  var r = new FileReader();
+  r.onload = function(e) {
+    var data = e.target.result;
+    if (tipo === 'N') S.fotoN = data;
+    if (tipo === 'M') S.fotoM = data;
+    var prev = document.getElementById(prevId);
+    prev.src = data;
+    prev.style.display = 'block';
+    document.getElementById(phId).style.display = 'none';
+  };
+  r.readAsDataURL(inp.files[0]);
+}
+
+function fmtDate(d) {
+  return d.getDate().toString().padStart(2,'0') + '/' + (d.getMonth()+1).toString().padStart(2,'0') + '/' + d.getFullYear();
+}
+
+function fmtTime(d) {
+  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+
+// ─── ENVIO ────────────────────────────────────────────────────────────────────
+function enviar(rows, titulo, subtitulo) {
+  var btn = document.querySelectorAll('.btn-p');
+  btn.forEach(function(b){ b.disabled = true; b.textContent = 'Enviando...'; });
+
+  fetch(SURL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ rows: rows })
+  })
+  .then(function() {
+    document.getElementById('okTitle').textContent = titulo;
+    document.getElementById('okSub').textContent   = subtitulo;
+    document.getElementById('okDetail').innerHTML  = '';
+    ir('tOk');
+  })
+  .catch(function(err) {
+    alert('Erro ao enviar. Verifique sua conexão e tente novamente.\n' + err);
+  })
+  .finally(function() {
+    btn.forEach(function(b){ b.disabled = false; });
+  });
+}
+
+// ─── NOVO DESCARTE / TROCAR ───────────────────────────────────────────────────
+function novoDescarte() {
+  S.colab   = '';
+  itensDia  = [];
+  itN       = [];
+  itM       = [];
+  S.fotoN   = null;
+  S.fotoM   = null;
+  ir('t1');
+}
 </script>
 
 </body>
