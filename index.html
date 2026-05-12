@@ -401,8 +401,31 @@ textarea{resize:none;height:70px;font-size:13px}
 </div><!-- /container -->
 
 <script>
-var SURL="https://script.google.com/macros/s/AKfycbwS5iYSB4JXGsHsLhpq9B7W2x8i74VbfdzfG7IAH3UdQ3OSSHdUM9ZFe5xDeDVuOsgr/exec";
+var SURL="https://script.google.com/macros/s/AKfycbwE51hwEdBp4q-Vvfw5Le1li4J-l7N8OcLMXsYvmr1Xj59zqACTYTspIq2jK-7k63J-/exec";
 var COLAB={'Lapa':['Sheila','Emily'],'Moema':['Pedro','Andreia','Ana Beatriz'],'Saúde':['Thifany','Jéssica','Mariah','Kauan'],'Cozinha':null,'Delivery Mooca':null,'Delivery Centro':null};
+// Carrega colaboradores e produtos dinamicamente da planilha
+function carregarConfig(){
+  var url=SURL+'?config=1';
+  fetch(url,{method:'GET',mode:'cors'})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.colab){
+      Object.keys(d.colab).forEach(function(loja){
+        COLAB[loja]=d.colab[loja].length>0?d.colab[loja]:null;
+      });
+    }
+    if(d.cats){
+      CATS=[];
+      PRODS={};
+      Object.keys(d.cats).forEach(function(cat){
+        var id=cat.toLowerCase().replace(/[^a-z]/g,'');
+        CATS.push({id:id,lb:cat});
+        PRODS[id]=d.cats[cat];
+      });
+    }
+  })
+  .catch(function(){});
+}
 var CNPJ={'Saúde':'20.331.832/0001-06','Cozinha':'20.331.832/0001-06','Lapa':'20.331.832/0002-89','Moema':'20.331.832/0003-60','Delivery Mooca':'20.331.832/0001-06','Delivery Centro':'20.331.832/0001-06'};
 var FISICAS=['Lapa','Moema','Saúde'];
 var CATS=[{id:'potes',lb:'Potes 180ml'},{id:'potinhos',lb:'Potinhos 80ml'},{id:'caixinhas',lb:'Caixinhas'},{id:'brigadeiro',lb:'Brigadeiros'},{id:'fatias',lb:'Fatias e Caseirinhos'},{id:'especiais',lb:'Especiais'},{id:'naked',lb:'Naked'},{id:'petit',lb:'Petit'}];
@@ -415,7 +438,7 @@ var TELAS=['t0','t1','t2','tDia','tConfDia','t7','t7b','t7c','tConfNoite','t8','
 
 function ir(id){TELAS.forEach(function(t){var e=document.getElementById(t);if(e)e.style.display='none';});var el=document.getElementById(id);if(el)el.style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
 
-document.addEventListener('DOMContentLoaded',function(){ir('t0');});
+document.addEventListener('DOMContentLoaded',function(){carregarConfig();ir('t0');});
 
 // ── LOJA ──
 function setLoja(l){
