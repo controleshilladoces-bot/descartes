@@ -697,7 +697,7 @@ function removeDia(i){itensDia.splice(i,1);renderItensDia();if(!itensDia.length)
 function confirmarDia(){
   if(!itensDia.length){alert('Adicione ao menos um item');return;}
   var now=new Date();
-  document.getElementById('confDiaLoja').textContent=S.loja+' — '+(CNPJ[S.loja]||'');
+  document.getElementById('confDiaLoja').textContent=S.loja+' — '+(CNPJS[S.loja]||'');
   document.getElementById('confDiaColab').textContent=S.colab;
   document.getElementById('confDiaData').textContent=fmtDate(now)+' às '+fmtTime(now);
   var itensEl=document.getElementById('confDiaItens');itensEl.innerHTML='';
@@ -713,7 +713,7 @@ function confirmarDia(){
 function submitDia(){
   if(enviando)return;
   var now=new Date();
-  var rows=itensDia.map(function(it){return{tipo:'Descarte do Dia',loja:S.loja,cnpj:CNPJ[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),cat:it.cat,prod:it.prod,qtd:it.qtd,unid:it.unid,motivo:it.motivo,foto:it.foto?'sim':''};});
+  var rows=itensDia.map(function(it){return{tipo:'Descarte do Dia',loja:S.loja,cnpj:CNPJS[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),cat:it.cat,prod:it.prod,qtd:it.qtd,unid:it.unid,motivo:it.motivo,foto:it.foto?'sim':''};});
   enviar('btnConfDiaEnviar',rows,'Descarte registrado!',itensDia.length+' item(ns) salvo(s).');
 }
 
@@ -757,7 +757,7 @@ function confirmarNoite(){
     return;
   }
   var now=new Date();
-  document.getElementById('confNoiteLoja').textContent=S.loja+' — '+(CNPJ[S.loja]||'');
+  document.getElementById('confNoiteLoja').textContent=S.loja+' — '+(CNPJS[S.loja]||'');
   document.getElementById('confNoiteColab').textContent=S.colab;
   document.getElementById('confNoiteData').textContent=fmtDate(now)+' às '+fmtTime(now);
   document.getElementById('confNoiteObs').textContent=document.getElementById('obsNoite').value||'—';
@@ -772,7 +772,7 @@ function confirmarNoite(){
 function submitNoite(){
   if(enviando)return;
   var now=new Date();
-  var rows=[{tipo:'Fechamento da Noite',loja:S.loja,cnpj:CNPJ[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),itens:JSON.stringify(itN),obs:document.getElementById('obsNoite').value,foto:S.fotoN?'sim':''}];
+  var rows=[{tipo:'Fechamento da Noite',loja:S.loja,cnpj:CNPJS[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),itens:JSON.stringify(itN),obs:document.getElementById('obsNoite').value,foto:S.fotoN?'sim':''}];
   enviar('btnConfNoiteEnviar',rows,'Fechamento registrado!','Noite encerrada com sucesso.');
 }
 
@@ -813,7 +813,7 @@ function confirmarManha(){
     return;
   }
   var now=new Date();
-  document.getElementById('confManhaLoja').textContent=S.loja+' — '+(CNPJ[S.loja]||'');
+  document.getElementById('confManhaLoja').textContent=S.loja+' — '+(CNPJS[S.loja]||'');
   document.getElementById('confManhaColab').textContent=S.colab;
   document.getElementById('confManhaData').textContent=fmtDate(now)+' às '+fmtTime(now);
   document.getElementById('confManhaObs').textContent=document.getElementById('obsManha').value||'—';
@@ -828,7 +828,7 @@ function confirmarManha(){
 function submitManha(){
   if(enviando)return;
   var now=new Date();
-  var rows=[{tipo:'Conferência da Manhã',loja:S.loja,cnpj:CNPJ[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),itens:JSON.stringify(itM),obs:document.getElementById('obsManha').value,foto:S.fotoM?'sim':''}];
+  var rows=[{tipo:'Conferência da Manhã',loja:S.loja,cnpj:CNPJS[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),itens:JSON.stringify(itM),obs:document.getElementById('obsManha').value,foto:S.fotoM?'sim':''}];
   enviar('btnConfManhaEnviar',rows,'Conferência registrada!','Manhã conferida com sucesso.');
 }
 
