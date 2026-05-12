@@ -854,10 +854,20 @@ function enviar(btnId,rows,titulo,subtitulo){
   if(enviando)return;
   enviando=true;
   setBtnEnviando(btnId);
-  // GET funciona 100% com no-cors no Apps Script
-  var payload=encodeURIComponent(JSON.stringify({rows:rows}));
-  var img=new Image();
-  img.src=SURL+'?data='+payload;
+  // Envia via form POST oculto - funciona 100% com Apps Script sem CORS
+  var payload=JSON.stringify({rows:rows});
+  var form=document.createElement('form');
+  form.method='POST';
+  form.action=SURL;
+  form.target='hidden_iframe';
+  var input=document.createElement('input');
+  input.type='hidden';
+  input.name='data';
+  input.value=payload;
+  form.appendChild(input);
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
   setTimeout(function(){
     enviando=false;
     document.getElementById('okTitle').textContent=titulo;
