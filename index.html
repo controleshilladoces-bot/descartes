@@ -854,18 +854,16 @@ function enviar(btnId,rows,titulo,subtitulo){
   if(enviando)return;
   enviando=true;
   setBtnEnviando(btnId);
-  // Apps Script com no-cors nao le JSON -- envia como form URL encoded
-  var payload='data='+encodeURIComponent(JSON.stringify({rows:rows}));
-  fetch(SURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:payload})
-  .catch(function(){})
-  .finally(function(){
-    setTimeout(function(){
-      enviando=false;
-      document.getElementById('okTitle').textContent=titulo;
-      document.getElementById('okSub').textContent=subtitulo;
-      ir('tOk');
-    },1500);
-  });
+  // GET funciona 100% com no-cors no Apps Script
+  var payload=encodeURIComponent(JSON.stringify({rows:rows}));
+  var img=new Image();
+  img.src=SURL+'?data='+payload;
+  setTimeout(function(){
+    enviando=false;
+    document.getElementById('okTitle').textContent=titulo;
+    document.getElementById('okSub').textContent=subtitulo;
+    ir('tOk');
+  },2000);
 }
 
 function novoDescarte(){
