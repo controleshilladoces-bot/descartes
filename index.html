@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -80,6 +81,7 @@ textarea{resize:none;height:70px;font-size:13px}
 <div class="container">
 
 <!-- T0 -->
+
 <div id="t0" class="screen">
   <div class="card">
     <div class="lbl">Olá!</div>
@@ -96,6 +98,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T1 -->
+
 <div id="t1" class="screen">
   <div class="card">
     <div class="lbl">Tipo de registro</div>
@@ -116,6 +119,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T2 colaborador dia -->
+
 <div id="t2" class="screen">
   <div class="card">
     <div class="lbl">Descarte do dia</div>
@@ -130,6 +134,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tDia -->
+
 <div id="tDia" class="screen">
   <div class="card">
     <div class="lbl">Descarte do dia</div>
@@ -195,6 +200,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tConfDia -->
+
 <div id="tConfDia" class="screen">
   <div class="card">
     <div class="lbl">Confirmação</div>
@@ -215,6 +221,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T7 noite colab -->
+
 <div id="t7" class="screen">
   <div class="card">
     <div class="lbl">Fechamento da noite</div>
@@ -229,6 +236,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T7b noite itens -->
+
 <div id="t7b" class="screen">
   <div class="card">
     <div class="lbl">Fechamento da noite — Itens</div>
@@ -257,6 +265,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T7c noite foto -->
+
 <div id="t7c" class="screen">
   <div class="card">
     <div class="lbl">Fechamento da noite — Foto</div>
@@ -273,6 +282,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tConfNoite -->
+
 <div id="tConfNoite" class="screen">
   <div class="card">
     <div class="lbl">Confirmação</div>
@@ -298,6 +308,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T8 manha colab (SEM alerta) -->
+
 <div id="t8" class="screen">
   <div class="card">
     <div class="lbl">Conferência da manhã</div>
@@ -312,6 +323,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T8b manha itens -->
+
 <div id="t8b" class="screen">
   <div class="card">
     <div class="lbl">Conferência da manhã — Itens</div>
@@ -332,6 +344,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T8c manha foto -->
+
 <div id="t8c" class="screen">
   <div class="card">
     <div class="lbl">Conferência da manhã — Foto</div>
@@ -348,6 +361,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tConfManha -->
+
 <div id="tConfManha" class="screen">
   <div class="card">
     <div class="lbl">Confirmação</div>
@@ -373,6 +387,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tOk -->
+
 <div id="tOk" class="screen">
   <div class="success">
     <div class="s-icon">✓</div>
@@ -839,14 +854,22 @@ function enviar(btnId,rows,titulo,subtitulo){
   if(enviando)return;
   enviando=true;
   setBtnEnviando(btnId);
-  // Envia via POST com fetch no-cors
+  // Usa iframe + form - unico metodo garantido sem CORS
   var payload=JSON.stringify({rows:rows});
-  fetch(SURL,{
-    method:'POST',
-    mode:'no-cors',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:'data='+encodeURIComponent(payload)
-  }).catch(function(){});
+  var iframe=document.getElementById('hidden_iframe');
+  var form=document.createElement('form');
+  form.method='POST';
+  form.action=SURL;
+  form.target='hidden_iframe';
+  form.style.display='none';
+  var input=document.createElement('input');
+  input.type='hidden';
+  input.name='data';
+  input.value=payload;
+  form.appendChild(input);
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout(function(){document.body.removeChild(form);},1000);
   setTimeout(function(){
     enviando=false;
     setBtnNormal(btnId,'✓ Confirmar e enviar');
@@ -869,5 +892,7 @@ function novoDescarte(){
   ir('t1');
 }
 </script>
+
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none"></iframe>
 </body>
 </html>
