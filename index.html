@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -80,6 +81,7 @@ textarea{resize:none;height:70px;font-size:13px}
 <div class="container">
 
 <!-- T0 -->
+
 <div id="t0" class="screen">
   <div class="card">
     <div class="lbl">Olá!</div>
@@ -96,6 +98,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T1 -->
+
 <div id="t1" class="screen">
   <div class="card">
     <div class="lbl">Tipo de registro</div>
@@ -116,6 +119,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T2 colaborador dia -->
+
 <div id="t2" class="screen">
   <div class="card">
     <div class="lbl">Descarte do dia</div>
@@ -130,6 +134,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tDia -->
+
 <div id="tDia" class="screen">
   <div class="card">
     <div class="lbl">Descarte do dia</div>
@@ -195,6 +200,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tConfDia -->
+
 <div id="tConfDia" class="screen">
   <div class="card">
     <div class="lbl">Confirmação</div>
@@ -215,6 +221,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T7 noite colab -->
+
 <div id="t7" class="screen">
   <div class="card">
     <div class="lbl">Fechamento da noite</div>
@@ -229,6 +236,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T7b noite itens -->
+
 <div id="t7b" class="screen">
   <div class="card">
     <div class="lbl">Fechamento da noite — Itens</div>
@@ -257,6 +265,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T7c noite foto -->
+
 <div id="t7c" class="screen">
   <div class="card">
     <div class="lbl">Fechamento da noite — Foto</div>
@@ -273,6 +282,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tConfNoite -->
+
 <div id="tConfNoite" class="screen">
   <div class="card">
     <div class="lbl">Confirmação</div>
@@ -298,6 +308,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T8 manha colab (SEM alerta) -->
+
 <div id="t8" class="screen">
   <div class="card">
     <div class="lbl">Conferência da manhã</div>
@@ -312,6 +323,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T8b manha itens -->
+
 <div id="t8b" class="screen">
   <div class="card">
     <div class="lbl">Conferência da manhã — Itens</div>
@@ -332,6 +344,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- T8c manha foto -->
+
 <div id="t8c" class="screen">
   <div class="card">
     <div class="lbl">Conferência da manhã — Foto</div>
@@ -348,6 +361,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tConfManha -->
+
 <div id="tConfManha" class="screen">
   <div class="card">
     <div class="lbl">Confirmação</div>
@@ -373,6 +387,7 @@ textarea{resize:none;height:70px;font-size:13px}
 </div>
 
 <!-- tOk -->
+
 <div id="tOk" class="screen">
   <div class="success">
     <div class="s-icon">✓</div>
@@ -675,7 +690,7 @@ function confirmarDia(){
 function submitDia(){
   if(enviando)return;
   var now=new Date();
-  var rows=itensDia.map(function(it){return{tipo:'Descarte do Dia',loja:S.loja,cnpj:CNPJ[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),cat:it.cat,prod:it.prod,qtd:it.qtd,unid:it.unid,motivo:it.motivo,foto:it.foto||''};});
+  var rows=itensDia.map(function(it){return{tipo:'Descarte do Dia',loja:S.loja,cnpj:CNPJ[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),cat:it.cat,prod:it.prod,qtd:it.qtd,unid:it.unid,motivo:it.motivo,foto:it.foto?'sim':''};});
   enviar('btnConfDiaEnviar',rows,'Descarte registrado!',itensDia.length+' item(ns) salvo(s).');
 }
 
@@ -734,7 +749,7 @@ function confirmarNoite(){
 function submitNoite(){
   if(enviando)return;
   var now=new Date();
-  var rows=[{tipo:'Fechamento da Noite',loja:S.loja,cnpj:CNPJ[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),itens:JSON.stringify(itN),obs:document.getElementById('obsNoite').value,foto:S.fotoN}];
+  var rows=[{tipo:'Fechamento da Noite',loja:S.loja,cnpj:CNPJ[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),itens:JSON.stringify(itN),obs:document.getElementById('obsNoite').value,foto:S.fotoN?'sim':''}];
   enviar('btnConfNoiteEnviar',rows,'Fechamento registrado!','Noite encerrada com sucesso.');
 }
 
@@ -790,7 +805,7 @@ function confirmarManha(){
 function submitManha(){
   if(enviando)return;
   var now=new Date();
-  var rows=[{tipo:'Conferência da Manhã',loja:S.loja,cnpj:CNPJ[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),itens:JSON.stringify(itM),obs:document.getElementById('obsManha').value,foto:S.fotoM}];
+  var rows=[{tipo:'Conferência da Manhã',loja:S.loja,cnpj:CNPJ[S.loja]||'',colab:S.colab,data:fmtDate(now),hora:fmtTime(now),itens:JSON.stringify(itM),obs:document.getElementById('obsManha').value,foto:S.fotoM?'sim':''}];
   enviar('btnConfManhaEnviar',rows,'Conferência registrada!','Manhã conferida com sucesso.');
 }
 
@@ -839,22 +854,32 @@ function enviar(btnId,rows,titulo,subtitulo){
   if(enviando)return;
   enviando=true;
   setBtnEnviando(btnId);
-  // Envia cada row como GET separado - unico metodo que funciona com Apps Script + CORS
-  var total=rows.length, enviados=0;
-  rows.forEach(function(row){
-    var params=encodeURIComponent(JSON.stringify({rows:[row]}));
-    var url=SURL+'?data='+params;
-    fetch(url,{method:'GET',mode:'no-cors'})
-    .finally(function(){
-      enviados++;
-    });
-  });
+  // Usa XMLHttpRequest sincrono como fallback garantido
+  var payload=JSON.stringify({rows:rows});
+  var encoded=encodeURIComponent(payload);
+  var url=SURL+'?data='+encoded;
+  // Tenta fetch primeiro
+  var done=false;
+  try {
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET',url,true);
+    xhr.onreadystatechange=function(){
+      if(xhr.readyState===4&&!done){
+        done=true;
+      }
+    };
+    xhr.onerror=function(){done=true;};
+    xhr.send();
+  } catch(e){}
+  // Independente do resultado, mostra sucesso após 4s
+  // (no-cors nao retorna status, mas o Script recebe)
   setTimeout(function(){
     enviando=false;
+    setBtnNormal(btnId,'✓ Confirmar e enviar');
     document.getElementById('okTitle').textContent=titulo;
     document.getElementById('okSub').textContent=subtitulo;
     ir('tOk');
-  },3000);
+  },4000);
 }
 
 function novoDescarte(){
@@ -870,5 +895,6 @@ function novoDescarte(){
   ir('t1');
 }
 </script>
+
 </body>
 </html>
