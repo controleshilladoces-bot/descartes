@@ -662,6 +662,8 @@ function goNoiteFoto(){
 function confirmarNoite(){
   if(!S.fotoN){ alert('Foto obrigatória'); return; }
   if(itN.length === 0){ alert('Adicione pelo menos 1 item'); return; }
+  console.log('[confirmarNoite] itN antes do envio:', JSON.stringify(itN));
+  console.log('[confirmarNoite] loja:', S.loja, 'colab:', S.colab, 'cnpj:', CNPJS[S.loja]);
   var btn = document.getElementById('btnConfirmarNoite');
   btn.textContent = 'Enviando...'; btn.disabled = true;
 
@@ -731,6 +733,8 @@ function goManhaFoto(){
 function confirmarManha(){
   if(!S.fotoM){ alert('Foto obrigatória'); return; }
   if(itM.length === 0){ alert('Adicione pelo menos 1 item'); return; }
+  console.log('[confirmarManha] itM antes do envio:', JSON.stringify(itM));
+  console.log('[confirmarManha] loja:', S.loja, 'colab:', S.colab, 'cnpj:', CNPJS[S.loja]);
   var btn = document.getElementById('btnConfirmarManha');
   btn.textContent = 'Enviando...'; btn.disabled = true;
 
@@ -838,6 +842,32 @@ function trocarLoja(){
 // { "rows": [ {loja, cnpj, tipo, prod, qtd, unid, motivo, colab, obs}, ... ] }
 // Usa form-POST com iframe oculto para evitar problemas de CORS.
 function enviarRows(rows){
+  // ----- FILTRO DEFENSIVO: nunca enviar linha vazia -----
+  var rowsOrig = (rows || []).slice();
+  var rowsValidas = rowsOrig.filter(function(r){
+    if(!r) return false;
+    var prod = String(r.prod || r.produto || '').trim();
+    var qtd = Number(r.qtd || 0);
+    return prod && qtd > 0;
+  });
+
+  console.log('[enviarRows] originais:', rowsOrig.length, 'válidas:', rowsValidas.length);
+  console.log('[enviarRows] rows enviadas:', rowsValidas);
+
+  if(rowsOrig.length > 0 && rowsValidas.length < rowsOrig.length){
+    console.warn('[enviarRows] BLOQUEADAS '+(rowsOrig.length - rowsValidas.length)+' linha(s) sem produto ou qtd > 0:', rowsOrig.filter(function(r){
+      var prod = String((r&&(r.prod||r.produto))||'').trim();
+      var qtd = Number((r&&r.qtd)||0);
+      return !(prod && qtd > 0);
+    }));
+  }
+
+  if(rowsValidas.length === 0){
+    alert('Nada foi enviado: nenhum item tinha produto e quantidade válidos.\n\nVerifique se você adicionou os itens antes de confirmar.');
+    return false;
+  }
+
+  // ----- SUBMIT VIA FORM + IFRAME (sem CORS) -----
   var f = document.createElement('form');
   f.method = 'POST';
   f.action = SURL;
@@ -845,11 +875,12 @@ function enviarRows(rows){
   var input = document.createElement('input');
   input.type = 'hidden';
   input.name = 'data';
-  input.value = JSON.stringify({rows: rows});
+  input.value = JSON.stringify({rows: rowsValidas});
   f.appendChild(input);
   document.body.appendChild(f);
   f.submit();
   setTimeout(function(){ if(f.parentNode) f.parentNode.removeChild(f); }, 2000);
+  return true;
 }
 
 // =============================================================
