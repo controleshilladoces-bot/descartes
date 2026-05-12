@@ -750,12 +750,16 @@ function renderItensN(){
 function removeN(i){itN.splice(i,1);renderItensN();}
 function goNoiteFoto(){ir('t7c');}
 function confirmarNoite(){
-  if(!S.fotoN){
+  // Verifica foto pela imagem visivel OU pela variavel
+  var prevImg=document.getElementById('fotoNoitePreview');
+  var temFoto=S.fotoN||(prevImg&&prevImg.style.display!=='none'&&prevImg.src);
+  if(!temFoto){
     var fw=document.querySelector('#t7c .foto-wrap');
     fw.style.borderColor='#C0392B';fw.style.borderStyle='solid';fw.style.borderWidth='2.5px';
     setTimeout(function(){fw.style.borderColor='#D4898F';fw.style.borderStyle='dashed';fw.style.borderWidth='1.5px';},2500);
     return;
   }
+  if(!S.fotoN&&prevImg&&prevImg.src) S.fotoN='sim';
   var now=new Date();
   document.getElementById('confNoiteLoja').textContent=S.loja+' — '+(CNPJS[S.loja]||'');
   document.getElementById('confNoiteColab').textContent=S.colab;
