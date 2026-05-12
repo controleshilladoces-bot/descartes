@@ -854,26 +854,22 @@ function enviar(btnId,rows,titulo,subtitulo){
   if(enviando)return;
   enviando=true;
   setBtnEnviando(btnId);
-  // Envia via form POST oculto - funciona 100% com Apps Script sem CORS
-  var payload=JSON.stringify({rows:rows});
-  var form=document.createElement('form');
-  form.method='POST';
-  form.action=SURL;
-  form.target='hidden_iframe';
-  var input=document.createElement('input');
-  input.type='hidden';
-  input.name='data';
-  input.value=payload;
-  form.appendChild(input);
-  document.body.appendChild(form);
-  form.submit();
-  document.body.removeChild(form);
+  // Envia cada row como GET separado - unico metodo que funciona com Apps Script + CORS
+  var total=rows.length, enviados=0;
+  rows.forEach(function(row){
+    var params=encodeURIComponent(JSON.stringify({rows:[row]}));
+    var url=SURL+'?data='+params;
+    fetch(url,{method:'GET',mode:'no-cors'})
+    .finally(function(){
+      enviados++;
+    });
+  });
   setTimeout(function(){
     enviando=false;
     document.getElementById('okTitle').textContent=titulo;
     document.getElementById('okSub').textContent=subtitulo;
     ir('tOk');
-  },2000);
+  },3000);
 }
 
 function novoDescarte(){
