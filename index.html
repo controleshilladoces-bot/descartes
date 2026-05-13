@@ -454,13 +454,19 @@ function buildCG(gid, txtId){
   g.innerHTML = '';
   var cs = COLAB[S.loja];
   var isMain = gid === 'colabGrid';
+  
+  // Se não tem colaboradores cadastrados, mostra direto o input
   if(!cs || !cs.length){
     g.style.display = 'none';
     if(txtId) document.getElementById(txtId).style.display = 'block';
     return;
   }
+  
+  // Mostra grid e esconde texto inicialmente
   g.style.display = 'grid';
   if(txtId) document.getElementById(txtId).style.display = 'none';
+  
+  // Adiciona os colaboradores cadastrados
   cs.forEach(function(c){
     var b = document.createElement('button');
     b.className = 'colab-btn';
@@ -469,10 +475,35 @@ function buildCG(gid, txtId){
       g.querySelectorAll('.colab-btn').forEach(function(x){ x.classList.remove('sel'); });
       b.classList.add('sel');
       S.colab = c;
+      // Esconde input se estiver aberto
+      if(txtId) document.getElementById(txtId).style.display = 'none';
       if(isMain){ setTimeout(function(){ initDia(); ir('tDia'); }, 100); }
     };
     g.appendChild(b);
   });
+  
+  // Adiciona botão "✏️ Outro / Digitar nome"
+  var btnOutro = document.createElement('button');
+  btnOutro.className = 'colab-btn';
+  btnOutro.style.background = '#FFF8F0';
+  btnOutro.style.borderStyle = 'dashed';
+  btnOutro.style.color = '#B06433';
+  btnOutro.innerHTML = '✏️ Outro nome';
+  btnOutro.onclick = function(){
+    g.querySelectorAll('.colab-btn').forEach(function(x){ x.classList.remove('sel'); });
+    btnOutro.classList.add('sel');
+    S.colab = ''; // limpa pra forçar preencher no input
+    if(txtId){
+      document.getElementById(txtId).style.display = 'block';
+      // foca no input
+      var inputId = txtId === 'colabTexto' ? 'colabInput' : (txtId === 'colabNoiteTexto' ? 'colabNoiteInput' : 'colabManhaInput');
+      setTimeout(function(){ 
+        var inp = document.getElementById(inputId);
+        if(inp) inp.focus();
+      }, 100);
+    }
+  };
+  g.appendChild(btnOutro);
 }
 
 function confirmarColab(){
