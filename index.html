@@ -30,6 +30,8 @@ body { font-family:'DM Sans',sans-serif; background:#FDF8F4; min-height:100vh; m
 .btn-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
 .btn-cat { background:#FDF8F4; border:1.5px solid #F2E8DE; border-radius:12px; padding:12px 8px; font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#3D2314; cursor:pointer; text-align:center; }
 .btn-cat.sel { background:#B06433; border-color:#B06433; color:white; }
+.btn-cat.cat-insumo { background:#F5E6D3; border-color:#D4A574; }
+.btn-cat.cat-insumo.sel { background:#6D4C2C; border-color:#6D4C2C; color:white; }
 .colab-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
 .colab-btn { background:#FDF8F4; border:1.5px solid #F2E8DE; border-radius:11px; padding:13px; font-size:13px; font-weight:600; color:#3D2314; cursor:pointer; text-align:center; }
 .colab-btn.sel { background:#3D2314; border-color:#3D2314; color:white; }
@@ -134,17 +136,11 @@ textarea { resize:none; height:70px; font-size:13px; }
         <div class="field">
           <label class="fl">Categoria</label>
           <div class="btn-grid" id="catDiaGrid"></div>
-          <div id="catDiaCoz" style="display:none">
-            <button class="btn-item" style="margin-bottom:8px" onclick="setCatDia('insumo_coz','Insumo')">🥝 Insumo / Ingrediente</button>
-            <button class="btn-item" onclick="setCatDia('acabado_coz','Produto Acabado')">🎂 Produto Acabado</button>
-          </div>
         </div>
         <div id="prodDiaLista" style="display:none">
           <div class="field"><label class="fl">Produto</label><select id="prodDiaSel"><option value="">Selecione...</option></select></div>
-        </div>
-        <div id="prodDiaTexto" style="display:none">
-          <div class="field"><label class="fl">Nome do produto</label><input type="text" id="prodDiaInput" placeholder="Ex: Morango, Caseirinho Cenoura..."></div>
-          <div class="field"><label class="fl">Unidade</label>
+          <div class="field" id="unidDiaField" style="display:none">
+            <label class="fl">Unidade</label>
             <div class="pills" id="unidDiaPills">
               <div class="pill sel" onclick="selUnidDia(this,'Unidade')">Unidade</div>
               <div class="pill" onclick="selUnidDia(this,'Kg')">Kg</div>
@@ -155,7 +151,7 @@ textarea { resize:none; height:70px; font-size:13px; }
         </div>
         <div class="field" id="qtdDiaField" style="display:none">
           <label class="fl">Quantidade</label>
-          <input type="number" id="qtdDia" min="1" placeholder="0" inputmode="numeric">
+          <input type="number" id="qtdDia" min="0" step="0.001" placeholder="0" inputmode="decimal">
         </div>
         <div class="field" id="motivoDiaField" style="display:none">
           <label class="fl">Motivo</label>
@@ -301,7 +297,7 @@ textarea { resize:none; height:70px; font-size:13px; }
 // =============================================================
 var SURL = "https://script.google.com/macros/s/AKfycbyMw_I71wsmyAU_KIhpEO8cEJD8bf-AuAYJkYscoDXMRKWsT4KdBdnqM_oZ8tHZe7BU/exec";
 
-// CNPJs por loja (espelha o CNPJS do Apps Script)
+// CNPJs (Delivery Centro CORRIGIDO para 0006-02)
 var CNPJS = {
   'Lapa': '20.331.832/0002-89',
   'Moema': '20.331.832/0003-60',
@@ -309,50 +305,90 @@ var CNPJS = {
   'Saúde': '20.331.832/0001-06',
   'Cozinha': '20.331.832/0001-06',
   'Delivery Mooca': '20.331.832/0001-06',
-  'Delivery Centro': '20.331.832/0001-06'
+  'Delivery Centro': '20.331.832/0006-02'
 };
 
 var FISICAS = ['Lapa','Moema','Saúde'];
 
-// COLAB e CATS/PRODS começam com fallback, depois são sobrescritos via ?config=1
+// COLAB começa com fallback, sobrescrito via ?config=1
 var COLAB = {
   'Lapa':['Sheila','Emily'],
   'Moema':['Pedro','Andreia','Ana Beatriz'],
   'Saúde':['Thifany','Jéssica','Mariah','Kauan'],
   'Cozinha':null,'Delivery Mooca':null,'Delivery Centro':null
 };
+
+// CATS e PRODS: a lista MESTRE completa (depois substituída pelo Apps Script)
 var CATS = [
   {id:'Potes 180ml',lb:'Potes 180ml'},
   {id:'Potinhos 80ml',lb:'Potinhos 80ml'},
   {id:'Caixinhas',lb:'Caixinhas'},
+  {id:'Coxinhas',lb:'Coxinhas'},
   {id:'Brigadeiros',lb:'Brigadeiros'},
   {id:'Fatias e Caseirinhos',lb:'Fatias e Caseirinhos'},
   {id:'Especiais',lb:'Especiais'},
   {id:'Naked',lb:'Naked'},
-  {id:'Petit',lb:'Petit'}
+  {id:'Petit',lb:'Petit'},
+  {id:'Travessas',lb:'Travessas'},
+  {id:'Frutas do Amor',lb:'Frutas do Amor'},
+  {id:'Bolachas',lb:'Bolachas'},
+  {id:'Bebidas',lb:'Bebidas'}
 ];
 var PRODS = {
-  'Potes 180ml':['Pote Pistache com Geleia','Pote Maracujá','Pote Morango Tradicional','Pote Morango Casadinho','Pote Bombom Uva','Pote Abacaxi','Pote Brownie','Pote Doce de Leite','Pote Brigadeiro','Pote Hillanoffe','Pote Ninho','Pote Casadinho Coco'],
+  'Potes 180ml':['Pote Pistache com Geleia','Pote Pistache','Pote Maracujá','Pote Maracujá com Brigadeiro','Pote Morango Tradicional','Pote Morango Casadinho','Pote Bombom Uva','Pote Abacaxi','Pote Brownie','Pote Doce de Leite','Pote Brigadeiro','Pote Hillanoffe','Pote Ninho','Pote Creme Ninho','Pote Casadinho Coco','Pote Limão','Pote Floresta Negra'],
   'Potinhos 80ml':['Potinho Pistache','Potinho Casadinho','Potinho Ninho Nutella','Potinho Maracujá'],
   'Caixinhas':['Caixinha Dois Brigadeiros','Caixinha Ninho Nutella'],
-  'Brigadeiros':['Coxinha Tradicional','Coxinha Branca no Belga','Brigadeiro de Uva'],
+  'Coxinhas':['Coxinha Tradicional','Coxinha Branca no Belga'],
+  'Brigadeiros':['Brigadeiro de Uva'],
   'Fatias e Caseirinhos':['Caseirinho Cenoura','Caseirinho Ninho Nutella','Fatia Casadinho','Fatia Ninho'],
-  'Especiais':['Cone Ninho','Cone Casadinho','Bolo Gelado Coco','Bolo Gelado Ninho Nutella'],
-  'Naked':['Naked Casadinho','Naked Coco','Naked Pistache Geleia','Naked Pistache Brigadeiro Branco','Naked Frutas Vermelhas'],
-  'Petit':['Petit Casadinho','Petit Coco','Petit Pistache Geleia','Petit Pistache Brigadeiro Branco','Petit Frutas Vermelhas']
+  'Especiais':['Cone Ninho','Cone Casadinho','Bolo Gelado Coco','Bolo Gelado Ninho Nutella','Tiramissu','Floresta Negra','Brownie Bites','Bolo Pistache'],
+  'Naked':['Naked Pistache Geleia','Naked Pistache Brigadeiro Branco','Naked Casadinho','Naked Coco','Naked Frutas Vermelhas'],
+  'Petit':['Petit Casadinho','Petit Coco','Petit Pistache Geleia','Petit Pistache Brigadeiro Branco','Petit Frutas Vermelhas'],
+  'Travessas':['Travessa Casadinho','Travessa Floresta Negra','Travessa Tiramissu','Travessa Torta Holandesa','Travessa Morango Tradicional','Travessa Uva','Travessa Amor'],
+  'Frutas do Amor':['Morango do Amor','Uva do Amor','Maracujá do Amor','Pote do Amor'],
+  'Bolachas':['Bolacha Ninho','Bolacha Chocolate','Bolacha Artesanal','Wafer 100g','Wafer Inteiro'],
+  'Bebidas':['Coca-Cola 350ml','Coca-Cola Zero 350ml','Guaraná 350ml','Guaraná Zero 350ml','Água com Gás','Água sem Gás','Café']
 };
+
+// =============================================================
+// FILTRO DE CATEGORIAS POR LOJA
+// Cozinha vê TUDO. Lojas só veem categorias que NÃO são de cozinha.
+// =============================================================
+function isCategoriaCozinha(catId, catLb){
+  var s = (String(catId||'') + ' ' + String(catLb||'')).toLowerCase();
+  return /(^|\s)(insumos?|cozinha\s*[-—])/i.test(s);
+}
+
+function getCatsPorLoja(){
+  if(S.loja === 'Cozinha'){
+    return CATS.slice();
+  }
+  return CATS.filter(function(c){
+    return !isCategoriaCozinha(c.id, c.lb);
+  });
+}
+
+function unidadePadraoPorCat(catId, catLb){
+  var s = (String(catId||'') + ' ' + String(catLb||'')).toLowerCase();
+  if(/(massas?|frutas?|recheios?|latic[íi]nios?|insumos?)/i.test(s)) return 'Kg';
+  return 'Unidade';
+}
+
+function categoriaPrecisaUnidade(catId, catLb){
+  var s = (String(catId||'') + ' ' + String(catLb||'')).toLowerCase();
+  return /(insumos?|cozinha\s*[-—]|massas?|frutas?|recheios?|latic[íi]nios?)/i.test(s);
+}
 
 // =============================================================
 // ESTADO
 // =============================================================
 var S = {loja:'', colab:'', fotoN:null, fotoM:null};
 var itensDia = [], itN = [], itM = [];
-var fotoDiaAtual = null;
 var unidDiaAtual = 'Unidade';
 var TELAS = ['t0','t1','t2','tDia','t7','t7b','t7c','t8','t8b','t8c','tOk'];
 
 // =============================================================
-// CARREGAR CONFIG DINÂMICA (Colaboradores + Produtos)
+// CARREGAR CONFIG DINÂMICA
 // =============================================================
 function carregarConfig(){
   try {
@@ -360,7 +396,6 @@ function carregarConfig(){
       .then(function(r){ return r.json(); })
       .then(function(data){
         if(data && data.colab && Object.keys(data.colab).length > 0){
-          // Mantém null para lojas sem colaboradores cadastrados
           var novosColab = {};
           ['Lapa','Moema','Saúde','Cozinha','Delivery Mooca','Delivery Centro'].forEach(function(l){
             novosColab[l] = (data.colab[l] && data.colab[l].length) ? data.colab[l] : null;
@@ -376,6 +411,7 @@ function carregarConfig(){
           });
           CATS = novasCats;
           PRODS = novosProds;
+          console.log('[carregarConfig] '+novasCats.length+' categorias carregadas');
         }
       })
       .catch(function(err){
@@ -448,7 +484,7 @@ function confirmarColab(){
 }
 
 // =============================================================
-// DESCARTE DO DIA
+// DESCARTE DO DIA — agora cozinha usa LISTA também
 // =============================================================
 function initDia(){
   itensDia = [];
@@ -461,32 +497,29 @@ function initDia(){
 }
 
 function buildCatDiaGrid(){
-  var coz = S.loja === 'Cozinha';
   var g = document.getElementById('catDiaGrid');
   g.innerHTML = '';
-  g.style.display = coz ? 'none' : 'grid';
-  document.getElementById('catDiaCoz').style.display = coz ? 'block' : 'none';
-  if(!coz){
-    CATS.forEach(function(c){
-      var b = document.createElement('button');
-      b.className = 'btn-cat';
-      b.textContent = c.lb;
-      b.onclick = function(){ setCatDia(c.id, c.lb); };
-      g.appendChild(b);
-    });
-  }
+  g.style.display = 'grid';
+  var cats = getCatsPorLoja();
+  cats.forEach(function(c){
+    var b = document.createElement('button');
+    b.className = 'btn-cat';
+    if(isCategoriaCozinha(c.id, c.lb)) b.classList.add('cat-insumo');
+    b.textContent = c.lb;
+    b.onclick = function(){ setCatDia(c.id, c.lb); };
+    g.appendChild(b);
+  });
 }
 
 function showFormDia(){
   document.getElementById('formDia').style.display = 'block';
   document.getElementById('prodDiaLista').style.display = 'none';
-  document.getElementById('prodDiaTexto').style.display = 'none';
   document.getElementById('qtdDiaField').style.display = 'none';
   document.getElementById('motivoDiaField').style.display = 'none';
   document.getElementById('btnAddDia').style.display = 'none';
+  document.getElementById('unidDiaField').style.display = 'none';
   document.getElementById('qtdDia').value = '';
   document.querySelectorAll('#motivoDiaPills .pill').forEach(function(p){ p.classList.remove('sel'); });
-  fotoDiaAtual = null;
   unidDiaAtual = 'Unidade';
   document.querySelectorAll('#unidDiaPills .pill').forEach(function(p){ p.classList.remove('sel'); });
   var pPad = document.querySelector('#unidDiaPills .pill');
@@ -497,38 +530,33 @@ function showFormDia(){
 function cancelarFormDia(){ document.getElementById('formDia').style.display = 'none'; }
 
 function setCatDia(id, lb){
-  document.querySelectorAll('#catDiaGrid .btn-cat').forEach(function(b){ b.classList.remove('sel'); });
-  var isCoz = (id === 'insumo_coz' || id === 'acabado_coz');
-  if(!isCoz){
-    var btns = document.querySelectorAll('#catDiaGrid .btn-cat');
-    btns.forEach(function(b){ if(b.textContent === lb) b.classList.add('sel'); });
-  }
-  var lista = document.getElementById('prodDiaLista');
-  var texto = document.getElementById('prodDiaTexto');
-  if(isCoz){
-    lista.style.display = 'none'; texto.style.display = 'block';
-    unidDiaAtual = id === 'insumo_coz' ? 'Kg' : 'Unidade';
-    document.querySelectorAll('#unidDiaPills .pill').forEach(function(p){ p.classList.remove('sel'); });
-    document.querySelectorAll('#unidDiaPills .pill').forEach(function(p){ if(p.textContent === unidDiaAtual) p.classList.add('sel'); });
-  } else {
-    texto.style.display = 'none'; lista.style.display = 'block';
-    var sel = document.getElementById('prodDiaSel');
-    sel.innerHTML = '<option value="">Selecione...</option>';
-    sel.dataset.cat = id;
-    sel.dataset.catLb = lb;
-    (PRODS[id] || []).forEach(function(p){
-      var o = document.createElement('option');
-      o.value = p; o.textContent = p;
-      sel.appendChild(o);
-    });
-    sel.onchange = function(){ if(sel.value) mostrarDetDia(); };
-  }
-  document.getElementById('qtdDiaField').style.display = 'block';
-  document.getElementById('motivoDiaField').style.display = 'block';
-  document.getElementById('btnAddDia').style.display = 'block';
+  document.querySelectorAll('#catDiaGrid .btn-cat').forEach(function(b){
+    if(b.textContent === lb) b.classList.add('sel');
+    else b.classList.remove('sel');
+  });
+
+  // SEMPRE mostra lista (select), nunca texto livre
+  document.getElementById('prodDiaLista').style.display = 'block';
+  var sel = document.getElementById('prodDiaSel');
+  sel.innerHTML = '<option value="">Selecione...</option>';
+  sel.dataset.cat = id;
+  sel.dataset.catLb = lb;
+  (PRODS[id] || []).forEach(function(p){
+    var o = document.createElement('option');
+    o.value = p; o.textContent = p;
+    sel.appendChild(o);
+  });
+  sel.onchange = function(){ if(sel.value) mostrarDetDia(id, lb); };
+
+  unidDiaAtual = unidadePadraoPorCat(id, lb);
+  document.querySelectorAll('#unidDiaPills .pill').forEach(function(p){
+    p.classList.remove('sel');
+    if(p.textContent === unidDiaAtual) p.classList.add('sel');
+  });
+  document.getElementById('unidDiaField').style.display = categoriaPrecisaUnidade(id, lb) ? 'block' : 'none';
 }
 
-function mostrarDetDia(){
+function mostrarDetDia(id, lb){
   document.getElementById('qtdDiaField').style.display = 'block';
   document.getElementById('motivoDiaField').style.display = 'block';
   document.getElementById('btnAddDia').style.display = 'block';
@@ -542,27 +570,22 @@ function selUnidDia(el, val){
 
 function addItemDia(){
   var sel = document.getElementById('prodDiaSel');
-  var txt = document.getElementById('prodDiaInput');
-  var prod = '', cat = '', unid = unidDiaAtual;
-  if(document.getElementById('prodDiaTexto').style.display !== 'none'){
-    prod = txt.value.trim();
-    cat = 'Cozinha';
-    if(!prod){ alert('Digite o nome do produto'); return; }
-  } else {
-    prod = sel.value;
-    cat = sel.dataset.catLb || '';
-    if(!prod){ alert('Selecione o produto'); return; }
-    unid = 'Unidade';
-  }
+  var prod = sel.value;
+  var cat = sel.dataset.catLb || '';
+  var catId = sel.dataset.cat || '';
+  if(!prod){ alert('Selecione o produto'); return; }
   var qtd = document.getElementById('qtdDia').value;
   var mot = document.querySelector('#motivoDiaPills .pill.sel');
-  if(!qtd || qtd <= 0){ alert('Informe a quantidade'); return; }
+  if(!qtd || Number(qtd) <= 0){ alert('Informe a quantidade'); return; }
   if(!mot){ alert('Selecione o motivo'); return; }
+
+  var unidUsar = categoriaPrecisaUnidade(catId, cat) ? unidDiaAtual : 'Unidade';
+
   itensDia.push({
     produto: prod,
     categoria: cat,
     quantidade: qtd,
-    unidade: unid,
+    unidade: unidUsar,
     motivo: mot.textContent
   });
   renderItensDia();
@@ -587,9 +610,6 @@ function rmDia(idx){
   if(itensDia.length === 0) document.getElementById('btnEnviarDia').style.display = 'none';
 }
 
-// =============================================================
-// CONFIRMAR DESCARTE DO DIA
-// =============================================================
 function confirmarDia(){
   if(itensDia.length === 0){ alert('Adicione pelo menos 1 item'); return; }
   var btn = document.getElementById('btnEnviarDia');
@@ -658,12 +678,9 @@ function goNoiteFoto(){
   ir('t7c');
 }
 
-// >>> Função que usa CNPJS (era a que dava o erro)
 function confirmarNoite(){
   if(!S.fotoN){ alert('Foto obrigatória'); return; }
   if(itN.length === 0){ alert('Adicione pelo menos 1 item'); return; }
-  console.log('[confirmarNoite] itN antes do envio:', JSON.stringify(itN));
-  console.log('[confirmarNoite] loja:', S.loja, 'colab:', S.colab, 'cnpj:', CNPJS[S.loja]);
   var btn = document.getElementById('btnConfirmarNoite');
   btn.textContent = 'Enviando...'; btn.disabled = true;
 
@@ -729,12 +746,9 @@ function goManhaFoto(){
   ir('t8c');
 }
 
-// >>> Função que usa CNPJS (era a que dava o erro)
 function confirmarManha(){
   if(!S.fotoM){ alert('Foto obrigatória'); return; }
   if(itM.length === 0){ alert('Adicione pelo menos 1 item'); return; }
-  console.log('[confirmarManha] itM antes do envio:', JSON.stringify(itM));
-  console.log('[confirmarManha] loja:', S.loja, 'colab:', S.colab, 'cnpj:', CNPJS[S.loja]);
   var btn = document.getElementById('btnConfirmarManha');
   btn.textContent = 'Enviando...'; btn.disabled = true;
 
@@ -788,7 +802,8 @@ function prevFoto(inp, prevId, phId, tipo){
 function buildCatTurno(gid, turno){
   var g = document.getElementById(gid);
   g.innerHTML = '';
-  CATS.forEach(function(c){
+  var cats = getCatsPorLoja();
+  cats.forEach(function(c){
     var b = document.createElement('button');
     b.className = 'btn-cat';
     b.textContent = c.lb;
@@ -836,13 +851,9 @@ function trocarLoja(){
 }
 
 // =============================================================
-// ENVIO PARA APPS SCRIPT
+// ENVIO
 // =============================================================
-// Envia o array de rows usando o formato esperado pelo doPost:
-// { "rows": [ {loja, cnpj, tipo, prod, qtd, unid, motivo, colab, obs}, ... ] }
-// Usa form-POST com iframe oculto para evitar problemas de CORS.
 function enviarRows(rows){
-  // ----- FILTRO DEFENSIVO: nunca enviar linha vazia -----
   var rowsOrig = (rows || []).slice();
   var rowsValidas = rowsOrig.filter(function(r){
     if(!r) return false;
@@ -852,22 +863,12 @@ function enviarRows(rows){
   });
 
   console.log('[enviarRows] originais:', rowsOrig.length, 'válidas:', rowsValidas.length);
-  console.log('[enviarRows] rows enviadas:', rowsValidas);
-
-  if(rowsOrig.length > 0 && rowsValidas.length < rowsOrig.length){
-    console.warn('[enviarRows] BLOQUEADAS '+(rowsOrig.length - rowsValidas.length)+' linha(s) sem produto ou qtd > 0:', rowsOrig.filter(function(r){
-      var prod = String((r&&(r.prod||r.produto))||'').trim();
-      var qtd = Number((r&&r.qtd)||0);
-      return !(prod && qtd > 0);
-    }));
-  }
 
   if(rowsValidas.length === 0){
-    alert('Nada foi enviado: nenhum item tinha produto e quantidade válidos.\n\nVerifique se você adicionou os itens antes de confirmar.');
+    alert('Nada foi enviado: nenhum item tinha produto e quantidade válidos.');
     return false;
   }
 
-  // ----- SUBMIT VIA FORM + IFRAME (sem CORS) -----
   var f = document.createElement('form');
   f.method = 'POST';
   f.action = SURL;
