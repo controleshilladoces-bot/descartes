@@ -482,28 +482,30 @@ function buildCG(gid, txtId){
     g.appendChild(b);
   });
   
-  // Adiciona botão "✏️ Outro / Digitar nome"
-  var btnOutro = document.createElement('button');
-  btnOutro.className = 'colab-btn';
-  btnOutro.style.background = '#FFF8F0';
-  btnOutro.style.borderStyle = 'dashed';
-  btnOutro.style.color = '#B06433';
-  btnOutro.innerHTML = '✏️ Outro nome';
-  btnOutro.onclick = function(){
-    g.querySelectorAll('.colab-btn').forEach(function(x){ x.classList.remove('sel'); });
-    btnOutro.classList.add('sel');
-    S.colab = ''; // limpa pra forçar preencher no input
-    if(txtId){
-      document.getElementById(txtId).style.display = 'block';
-      // foca no input
-      var inputId = txtId === 'colabTexto' ? 'colabInput' : (txtId === 'colabNoiteTexto' ? 'colabNoiteInput' : 'colabManhaInput');
-      setTimeout(function(){ 
-        var inp = document.getElementById(inputId);
-        if(inp) inp.focus();
-      }, 100);
-    }
-  };
-  g.appendChild(btnOutro);
+  // Adiciona botão "✏️ Outro / Digitar nome" SÓ para Delivery Mooca e Delivery Centro
+  var lojasComOutro = ['Delivery Mooca', 'Delivery Centro'];
+  if(lojasComOutro.indexOf(S.loja) !== -1){
+    var btnOutro = document.createElement('button');
+    btnOutro.className = 'colab-btn';
+    btnOutro.style.background = '#FFF8F0';
+    btnOutro.style.borderStyle = 'dashed';
+    btnOutro.style.color = '#B06433';
+    btnOutro.innerHTML = '✏️ Outro nome';
+    btnOutro.onclick = function(){
+      g.querySelectorAll('.colab-btn').forEach(function(x){ x.classList.remove('sel'); });
+      btnOutro.classList.add('sel');
+      S.colab = '';
+      if(txtId){
+        document.getElementById(txtId).style.display = 'block';
+        var inputId = txtId === 'colabTexto' ? 'colabInput' : (txtId === 'colabNoiteTexto' ? 'colabNoiteInput' : 'colabManhaInput');
+        setTimeout(function(){ 
+          var inp = document.getElementById(inputId);
+          if(inp) inp.focus();
+        }, 100);
+      }
+    };
+    g.appendChild(btnOutro);
+  }
 }
 
 function confirmarColab(){
